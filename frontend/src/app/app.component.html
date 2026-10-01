@@ -1,0 +1,420 @@
+<main class="page-shell" [class.has-account]="!!account" [class.public-mode]="!account && !authOpen">
+  <section class="welcome-panel" aria-label="CareConnect introduction">
+    <a class="brand" href="/" aria-label="CareConnect home">
+      <span class="brand-mark" aria-hidden="true"><span></span><span></span></span>
+      <span>Care<span class="brand-light">Connect</span></span>
+    </a>
+    <div class="welcome-copy">
+      <span class="eyebrow"><span class="eyebrow-dot"></span> HEALTHCARE, CONNECTED</span>
+      <h1>Better care starts with a clearer connection.</h1>
+      <p>One secure place for patients and care teams to stay connected throughout every step of care.</p>
+      <div class="care-note">
+        <span class="note-icon" aria-hidden="true">✳</span>
+        <span><strong>Care that moves with you</strong><small>Your care team and health information, together.</small></span>
+      </div>
+    </div>
+    <div class="welcome-footer"><span>Thoughtful care. Connected teams.</span><span>© 2026 CareConnect</span></div>
+  </section>
+
+  <section class="form-panel" [class.dashboard-shell]="!!account" [class.public-site-panel]="!account && !authOpen" aria-label="Account access">
+    <div class="form-wrap">
+      @if (!account && !authOpen) {
+        <div class="landing-page">
+          <header class="landing-nav">
+            <a class="brand landing-brand" href="/" aria-label="CareConnect home">
+              <span class="brand-mark" aria-hidden="true"><span></span><span></span></span>
+              <span>Care<span class="brand-light">Connect</span></span>
+            </a>
+            <nav class="landing-links" aria-label="Landing page navigation">
+              <a href="#care-services">Care services</a>
+              <a href="#care-team">Care team</a>
+              <a href="#how-it-works">About us</a>
+            </nav>
+            <div class="landing-actions">
+              <button class="landing-login" type="button" (click)="setMode('login')">Sign in</button>
+              <button class="landing-cta small-cta" type="button" (click)="setMode('signup')">Get started <span aria-hidden="true">→</span></button>
+            </div>
+          </header>
+
+          <section class="landing-hero">
+            <div class="hero-copy">
+              <span class="landing-kicker"><span></span> A clearer way to care</span>
+              <h1>Better health starts with <em>better connection.</em></h1>
+              <p>Bring your appointments, health records, prescriptions, and care team together in one calm, secure place.</p>
+              <div class="hero-actions">
+                <button class="landing-cta" type="button" (click)="setMode('signup')">Start your care journey <span aria-hidden="true">→</span></button>
+                <a class="hero-secondary" href="#care-services"><span class="play-mark" aria-hidden="true">⌄</span> Explore CareConnect</a>
+              </div>
+              <div class="hero-proof"><div class="proof-avatars"><span>✚</span><span>✚</span><span>✚</span></div><span><strong>Care that stays connected</strong><small>For patients and care teams</small></span></div>
+            </div>
+            <div class="hero-visual" aria-label="Healthcare team supporting connected care">
+              <div class="hero-orbit orbit-one"></div><div class="hero-orbit orbit-two"></div>
+              <div class="hero-spark spark-one">✦</div><div class="hero-spark spark-two">✦</div>
+              <div class="doctor-illustration">
+                <div class="doctor-halo"></div>
+                <svg viewBox="0 0 360 410" role="img" aria-label="Illustration of a friendly doctor">
+                  <defs><linearGradient id="coat" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff"/><stop offset="1" stop-color="#dceaf6"/></linearGradient><linearGradient id="shirt" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#70b7d3"/><stop offset="1" stop-color="#357da5"/></linearGradient></defs>
+                  <ellipse cx="180" cy="391" rx="115" ry="13" fill="#315875" opacity=".13"/>
+                  <path d="M86 390c5-87 19-153 59-170h70c42 17 55 83 60 170z" fill="url(#coat)"/>
+                  <path d="M146 220h68l19 170h-104z" fill="url(#shirt)"/>
+                  <path d="m137 224 42 51-36 51-29-77c5-11 12-19 23-25zm86 0-42 51 36 51 29-77c-5-11-12-19-23-25z" fill="#f9fcff"/>
+                  <path d="M145 205h70v36c-7 20-20 31-35 31s-28-11-35-31z" fill="#c77f60"/>
+                  <ellipse cx="180" cy="145" rx="72" ry="84" fill="#d99776"/>
+                  <path d="M109 145c-8-55 17-98 69-101 46-3 75 29 69 85-18-14-29-31-34-54-19 28-53 46-99 49l-5 21z" fill="#233d57"/>
+                  <path d="M125 158c5 49 26 74 55 74s50-25 55-74c-10 13-19 19-32 22-14 3-28-5-35-13-9 9-26 15-43 7z" fill="#d99776"/>
+                  <path d="M154 157h11m41 0h11" stroke="#244059" stroke-width="5" stroke-linecap="round"/><path d="M168 195c8 7 17 7 25 0" fill="none" stroke="#9e5549" stroke-width="4" stroke-linecap="round"/>
+                  <path d="M109 294c23 20 45 32 71 32s49-12 71-32l17 96H91z" fill="#eef5fa"/>
+                  <path d="m143 244 37 36 37-36-7 83h-60z" fill="#fff"/>
+                  <path d="M180 279v55" stroke="#cfdae4" stroke-width="2"/><path d="M199 297h20v26h-20z" rx="3" fill="#fff" stroke="#c7d8e5" stroke-width="2"/><path d="M209 302v16m-7-8h14" stroke="#4b9a8b" stroke-width="3" stroke-linecap="round"/>
+                  <path d="M104 282c-17 18-26 41-29 68l28 8 23-57m128-19c17 18 26 41 29 68l-28 8-23-57" fill="#dceaf6"/>
+                </svg>
+              <div class="doctor-caption"><span class="caption-icon">✚</span><span><strong>Your care, connected</strong><small>Every step, all in one place</small></span><span class="caption-check">✓</span></div>
+              </div>
+              <div class="floating-care-card"><span class="floating-icon">◷</span><span><small>YOUR NEXT STEP</small><strong>Book an appointment</strong></span><span class="floating-arrow">↗</span></div>
+            </div>
+          </section>
+
+          <section class="trust-strip" id="how-it-works"><span>One connected space for</span><strong>Appointments</strong><i></i><strong>Health records</strong><i></i><strong>Prescriptions</strong><i></i><strong>Your care team</strong></section>
+
+          <section class="landing-services" id="care-services">
+            <div class="section-intro"><span class="landing-kicker"><span></span> Care, made simpler</span><h2>Everything you need to stay <em>on top of your health.</em></h2><p>Your health details are easier to manage when they’re all in one place.</p></div>
+            <div class="service-grid">
+              <article class="service-card"><span class="service-icon blue-icon">◷</span><span class="service-number">01</span><h3>Appointments</h3><p>Keep track of upcoming visits and stay in touch with your care team.</p><button type="button" (click)="setMode('signup')" aria-label="Get started with appointments">Explore appointments <span>→</span></button></article>
+              <article class="service-card"><span class="service-icon green-icon">▤</span><span class="service-number">02</span><h3>Health records</h3><p>See your medical history and treatment information together.</p><button type="button" (click)="setMode('signup')" aria-label="Get started with health records">Explore records <span>→</span></button></article>
+              <article class="service-card" id="care-team"><span class="service-icon soft-icon">✚</span><span class="service-number">03</span><h3>Your care team</h3><p>Connect with doctors and nurses who are part of your care journey.</p><button type="button" (click)="setMode('signup')" aria-label="Get started with your care team">Meet your team <span>→</span></button></article>
+            </div>
+          </section>
+
+          <section class="landing-bottom-cta"><div><span class="landing-kicker"><span></span> Your health, thoughtfully connected</span><h2>Let’s make your next step <em>a little easier.</em></h2></div><button class="landing-cta" type="button" (click)="setMode('signup')">Create your account <span aria-hidden="true">→</span></button></section>
+          <footer class="landing-footer"><a class="brand landing-brand" href="/" aria-label="CareConnect home"><span class="brand-mark" aria-hidden="true"><span></span><span></span></span><span>Care<span class="brand-light">Connect</span></span></a><span>Thoughtful care. Connected teams.</span><span>© 2026 CareConnect</span></footer>
+        </div>
+      } @else if (!account) {
+        <div class="auth-topline"><div class="mobile-brand brand"><span class="brand-mark" aria-hidden="true"><span></span><span></span></span><span>Care<span class="brand-light">Connect</span></span></div><button type="button" class="auth-back" (click)="closeAuth()">← Back to home</button></div>
+        <div class="form-heading">
+          <span class="eyebrow">{{ mode === 'signup' ? 'JOIN CARECONNECT' : 'WELCOME BACK' }}</span>
+          <h2>{{ mode === 'signup' ? 'Create your account' : 'Sign in to your account' }}</h2>
+          <p>{{ mode === 'signup' ? 'A few details will get you connected.' : 'Enter your details to continue to CareConnect.' }}</p>
+        </div>
+
+        <div class="mode-switch" role="tablist" aria-label="Account access mode">
+          <button class="mode-button" [class.active]="mode === 'login'" [attr.aria-selected]="mode === 'login'" role="tab" type="button" (click)="setMode('login')">Sign in</button>
+          <button class="mode-button" [class.active]="mode === 'signup'" [attr.aria-selected]="mode === 'signup'" role="tab" type="button" (click)="setMode('signup')">Create account</button>
+        </div>
+
+        @if (notice) {
+          <div class="notice" [class.success]="noticeKind === 'success'" role="alert">{{ notice }}</div>
+        }
+
+        @if (mode === 'login') {
+          <form class="auth-form" (ngSubmit)="login()" #loginForm="ngForm">
+            <label for="login-email">Email address</label>
+            <input id="login-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required [(ngModel)]="loginData.email">
+            <div class="label-row"><label for="login-password">Password</label></div>
+            <input id="login-password" name="password" type="password" autocomplete="current-password" placeholder="Enter your password" required [(ngModel)]="loginData.password">
+            <button class="submit-button" type="submit" [disabled]="loading || loginForm.invalid"><span>{{ loading ? 'Please wait…' : 'Sign in' }}</span><span aria-hidden="true">→</span></button>
+          </form>
+        } @else {
+          <form class="auth-form" (ngSubmit)="signup()" #signupForm="ngForm">
+            <label for="signup-role">I am a</label>
+            <div class="select-wrap"><select id="signup-role" name="role" required [(ngModel)]="signupData.role">
+              <option value="PATIENT">Patient</option><option value="DOCTOR">Doctor</option><option value="NURSE">Nurse</option><option value="ADMIN">Administrator</option>
+            </select></div>
+            <label for="signup-name">Full name</label>
+            <input id="signup-name" name="name" autocomplete="name" placeholder="Your full name" required [(ngModel)]="signupData.name">
+            <label for="signup-email">Email address</label>
+            <input id="signup-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required [(ngModel)]="signupData.email">
+
+            @switch (signupData.role) {
+              @case ('PATIENT') {
+                <label for="signup-age">Age</label>
+                <input id="signup-age" name="age" type="number" min="0" max="130" required placeholder="Your age" [(ngModel)]="signupData.age">
+                <label for="signup-disease">Health concern <span class="optional">(optional)</span></label>
+                <input id="signup-disease" name="disease" placeholder="What brings you here?" [(ngModel)]="signupData.disease">
+              }
+              @case ('DOCTOR') {
+                <label for="signup-experience">Years of experience</label>
+                <input id="signup-experience" name="experience" type="number" min="0" max="80" required placeholder="Years of practice" [(ngModel)]="signupData.experience">
+                <label for="signup-department">Department</label>
+                <input id="signup-department" name="department" required placeholder="e.g. Cardiology" [(ngModel)]="signupData.department">
+              }
+              @case ('NURSE') {
+                <label for="signup-department">Department</label>
+                <input id="signup-department" name="department" required placeholder="e.g. General Ward" [(ngModel)]="signupData.department">
+                <label for="signup-phone">Phone number <span class="optional">(optional)</span></label>
+                <input id="signup-phone" name="phoneNumber" type="tel" autocomplete="tel" placeholder="Your phone number" [(ngModel)]="signupData.phoneNumber">
+              }
+              @case ('ADMIN') {
+                <label for="admin-code">Administrator invitation code</label>
+                <input id="admin-code" name="adminSignupCode" type="password" autocomplete="off" required placeholder="Enter your invitation code" [(ngModel)]="signupData.adminSignupCode">
+                <p class="role-description">Administrator accounts require an invitation code from your system owner.</p>
+              }
+            }
+
+            <label for="signup-password">Password</label>
+            <input id="signup-password" name="password" type="password" autocomplete="new-password" minlength="8" placeholder="At least 8 characters" required [(ngModel)]="signupData.password">
+            <p class="form-hint">Use at least 8 characters.</p>
+            <button class="submit-button" type="submit" [disabled]="loading || signupForm.invalid"><span>{{ loading ? 'Please wait…' : 'Create account' }}</span><span aria-hidden="true">→</span></button>
+          </form>
+        }
+        <p class="privacy-note"><span aria-hidden="true">▣</span> Your account details are protected and never shown publicly.</p>
+      } @else {
+        <div class="workspace">
+          <aside class="sidebar">
+            <a class="brand workspace-brand" href="/" aria-label="CareConnect dashboard">
+              <span class="brand-mark" aria-hidden="true"><span></span><span></span></span>
+              <span>Care<span class="brand-light">Connect</span></span>
+            </a>
+            <div class="workspace-label">WORKSPACE</div>
+            <nav class="side-nav" aria-label="Main navigation">
+              <button class="nav-item" [class.selected]="activeKey === 'overview'" type="button" (click)="selectPage('overview')"><span class="nav-icon">⌂</span> Overview</button>
+              @for (item of visibleResources; track trackResource($index, item)) {
+                <button class="nav-item" [class.selected]="activeKey === item.key" type="button" (click)="selectPage(item.key)"><span class="nav-icon">{{ item.icon }}</span> {{ item.label }}</button>
+              }
+            </nav>
+            <div class="sidebar-bottom">
+              <div class="profile-mini"><span class="mini-avatar">{{ initials }}</span><span class="mini-copy"><strong>{{ account.name }}</strong><small>{{ account.role.toLowerCase() }}</small></span><button class="logout-button" type="button" (click)="logout()">Sign out</button></div>
+            </div>
+          </aside>
+
+          <section class="workspace-main">
+            <header class="topbar">
+              <div class="mobile-brand brand"><span class="brand-mark" aria-hidden="true"><span></span><span></span></span><span>Care<span class="brand-light">Connect</span></span></div>
+              <div class="breadcrumb">CareConnect <span>/</span> {{ activeResource?.label || 'Overview' }}</div>
+              <div class="topbar-actions"><span class="today-label">{{ today | date:'EEE, MMM d' }}</span><span class="top-avatar">{{ initials }}</span></div>
+            </header>
+
+            <main class="content-area">
+              @if (notice) { <div class="notice dashboard-notice" [class.success]="noticeKind === 'success'" role="status">{{ notice }}</div> }
+
+              @if (activeKey === 'overview') {
+                <section class="page-heading overview-heading">
+                  <div><span class="eyebrow">{{ account.role === 'ADMIN' ? 'SYSTEM OVERVIEW' : account.role === 'DOCTOR' ? 'CLINICAL WORKSPACE' : account.role === 'NURSE' ? 'PATIENT COORDINATION' : 'YOUR CARE, IN ONE PLACE' }}</span><h1>Good {{ greeting }}, {{ greetingName }}.</h1><p>{{ account.role === 'PATIENT' ? 'Here’s your health overview for today.' : account.role === 'DOCTOR' ? 'Here is your clinical schedule and patient activity.' : account.role === 'NURSE' ? 'Here is your assigned patient schedule for today.' : 'Here is today’s operational summary.' }}</p></div>
+                  @if (account.role === 'ADMIN' || account.role === 'DOCTOR') { <button class="primary-button" type="button" (click)="createOn('appointments')">＋ New appointment</button> }
+                </section>
+
+                @if (pageLoading) { <div class="loading-state"><span class="spinner"></span> Loading your dashboard…</div> }
+
+                @if (account.role === 'PATIENT' && patientDashboard; as dashboard) {
+                  <section class="stat-grid" aria-label="Your personal health statistics">
+                    <article class="stat-card"><span class="stat-icon teal">◷</span><span class="stat-label">Upcoming appointments</span><strong>{{ upcomingAppointments.length }}</strong><small>{{ upcomingAppointments[0] ? (upcomingAppointments[0]['appointmentDateTime'] | date:'MMM d, y') : 'No visits scheduled' }}</small></article>
+                    <article class="stat-card"><span class="stat-icon violet">▤</span><span class="stat-label">Medical records</span><strong>{{ dashboard.records.length }}</strong><small>Your care history</small></article>
+                    <article class="stat-card"><span class="stat-icon blue">✚</span><span class="stat-label">Active medications</span><strong>{{ activePrescriptions.length }}</strong><small>Active prescriptions</small></article>
+                    <article class="stat-card"><span class="stat-icon amber">⌁</span><span class="stat-label">Recent lab reports</span><strong>{{ dashboard.labReports.length }}</strong><small>{{ abnormalReports.length }} abnormal result{{ abnormalReports.length === 1 ? '' : 's' }}</small></article>
+                  </section>
+                  <section class="patient-summary panel">
+                    <div class="patient-summary-avatar">{{ dashboard.patient['name']?.slice(0, 1) || initials }}</div>
+                    <div class="patient-summary-main"><span class="eyebrow">PATIENT PROFILE</span><h2>{{ dashboard.patient['name'] }}</h2><p>{{ dashboard.patient['age'] }} years · {{ dashboard.patient['gender'] || 'Gender not recorded' }} · {{ dashboard.patient['bloodGroup'] || 'Blood group not recorded' }}</p></div>
+                    <div class="patient-summary-detail"><small>Primary condition</small><strong>{{ dashboard.patient['disease'] || 'No condition recorded' }}</strong></div>
+                    <div class="patient-summary-detail"><small>Care team</small><strong>{{ dashboard.careTeam.length ? dashboard.careTeam[0]['name'] : 'No doctor assigned' }}</strong><span>{{ dashboard.careTeam.length ? dashboard.careTeam[0]['department'] : 'Care team' }}</span></div>
+                    <div class="patient-summary-detail"><small>Contact</small><strong>{{ dashboard.patient['phone'] || dashboard.patient['email'] || 'No contact on file' }}</strong><span>{{ dashboard.patient['address'] || '' }}</span></div>
+                  </section>
+                  <section class="overview-grid">
+                    <article class="panel upcoming-panel"><div class="panel-heading"><div><h2>Upcoming appointments</h2><p>Your visits and care plan</p></div><button class="text-button" type="button" (click)="selectPage('appointments')">View all →</button></div>
+                      @if (upcomingAppointments.length) { <div class="appointment-list">@for (appointment of upcomingAppointments; track trackRow($index, appointment)) { <div class="appointment-row"><div class="date-tile"><strong>{{ appointment['appointmentDateTime'] | date:'d' }}</strong><span>{{ appointment['appointmentDateTime'] | date:'MMM' }}</span></div><div class="appointment-info"><strong>{{ appointment['doctorName'] || 'Care team' }} · {{ appointment['doctor']?.['department'] || 'Medical care' }}</strong><span>{{ appointment['appointmentDateTime'] | date:'EEE, MMM d · shortTime' }} · {{ appointment['reason'] || 'Care visit' }}</span></div><span class="status-pill">{{ appointment['status'] || 'Scheduled' }}</span></div> }</div> }
+                      @else if (!pageLoading) { <div class="empty-inline"><span class="empty-icon">◷</span><strong>No upcoming appointments</strong><p>Book a visit with your care team when you need one.</p><button class="text-button" type="button" (click)="createOn('appointments')">Book an appointment →</button></div> }
+                    </article>
+                    <article class="panel quick-panel"><div class="panel-heading"><div><h2>Current prescriptions</h2><p>Medication instructions from your care team</p></div><button class="text-button" type="button" (click)="selectPage('prescriptions')">View all →</button></div>
+                      @for (prescription of activePrescriptions.slice(0, 4); track trackRow($index, prescription)) { <div class="clinical-row"><span class="quick-link-icon lavender">✚</span><span><strong>{{ prescription['medicationName'] || 'Medication' }}</strong><small>{{ prescription['dosage'] }} · {{ prescription['frequency'] }} · {{ prescription['duration'] }}</small></span><span class="record-badge normal">Active</span></div> }
+                      @if (!activePrescriptions.length && !pageLoading) { <div class="empty-inline"><strong>No active prescriptions</strong><p>Your medication instructions will appear here.</p></div> }
+                    </article>
+                    <article class="panel data-panel"><div class="panel-heading"><div><h2>Recent medical records</h2><p>Your latest care history</p></div><button class="text-button" type="button" (click)="selectPage('medical-records')">View records →</button></div>
+                      @for (record of recentRecords; track trackRow($index, record)) { <div class="data-row"><span><strong>{{ record['diagnosis'] || 'Care record' }}</strong><small>{{ record['treatment'] || 'Treatment details' }} · {{ record['doctorName'] || 'Care team' }}</small></span><time>{{ record['recordedAt'] | date:'MMM d, y' }}</time></div> }
+                      @if (!dashboard.records.length && !pageLoading) { <div class="empty-inline"><strong>No medical records yet</strong></div> }
+                    </article>
+                    <article class="panel data-panel"><div class="panel-heading"><div><h2>Recent lab reports</h2><p>Your available test results</p></div><button class="text-button" type="button" (click)="selectPage('lab-reports')">View reports →</button></div>
+                      @for (report of recentReports; track trackRow($index, report)) { <div class="data-row"><span><strong>{{ report['testName'] || 'Lab test' }} · {{ report['result'] || 'Result pending' }}</strong><small>Reference range: {{ report['referenceRange'] || 'Not provided' }}</small></span><span class="record-badge" [class.normal]="report['status'] === 'NORMAL'" [class.abnormal]="report['status'] === 'ABNORMAL'" [class.pending]="report['status'] === 'PENDING'">{{ report['status'] || 'PENDING' }}</span><time>{{ report['reportDate'] | date:'MMM d, y' }}</time></div> }
+                      @if (!dashboard.labReports.length && !pageLoading) { <div class="empty-inline"><strong>No lab reports yet</strong></div> }
+                    </article>
+                    <article class="panel quick-panel"><div class="panel-heading"><div><h2>Your care team</h2><p>Doctors connected to your care</p></div><button class="text-button" type="button" (click)="selectPage('doctors')">View team →</button></div>
+                      @for (doctor of dashboard.careTeam.slice(0, 5); track trackRow($index, doctor)) { <div class="clinical-row"><span class="mini-avatar">{{ doctor['name']?.slice(0, 1) || 'D' }}</span><span><strong>{{ doctor['name'] }}</strong><small>{{ doctor['department'] }} · {{ doctor['experience'] }} years</small></span></div> }
+                      @if (!dashboard.careTeam.length && !pageLoading) { <div class="empty-inline"><strong>Your care team will appear here</strong><p>Doctors from your appointments and records are listed here.</p></div> }
+                    </article>
+                    <article class="panel data-panel"><div class="panel-heading"><div><h2>Diagnoses</h2><p>Your documented health history</p></div><button class="text-button" type="button" (click)="selectPage('diagnoses')">View history →</button></div>
+                      @for (diagnosis of dashboard.diagnoses; track trackRow($index, diagnosis)) { <div class="data-row"><span><strong>{{ diagnosis['diagnosis'] }}</strong><small>{{ diagnosis['notes'] || 'No additional notes' }} · {{ diagnosis['doctorName'] || 'Care team' }}</small></span><time>{{ diagnosis['diagnosedAt'] | date:'MMM d, y' }}</time></div> }
+                      @if (!dashboard.diagnoses.length && !pageLoading) { <div class="empty-inline"><strong>No diagnoses recorded</strong></div> }
+                    </article>
+                    <article class="panel data-panel"><div class="panel-heading"><div><h2>Recent vitals</h2><p>Your latest recorded measurements</p></div><button class="text-button" type="button" (click)="selectPage('vitals')">View vitals →</button></div>
+                      @if (dashboard.vitals[0]; as vital) { <div class="vitals-grid"><div><small>Blood pressure</small><strong>{{ vital['bloodPressure'] || '—' }}</strong></div><div><small>Heart rate</small><strong>{{ vital['heartRate'] || '—' }} bpm</strong></div><div><small>Temperature</small><strong>{{ vital['temperature'] || '—' }} °C</strong></div><div><small>Oxygen</small><strong>{{ vital['oxygenSaturation'] || '—' }}%</strong></div><div><small>Weight</small><strong>{{ vital['weight'] || '—' }} kg</strong></div><div><small>Height</small><strong>{{ vital['height'] || '—' }} cm</strong></div></div><p class="vital-recorded">Recorded {{ vital['recordedAt'] | date:'MMM d, y · shortTime' }}</p> }
+                      @else if (!pageLoading) { <div class="empty-inline"><strong>No vitals recorded</strong></div> }
+                    </article>
+                    <article class="panel data-panel"><div class="panel-heading"><div><h2>Notifications</h2><p>Updates from your care team</p></div></div>
+                      @for (notification of dashboard.notifications.slice(0, 4); track trackRow($index, notification)) { <div class="data-row"><span><strong>{{ notification['title'] }}</strong><small>{{ notification['message'] }}</small></span><time>{{ notification['createdAt'] | date:'MMM d' }}</time></div> }
+                      @if (!dashboard.notifications.length && !pageLoading) { <div class="empty-inline"><strong>No new notifications</strong></div> }
+                    </article>
+                  </section>
+                }
+
+                @if (account.role === 'DOCTOR' && doctorDashboard; as dashboard) {
+                  <section class="stat-grid" aria-label="Clinical workload statistics">
+                    <article class="stat-card"><span class="stat-icon teal">◷</span><span class="stat-label">Today's appointments</span><strong>{{ dashboard.todayAppointments.length }}</strong><small>Scheduled for today</small></article>
+                    <article class="stat-card"><span class="stat-icon blue">◷</span><span class="stat-label">Upcoming appointments</span><strong>{{ dashboard.upcomingAppointments.length }}</strong><small>Assigned to you</small></article>
+                    <article class="stat-card"><span class="stat-icon violet">♡</span><span class="stat-label">Assigned patients</span><strong>{{ dashboard.patients.length }}</strong><small>Connected through care records</small></article>
+                    <article class="stat-card"><span class="stat-icon amber">⌁</span><span class="stat-label">Pending lab reports</span><strong>{{ doctorPendingLabs.length }}</strong><small>Awaiting review</small></article>
+                  </section>
+                  <section class="overview-grid">
+                    <article class="panel upcoming-panel"><div class="panel-heading"><div><h2>Today's appointments</h2><p>Patient schedule and visit status</p></div><button class="text-button" type="button" (click)="selectPage('appointments')">View schedule →</button></div>
+                      @for (appointment of dashboard.todayAppointments.slice(0, 6); track trackRow($index, appointment)) { <div class="appointment-row"><div class="date-tile"><strong>{{ appointment['appointmentDateTime'] | date:'h:mm' }}</strong><span>{{ appointment['appointmentDateTime'] | date:'a' }}</span></div><div class="appointment-info"><strong>{{ appointment['patientName'] }}</strong><span>{{ appointment['reason'] || 'Care visit' }} · {{ appointment['appointmentDateTime'] | date:'shortTime' }}</span></div><span class="status-pill">{{ appointment['status'] || 'Scheduled' }}</span></div> }
+                      @if (!dashboard.todayAppointments.length && !pageLoading) { <div class="empty-inline"><strong>No appointments scheduled today</strong><p>Your assigned appointments will appear here.</p></div> }
+                    </article>
+                    <article class="panel quick-panel"><div class="panel-heading"><div><h2>Clinical actions</h2><p>Start a care task</p></div></div><div class="clinical-actions"><button class="primary-button" type="button" (click)="createOn('medical-records')">＋ Add medical record</button><button class="secondary-action" type="button" (click)="createOn('diagnoses')">＋ Add diagnosis</button><button class="secondary-action" type="button" (click)="createOn('prescriptions')">＋ Create prescription</button><button class="secondary-action" type="button" (click)="selectPage('patients')">View my patients →</button></div></article>
+                    <article class="panel data-panel"><div class="panel-heading"><div><h2>My patients</h2><p>Patients linked to your appointments and clinical records</p></div><button class="text-button" type="button" (click)="selectPage('patients')">View patients →</button></div>
+                      @for (patient of dashboard.patients.slice(0, 5); track trackRow($index, patient)) { <div class="data-row"><span><strong>{{ patient['name'] }}</strong><small>{{ patient['disease'] || 'No concern recorded' }}</small></span><button class="text-button" type="button" (click)="openPatientDetails(patient)">Open profile →</button></div> }
+                      @if (!dashboard.patients.length && !pageLoading) { <div class="empty-inline"><strong>No assigned patients yet</strong></div> }
+                    </article>
+                    <article class="panel data-panel"><div class="panel-heading"><div><h2>Recent medical records</h2><p>For patients in your care</p></div><button class="text-button" type="button" (click)="selectPage('medical-records')">View all →</button></div>
+                      @for (record of dashboard.records.slice(0, 5); track trackRow($index, record)) { <div class="data-row"><span><strong>{{ record['patientName'] }} · {{ record['diagnosis'] }}</strong><small>{{ record['treatment'] }}</small></span><time>{{ record['recordedAt'] | date:'MMM d' }}</time></div> }
+                    </article>
+                    <article class="panel data-panel"><div class="panel-heading"><div><h2>Recent lab reports</h2><p>Results for your assigned patients</p></div><button class="text-button" type="button" (click)="selectPage('lab-reports')">Review reports →</button></div>
+                      @for (report of dashboard.labReports.slice(0, 5); track trackRow($index, report)) { <div class="data-row"><span><strong>{{ report['patientName'] }} · {{ report['testName'] }}</strong><small>{{ report['result'] }} · Reference {{ report['referenceRange'] || '—' }}</small></span><time>{{ report['reportDate'] | date:'MMM d' }}</time></div> }
+                    </article>
+                    <article class="panel data-panel"><div class="panel-heading"><div><h2>Recent vitals</h2><p>Measurements from your patient panel</p></div><button class="text-button" type="button" (click)="selectPage('vitals')">Review vitals →</button></div>
+                      @for (vital of dashboard.vitals.slice(0, 4); track trackRow($index, vital)) { <div class="data-row"><span><strong>{{ vital['patientName'] }} · {{ vital['bloodPressure'] || 'Vitals' }}</strong><small>{{ vital['heartRate'] || '—' }} bpm · {{ vital['temperature'] || '—' }} °C · SpO₂ {{ vital['oxygenSaturation'] || '—' }}%</small></span><time>{{ vital['recordedAt'] | date:'MMM d' }}</time></div> }
+                      @if (!dashboard.vitals.length && !pageLoading) { <div class="empty-inline"><strong>No vitals on your panel</strong></div> }
+                    </article>
+                    <article class="panel data-panel"><div class="panel-heading"><div><h2>Prescription activity</h2><p>Recent treatment plans for your patients</p></div><button class="text-button" type="button" (click)="selectPage('prescriptions')">View prescriptions →</button></div>
+                      @for (prescription of dashboard.prescriptions.slice(0, 5); track trackRow($index, prescription)) { <div class="data-row"><span><strong>{{ prescription['patientName'] }} · {{ prescription['medicationName'] }}</strong><small>{{ prescription['dosage'] }} · {{ prescription['frequency'] }} · {{ prescription['status'] || 'Status not recorded' }}</small></span><time>{{ prescription['prescribedDate'] | date:'MMM d' }}</time></div> }
+                      @if (!dashboard.prescriptions.length && !pageLoading) { <div class="empty-inline"><strong>No prescription activity</strong></div> }
+                    </article>
+                    <article class="panel data-panel"><div class="panel-heading"><div><h2>Notifications</h2><p>Updates for your account</p></div></div>
+                      @for (notification of dashboard.notifications.slice(0, 4); track trackRow($index, notification)) { <div class="data-row"><span><strong>{{ notification['title'] }}</strong><small>{{ notification['message'] }}</small></span><time>{{ notification['createdAt'] | date:'MMM d' }}</time></div> }
+                      @if (!dashboard.notifications.length && !pageLoading) { <div class="empty-inline"><strong>No new notifications</strong></div> }
+                    </article>
+                  </section>
+                }
+
+                @if (account.role === 'NURSE' && nurseDashboard; as dashboard) {
+                  <section class="stat-grid" aria-label="Nursing coordination statistics">
+                    <article class="stat-card"><span class="stat-icon teal">◷</span><span class="stat-label">Today's check-ins</span><strong>{{ dashboard.todayAppointments.length }}</strong><small>Scheduled patient visits</small></article>
+                    <article class="stat-card"><span class="stat-icon blue">♡</span><span class="stat-label">Patients under care</span><strong>{{ dashboard.patients.length }}</strong><small>Assigned to your care</small></article>
+                    <article class="stat-card"><span class="stat-icon amber">⌁</span><span class="stat-label">Pending tasks</span><strong>{{ dashboard.pendingTasks.length }}</strong><small>Upcoming assigned visits</small></article>
+                    <article class="stat-card"><span class="stat-icon violet">♥</span><span class="stat-label">Vitals recorded</span><strong>{{ dashboard.vitals.length }}</strong><small>For assigned patients</small></article>
+                  </section>
+                  <section class="overview-grid">
+                    <article class="panel upcoming-panel"><div class="panel-heading"><div><h2>Today's patient check-ins</h2><p>Appointments for patients assigned to you</p></div><button class="text-button" type="button" (click)="selectPage('appointments')">View appointments →</button></div>
+                      @for (appointment of dashboard.todayAppointments.slice(0, 6); track trackRow($index, appointment)) { <div class="appointment-row"><div class="date-tile"><strong>{{ appointment['appointmentDateTime'] | date:'h:mm' }}</strong><span>{{ appointment['appointmentDateTime'] | date:'a' }}</span></div><div class="appointment-info"><strong>{{ appointment['patientName'] }} · {{ appointment['doctorName'] }}</strong><span>{{ appointment['reason'] || 'Care visit' }} · {{ appointment['appointmentDateTime'] | date:'shortTime' }}</span></div><span class="status-pill">{{ appointment['status'] || 'Scheduled' }}</span></div> }
+                      @if (!dashboard.todayAppointments.length && !pageLoading) { <div class="empty-inline"><strong>No assigned appointments today</strong></div> }
+                    </article>
+                    <article class="panel quick-panel"><div class="panel-heading"><div><h2>Patient coordination</h2><p>Quick access to your care work</p></div></div><div class="clinical-actions"><button class="secondary-action" type="button" (click)="selectPage('patients')">View assigned patients →</button><button class="secondary-action" type="button" (click)="selectPage('appointments')">Review appointments →</button><button class="secondary-action" type="button" (click)="selectPage('lab-reports')">Review lab reports →</button></div></article>
+                    <article class="panel data-panel"><div class="panel-heading"><div><h2>Patients under care</h2><p>Assigned to your nursing workflow</p></div><button class="text-button" type="button" (click)="selectPage('patients')">View patients →</button></div>@for (patient of dashboard.patients.slice(0, 5); track trackRow($index, patient)) { <div class="data-row"><span><strong>{{ patient['name'] }}</strong><small>{{ patient['disease'] || 'No concern recorded' }}</small></span><button class="text-button" type="button" (click)="openPatientDetails(patient)">Open profile →</button></div> }@if (!dashboard.patients.length && !pageLoading) { <div class="empty-inline"><strong>No patients assigned yet</strong><p>Ask an administrator to assign patients to your account.</p></div> }</article>
+                    <article class="panel data-panel"><div class="panel-heading"><div><h2>Recent lab reports</h2><p>Results for assigned patients</p></div><button class="text-button" type="button" (click)="selectPage('lab-reports')">View reports →</button></div>@for (report of dashboard.labReports.slice(0, 5); track trackRow($index, report)) { <div class="data-row"><span><strong>{{ report['patientName'] }} · {{ report['testName'] }}</strong><small>{{ report['result'] }} · Reference {{ report['referenceRange'] || '—' }}</small></span><time>{{ report['reportDate'] | date:'MMM d' }}</time></div> }</article>
+                    <article class="panel data-panel"><div class="panel-heading"><div><h2>Recent medical records</h2><p>History for patients assigned to you</p></div><button class="text-button" type="button" (click)="selectPage('medical-records')">View records →</button></div>@for (record of dashboard.records.slice(0, 5); track trackRow($index, record)) { <div class="data-row"><span><strong>{{ record['patientName'] }} · {{ record['diagnosis'] }}</strong><small>{{ record['treatment'] }}</small></span><time>{{ record['recordedAt'] | date:'MMM d' }}</time></div> }</article>
+                    <article class="panel data-panel"><div class="panel-heading"><div><h2>Latest patient vitals</h2><p>Measurements for assigned patients</p></div><button class="text-button" type="button" (click)="selectPage('vitals')">View vitals →</button></div>@for (vital of dashboard.vitals.slice(0, 5); track trackRow($index, vital)) { <div class="data-row"><span><strong>{{ vital['patientName'] }} · {{ vital['bloodPressure'] || 'Vitals recorded' }}</strong><small>{{ vital['heartRate'] || '—' }} bpm · SpO₂ {{ vital['oxygenSaturation'] || '—' }}%</small></span><time>{{ vital['recordedAt'] | date:'MMM d' }}</time></div> }@if (!dashboard.vitals.length && !pageLoading) { <div class="empty-inline"><strong>No vitals recorded for assigned patients</strong></div> }</article>
+                    <article class="panel data-panel"><div class="panel-heading"><div><h2>Notifications</h2><p>Care coordination updates</p></div></div>@for (notification of dashboard.notifications.slice(0, 4); track trackRow($index, notification)) { <div class="data-row"><span><strong>{{ notification['title'] }}</strong><small>{{ notification['message'] }}</small></span><time>{{ notification['createdAt'] | date:'MMM d' }}</time></div> }@if (!dashboard.notifications.length && !pageLoading) { <div class="empty-inline"><strong>No new notifications</strong></div> }</article>
+                  </section>
+                }
+
+                @if (account.role === 'ADMIN' && adminDashboard; as dashboard) {
+                  <section class="stat-grid admin-stat-grid" aria-label="System statistics">
+                    <article class="stat-card"><span class="stat-icon blue">♡</span><span class="stat-label">Total patients</span><strong>{{ dashboard.patients.length }}</strong><small>Patient profiles</small></article>
+                    <article class="stat-card"><span class="stat-icon teal">⚕</span><span class="stat-label">Total doctors</span><strong>{{ dashboard.doctors.length }}</strong><small>Care team members</small></article>
+                    <article class="stat-card"><span class="stat-icon violet">✚</span><span class="stat-label">Total nurses</span><strong>{{ dashboard.nurses.length }}</strong><small>Nursing team members</small></article>
+                    <article class="stat-card"><span class="stat-icon amber">◷</span><span class="stat-label">Appointments</span><strong>{{ dashboard.appointments.length }}</strong><small>Scheduled and historical</small></article>
+                    <article class="stat-card"><span class="stat-icon violet">▤</span><span class="stat-label">Medical records</span><strong>{{ dashboard.records.length }}</strong><small>Across the system</small></article>
+                    <article class="stat-card"><span class="stat-icon amber">⌁</span><span class="stat-label">Lab reports</span><strong>{{ dashboard.labReports.length }}</strong><small>Available results</small></article>
+                    <article class="stat-card"><span class="stat-icon teal">◷</span><span class="stat-label">Appointments today</span><strong>{{ adminAppointmentsToday.length }}</strong><small>On today's schedule</small></article>
+                    <article class="stat-card"><span class="stat-icon blue">♙</span><span class="stat-label">User accounts</span><strong>{{ dashboard.users.length }}</strong><small>Across all roles</small></article>
+                  </section>
+                  <section class="overview-grid">
+                    <article class="panel upcoming-panel"><div class="panel-heading"><div><h2>Recent appointments</h2><p>Latest scheduling activity</p></div><button class="text-button" type="button" (click)="selectPage('appointments')">Manage appointments →</button></div>
+                      @for (appointment of dashboard.appointments.slice(0, 6); track trackRow($index, appointment)) { <div class="appointment-row"><div class="date-tile"><strong>{{ appointment['appointmentDateTime'] | date:'d' }}</strong><span>{{ appointment['appointmentDateTime'] | date:'MMM' }}</span></div><div class="appointment-info"><strong>{{ appointment['patientName'] }} · {{ appointment['doctorName'] }}</strong><span>{{ appointment['appointmentDateTime'] | date:'MMM d · shortTime' }} · {{ appointment['status'] }}</span></div><span class="status-pill">{{ appointment['status'] || 'Scheduled' }}</span></div> }
+                    </article>
+                    <article class="panel quick-panel"><div class="panel-heading"><div><h2>Administration</h2><p>Manage core CareConnect resources</p></div></div><div class="clinical-actions"><button class="secondary-action" type="button" (click)="selectPage('patients')">Manage patients →</button><button class="secondary-action" type="button" (click)="selectPage('doctors')">Manage doctors →</button><button class="secondary-action" type="button" (click)="selectPage('nurses')">Manage nurses →</button><button class="secondary-action" type="button" (click)="selectPage('medications')">Manage medications →</button></div></article>
+                    <article class="panel data-panel"><div class="panel-heading"><div><h2>Operational activity</h2><p>Current system records</p></div></div><div class="data-row"><span><strong>{{ dashboard.prescriptions.length }} prescriptions</strong><small>Recorded in the system</small></span><button class="text-button" type="button" (click)="selectPage('prescriptions')">Manage →</button></div><div class="data-row"><span><strong>{{ dashboard.labReports.length }} lab reports</strong><small>Available for review</small></span><button class="text-button" type="button" (click)="selectPage('lab-reports')">Manage →</button></div><div class="data-row"><span><strong>{{ dashboard.records.length }} medical records</strong><small>Across patient profiles</small></span><button class="text-button" type="button" (click)="selectPage('medical-records')">Manage →</button></div><div class="data-row"><span><strong>{{ dashboard.notifications.length }} notifications</strong><small>Across signed-in users</small></span></div></article>
+                    <article class="panel data-panel"><div class="panel-heading"><div><h2>Department distribution</h2><p>Doctors by department</p></div></div>@for (item of adminDepartmentStats; track item.label) { <div class="chart-row"><div class="chart-label"><span>{{ item.label }}</span><strong>{{ item.value }}</strong></div><div class="chart-track"><i [style.width.%]="barPercent(item.value, maxDepartmentCount)"></i></div></div> }@if (!adminDepartmentStats.length) { <div class="empty-inline"><strong>No department data</strong></div> }</article>
+                    <article class="panel data-panel"><div class="panel-heading"><div><h2>Appointment activity</h2><p>Current appointment status breakdown</p></div></div>@for (item of adminAppointmentStatusStats; track item.label) { <div class="chart-row"><div class="chart-label"><span>{{ item.label }}</span><strong>{{ item.value }}</strong></div><div class="chart-track"><i [style.width.%]="barPercent(item.value, dashboard.appointments.length)"></i></div></div> }@if (!adminAppointmentStatusStats.length) { <div class="empty-inline"><strong>No appointment data</strong></div> }</article>
+                  </section>
+                }
+              } @else {
+                @if (activeResource; as resource) {
+                <section class="page-heading resource-heading"><div><span class="eyebrow">{{ account.role === 'PATIENT' ? 'YOUR HEALTH' : account.role === 'DOCTOR' ? 'CLINICAL WORKSPACE' : account.role === 'NURSE' ? 'CARE COORDINATION' : 'SYSTEM MANAGEMENT' }}</span><h1>{{ resource.label }}</h1><p>{{ account.role === 'PATIENT' ? 'Your personal ' + resource.label.toLowerCase() + '.' : 'View the ' + resource.label.toLowerCase() + ' available to your role.' }}</p></div>@if (canCreate(resource)) { <button class="primary-button" type="button" (click)="createNew()">＋ Add {{ resource.singular }}</button> }</section>
+                <section class="panel table-panel">
+                  <div class="table-toolbar"><div><h2>{{ resource.label }}</h2><span class="result-count">{{ visibleRows.length }} {{ visibleRows.length === 1 ? 'result' : 'results' }}</span></div><label class="search-box"><span>⌕</span><input type="search" [(ngModel)]="search" placeholder="Search {{ resource.label.toLowerCase() }}" aria-label="Search records"></label></div>
+                  @if (pageLoading) { <div class="loading-state"><span class="spinner"></span> Loading {{ resource.label.toLowerCase() }}…</div> }
+                  @if (!pageLoading && visibleRows.length) {
+                    <div class="table-scroll"><table><thead><tr>@for (column of resource.columns; track column.path) { <th>{{ column.label }}</th> }<th class="actions-heading">Actions</th></tr></thead><tbody>
+                      @for (row of visibleRows; track trackRow($index, row)) { <tr>@for (column of resource.columns; track column.path) { <td><span [class.status-pill]="column.path === 'status' && resource.key === 'appointments'" [class.status-scheduled]="column.path === 'status' && row['status']?.toLowerCase() === 'scheduled'" [class.record-badge]="column.path === 'status' && ['lab-reports', 'prescriptions'].includes(resource.key)" [class.normal]="column.path === 'status' && row['status']?.toUpperCase() === 'NORMAL'" [class.abnormal]="column.path === 'status' && row['status']?.toUpperCase() === 'ABNORMAL'" [class.pending]="column.path === 'status' && row['status']?.toUpperCase() === 'PENDING'">{{ displayValue(row, column.path) }}</span></td> }<td class="row-actions">@if (resource.key === 'patients') { <button class="text-button" type="button" (click)="openPatientDetails(row)">View profile</button> } @if (resource.key === 'patients' && account.role === 'ADMIN') { <button class="icon-action" type="button" title="Assign nurses" aria-label="Manage nurse assignments" (click)="openNurseAssignments(row)">♙</button> } @if (canEdit(resource)) { <button class="icon-action" type="button" title="Edit" aria-label="Edit record" (click)="editRow(row)">✎</button> } @if (canDelete(resource)) { <button class="icon-action danger-action" type="button" title="Delete" aria-label="Delete record" (click)="deleteRow(row)">⌫</button> }</td></tr> }
+                    </tbody></table></div>
+                  } @else if (!pageLoading) { <div class="empty-state"><span class="empty-icon">{{ resource.icon }}</span><h3>{{ search ? 'No matching records' : `No ${resource.label.toLowerCase()} yet` }}</h3><p>{{ search ? 'Try another search term.' : 'Create a record to get started. Your changes will be saved to CareConnect.' }}</p>@if (!search && canCreate(resource)) { <button class="primary-button" type="button" (click)="createNew()">＋ Add {{ resource.singular }}</button> }</div> }
+                </section>
+                }
+              }
+            </main>
+          </section>
+        </div>
+
+        @if (showForm && activeResource; as resource) {
+          <div class="modal-backdrop" (click)="showForm = false" (keydown.escape)="showForm = false">
+            <section class="record-modal" role="dialog" aria-modal="true" [attr.aria-label]="(editingId ? 'Edit ' : 'New ') + resource.singular" (click)="$event.stopPropagation()">
+              <header class="modal-header"><div><span class="eyebrow">{{ editingId ? 'UPDATE CARE DETAILS' : 'ADD TO CARECONNECT' }}</span><h2>{{ editingId ? 'Edit ' + resource.singular : 'New ' + resource.singular }}</h2><p>Complete the details below to save this record.</p></div><button class="close-button" type="button" aria-label="Close" (click)="showForm = false">×</button></header>
+              <form class="record-form" (ngSubmit)="saveRecord()">
+                @for (field of resource.fields; track field.key) {
+                  @if (!(field.key === 'patientId' && canEnterNewPatient())) {
+                  <label class="form-field"><span>{{ field.label }} @if (field.required) { <b>*</b> }</span>
+                    @if (field.type === 'select') {
+                      <select [name]="field.key" [(ngModel)]="formData[field.key]" [required]="!!field.required" [disabled]="field.key === 'patientId' && account.role === 'PATIENT'"><option [ngValue]="undefined" disabled>Select {{ field.label.toLowerCase() }}</option>@for (option of fieldOptions(field); track $index) { <option [ngValue]="optionValue(field, option)">{{ optionLabel(field, option) }}</option> }</select>
+                    } @else if (field.type === 'textarea') {
+                      <textarea [name]="field.key" [(ngModel)]="formData[field.key]" rows="3" [required]="!!field.required" [placeholder]="field.placeholder || ''"></textarea>
+                    } @else {
+                      <input [name]="field.key" [type]="field.type || 'text'" [(ngModel)]="formData[field.key]" [required]="!!field.required" [placeholder]="field.placeholder || ''" [min]="field.type === 'number' ? 0 : null">
+                    }
+                  </label>
+                  }
+                }
+                @if (canEnterNewPatient()) {
+                  <div class="new-patient-fields">
+                    <h3>Patient details</h3>
+                    <label class="form-field"><span>Patient name <b>*</b></span><input name="patientName" [(ngModel)]="formData['patientName']" required placeholder="Full name"></label>
+                    <label class="form-field"><span>Age</span><input name="patientAge" type="number" min="0" [(ngModel)]="formData['patientAge']" placeholder="Age"></label>
+                    <label class="form-field"><span>Gender</span><select name="patientGender" [(ngModel)]="formData['patientGender']"><option [ngValue]="undefined">Select gender</option>@for (gender of genderOptions; track gender) { <option [ngValue]="gender">{{ gender }}</option> }</select></label>
+                    <label class="form-field"><span>Health concern</span><input name="patientDisease" [(ngModel)]="formData['patientDisease']" placeholder="Health concern"></label>
+                    <label class="form-field"><span>Phone</span><input name="patientPhone" type="tel" [(ngModel)]="formData['patientPhone']" placeholder="Phone number"></label>
+                    <label class="form-field"><span>Email</span><input name="patientEmail" type="email" [(ngModel)]="formData['patientEmail']" placeholder="Email address"></label>
+                    <label class="form-field"><span>Blood group</span><input name="patientBloodGroup" [(ngModel)]="formData['patientBloodGroup']" placeholder="e.g. O+"></label>
+                    <label class="form-field"><span>Emergency contact</span><input name="patientEmergencyContact" type="tel" [(ngModel)]="formData['patientEmergencyContact']" placeholder="Emergency contact number"></label>
+                    <label class="form-field patient-wide-field"><span>Address</span><input name="patientAddress" [(ngModel)]="formData['patientAddress']" placeholder="Address"></label>
+                  </div>
+                }
+                @if (notice && noticeKind === 'error') { <div class="notice modal-notice" role="alert">{{ notice }}</div> }
+                <footer class="modal-actions"><button class="secondary-action" type="button" (click)="showForm = false">Cancel</button><button class="primary-button" type="submit" [disabled]="saving">{{ saving ? 'Saving…' : editingId ? 'Save changes' : 'Create ' + resource.singular }}</button></footer>
+              </form>
+            </section>
+          </div>
+        }
+
+        @if (assignmentPatient; as patient) {
+          <div class="modal-backdrop" (click)="assignmentPatient = null" (keydown.escape)="assignmentPatient = null">
+            <section class="record-modal assignment-modal" role="dialog" aria-modal="true" [attr.aria-label]="'Nurse assignments for ' + patient['name']" (click)="$event.stopPropagation()">
+              <header class="modal-header"><div><span class="eyebrow">PATIENT COORDINATION</span><h2>Nurse assignments</h2><p>{{ patient['name'] }} · Select the nurses assigned to this patient.</p></div><button class="close-button" type="button" aria-label="Close" (click)="assignmentPatient = null">×</button></header>
+              <div class="assignment-list">
+                @if (assignmentLoading) { <div class="loading-state"><span class="spinner"></span> Loading nurse team…</div> }
+                @for (nurse of assignmentNurses; track trackRow($index, nurse)) { <div class="assignment-row"><span class="mini-avatar">{{ nurse['name']?.slice(0, 1) || 'N' }}</span><span><strong>{{ nurse['name'] }}</strong><small>{{ nurse['department'] }}</small></span><button class="secondary-action" type="button" (click)="toggleNurseAssignment(nurse)">{{ isNurseAssigned(nurse) ? 'Unassign' : 'Assign' }}</button></div> }
+                @if (!assignmentLoading && !assignmentNurses.length) { <p>No nurses are available.</p> }
+              </div>
+            </section>
+          </div>
+        }
+        @if (patientProfile || patientProfileLoading) {
+          <div class="modal-backdrop" (click)="patientProfile = null" (keydown.escape)="patientProfile = null">
+            <section class="record-modal patient-profile-modal" role="dialog" aria-modal="true" aria-label="Patient profile" (click)="$event.stopPropagation()">
+              <header class="modal-header"><div><span class="eyebrow">CARECONNECT PATIENT RECORD</span><h2>{{ patientProfile?.patient?.['name'] || 'Patient profile' }}</h2><p>Medical history and current clinical information.</p></div><button class="close-button" type="button" aria-label="Close" (click)="patientProfile = null">×</button></header>
+              @if (patientProfileLoading) { <div class="loading-state"><span class="spinner"></span> Loading patient record…</div> }
+              @if (patientProfile; as profile) {
+                <div class="patient-detail-summary"><span>{{ profile.patient['age'] }} years · {{ profile.patient['gender'] || '—' }} · {{ profile.patient['bloodGroup'] || 'Blood group not recorded' }}</span><strong>{{ profile.patient['disease'] || 'No primary condition recorded' }}</strong><small>{{ profile.patient['email'] || '' }} {{ profile.patient['phone'] ? '· ' + profile.patient['phone'] : '' }} · {{ profile.patient['address'] || '' }}</small></div>
+                @if (account.role === 'DOCTOR') { <div class="patient-profile-actions"><button class="primary-button" type="button" (click)="createOn('medical-records', profile.patient['id']); patientProfile = null">＋ Clinical note</button><button class="secondary-action" type="button" (click)="createOn('diagnoses', profile.patient['id']); patientProfile = null">＋ Diagnosis</button><button class="secondary-action" type="button" (click)="createOn('prescriptions', profile.patient['id']); patientProfile = null">＋ Prescription</button><button class="secondary-action" type="button" (click)="createOn('lab-reports', profile.patient['id']); patientProfile = null">＋ Lab report</button></div> }
+                <div class="patient-profile-content">
+                  <section><h3>Medical history</h3>@for (record of profile.records; track trackRow($index, record)) { <article class="profile-record"><strong>{{ record['diagnosis'] || 'Care visit' }}</strong><span>{{ record['recordedAt'] | date:'MMM d, y' }} · {{ record['doctorName'] || 'Care team' }}</span><p>{{ record['notes'] || record['treatment'] || 'No additional clinical notes.' }}</p></article> }@if (!profile.records.length) { <p class="empty-inline">No medical history recorded.</p> }</section>
+                  <section><h3>Diagnoses</h3>@for (diagnosis of profile.diagnoses; track trackRow($index, diagnosis)) { <article class="profile-record"><strong>{{ diagnosis['diagnosis'] }}</strong><span>{{ diagnosis['diagnosedAt'] | date:'MMM d, y' }} · {{ diagnosis['doctorName'] || 'Care team' }}</span><p>{{ diagnosis['notes'] || '' }}</p></article> }@if (!profile.diagnoses.length) { <p class="empty-inline">No diagnoses recorded.</p> }</section>
+                  <section><h3>Prescriptions</h3>@for (prescription of profile.prescriptions; track trackRow($index, prescription)) { <article class="profile-record"><strong>{{ prescription['medicationName'] }} · {{ prescription['dosage'] }}</strong><span>{{ prescription['frequency'] }} · {{ prescription['duration'] }} · {{ prescription['status'] || 'Status not recorded' }}</span><p>{{ prescription['doctorName'] || 'Care team' }} · {{ prescription['prescribedDate'] | date:'MMM d, y' }}</p></article> }@if (!profile.prescriptions.length) { <p class="empty-inline">No prescriptions recorded.</p> }</section>
+                  <section><h3>Lab reports</h3>@for (report of profile.labReports; track trackRow($index, report)) { <article class="profile-record"><strong>{{ report['testName'] }} · {{ report['result'] }}</strong><span>{{ report['status'] || 'PENDING' }} · {{ report['reportDate'] | date:'MMM d, y' }}</span><p>Reference range: {{ report['referenceRange'] || 'Not provided' }}</p></article> }@if (!profile.labReports.length) { <p class="empty-inline">No lab reports recorded.</p> }</section>
+                  <section><h3>Vitals</h3>@for (vital of profile.vitals; track trackRow($index, vital)) { <article class="profile-record"><strong>{{ vital['bloodPressure'] || 'Vitals' }} · {{ vital['heartRate'] || '—' }} bpm</strong><span>{{ vital['recordedAt'] | date:'MMM d, y · shortTime' }}</span><p>Temp {{ vital['temperature'] || '—' }} °C · SpO₂ {{ vital['oxygenSaturation'] || '—' }}% · {{ vital['weight'] || '—' }} kg · {{ vital['height'] || '—' }} cm</p></article> }@if (!profile.vitals.length) { <p class="empty-inline">No vitals recorded.</p> }</section>
+                  <section><h3>Appointments</h3>@for (appointment of profile.appointments; track trackRow($index, appointment)) { <article class="profile-record"><strong>{{ appointment['doctorName'] }} · {{ appointment['status'] }}</strong><span>{{ appointment['appointmentDateTime'] | date:'MMM d, y · shortTime' }}</span><p>{{ appointment['reason'] || 'Care visit' }}</p></article> }@if (!profile.appointments.length) { <p class="empty-inline">No appointments recorded.</p> }</section>
+                </div>
+              }
+            </section>
+          </div>
+        }
+      }
+    </div>
+    <div class="mobile-footer">Thoughtful care. Connected teams.</div>
+  </section>
+</main>
