@@ -331,11 +331,13 @@ export class AppComponent implements OnInit {
     for (const field of resource.fields) if (form[field.key] !== '' && form[field.key] !== undefined && form[field.key] !== null) payload[field.key] = form[field.key];
     if (resource.key === 'appointments') {
       if (this.canEnterNewPatient()) {
-        payload['patient'] = {
-          name: form['patientName'], age: form['patientAge'] == null || form['patientAge'] === '' ? null : Number(form['patientAge']), disease: form['patientDisease'],
+        const patient: Row = {
+          name: form['patientName'], disease: form['patientDisease'],
           gender: form['patientGender'], email: form['patientEmail'], phone: form['patientPhone'], bloodGroup: form['patientBloodGroup'],
           address: form['patientAddress'], emergencyContact: form['patientEmergencyContact']
         };
+        if (form['patientAge'] !== '' && form['patientAge'] !== undefined && form['patientAge'] !== null) patient['age'] = Number(form['patientAge']);
+        payload['patient'] = patient;
       } else payload['patient'] = { id: Number(form['patientId']) };
       payload['doctor'] = { docId: Number(form['doctorId']) };
     }

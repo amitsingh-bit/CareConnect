@@ -13,7 +13,7 @@ public class Doctor {
     private String department;
     public Doctor() {
     }
-    public Doctor(String name, int experience, String department) {
+    public Doctor(String name, Integer experience, String department) {
         this.name = name;
         this.experience = experience;
         this.department = department;
