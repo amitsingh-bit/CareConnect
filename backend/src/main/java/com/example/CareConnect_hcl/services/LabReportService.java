@@ -30,9 +30,8 @@ public class LabReportService {
         this.patientAccess = patientAccess;
     }
     public List<LabReport> getAll() {
-        Account account = currentAccount.requireAccount();
+        Account account = currentAccount.requireRole("PATIENT", "DOCTOR", "NURSE");
         return switch (account.getRole().toUpperCase()) {
-            case "ADMIN" -> repository.findAll();
             case "PATIENT" -> repository.findByPatient_IdOrderByReportDateDesc(account.getProfileId());
             case "DOCTOR", "NURSE" -> {
                 var patientIds = patientAccess.accessiblePatientIdList(account);
@@ -43,11 +42,11 @@ public class LabReportService {
     }
     public LabReport getById(Long id) {
         LabReport report = repository.findById(id).orElseThrow(() -> notFound());
-        patientAccess.requirePatientAccess(report.getPatientId());
+        patientAccess.requireClinicalPatientAccess(report.getPatientId());
         return report;
     }
     public LabReport create(LabReport report) {
-        Account account = currentAccount.requireRole("ADMIN", "DOCTOR");
+        Account account = currentAccount.requireRole("DOCTOR");
         report.setId(null);
         attachRelations(report);
         if ("DOCTOR".equalsIgnoreCase(account.getRole())) {
@@ -58,7 +57,7 @@ public class LabReportService {
     }
     public LabReport update(Long id, LabReport details) {
         LabReport report = getById(id);
-        Account account = currentAccount.requireRole("ADMIN", "DOCTOR");
+        Account account = currentAccount.requireRole("DOCTOR");
         report.setMedicalRecord(details.getMedicalRecord());
         report.setDoctor(details.getDoctor());
         report.setTestName(details.getTestName());
@@ -73,7 +72,7 @@ public class LabReportService {
         }
         return repository.save(report);
     }
-    public void delete(Long id) { currentAccount.requireRole("ADMIN"); repository.delete(getById(id)); }
+    public void delete(Long id) { currentAccount.requireRole("DOCTOR"); repository.delete(getById(id)); }
 
     private void attachRelations(LabReport report) {
         if (report.getMedicalRecord() == null || report.getMedicalRecord().getId() == null) {

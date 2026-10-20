@@ -30,18 +30,17 @@ public class DiagnosisService {
         this.patientAccess = patientAccess;
     }
     public List<Diagnosis> getAll() {
-        Account account = currentAccount.requireRole("ADMIN", "DOCTOR", "PATIENT", "NURSE");
-        if ("ADMIN".equalsIgnoreCase(account.getRole())) return repository.findAll();
+        Account account = currentAccount.requireRole("DOCTOR", "PATIENT", "NURSE");
         var patientIds = patientAccess.accessiblePatientIdList(account);
         return patientIds.isEmpty() ? List.of() : repository.findByPatient_IdIn(patientIds);
     }
     public Diagnosis getById(Long id) {
         Diagnosis diagnosis = repository.findById(id).orElseThrow(() -> notFound());
-        patientAccess.requirePatientAccess(diagnosis.getPatientId());
+        patientAccess.requireClinicalPatientAccess(diagnosis.getPatientId());
         return diagnosis;
     }
     public Diagnosis create(Diagnosis diagnosis) {
-        Account account = currentAccount.requireRole("ADMIN", "DOCTOR");
+        Account account = currentAccount.requireRole("DOCTOR");
         diagnosis.setId(null);
         attachRelations(diagnosis);
         if ("DOCTOR".equalsIgnoreCase(account.getRole())) {
@@ -52,7 +51,7 @@ public class DiagnosisService {
     }
     public Diagnosis update(Long id, Diagnosis details) {
         Diagnosis diagnosis = getById(id);
-        Account account = currentAccount.requireRole("ADMIN", "DOCTOR");
+        Account account = currentAccount.requireRole("DOCTOR");
         diagnosis.setMedicalRecord(details.getMedicalRecord());
         diagnosis.setDoctor(details.getDoctor());
         diagnosis.setDiagnosis(details.getDiagnosis());
@@ -65,7 +64,7 @@ public class DiagnosisService {
         }
         return repository.save(diagnosis);
     }
-    public void delete(Long id) { currentAccount.requireRole("ADMIN"); repository.delete(getById(id)); }
+    public void delete(Long id) { currentAccount.requireRole("DOCTOR"); repository.delete(getById(id)); }
 
     private void attachRelations(Diagnosis diagnosis) {
         if (diagnosis.getMedicalRecord() == null || diagnosis.getMedicalRecord().getId() == null) {

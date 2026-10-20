@@ -82,6 +82,12 @@ public class PatientAccessService {
         }
     }
 
+    /** Clinical resources require an assigned care relationship; platform administrators do not get implicit access. */
+    public void requireClinicalPatientAccess(Long patientId) {
+        currentAccount.requireRole("PATIENT", "DOCTOR", "NURSE");
+        requirePatientAccess(patientId);
+    }
+
     public boolean isPatientLinkedToDoctor(Long patientId, Long doctorId) {
         if (patientId == null || doctorId == null) return false;
         return appointments.existsByPatient_IdAndDoctor_Docid(patientId, doctorId)

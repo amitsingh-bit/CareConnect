@@ -26,20 +26,19 @@ public class VitalService {
     }
 
     public List<Vital> getAll() {
-        Account account = currentAccount.requireRole("ADMIN", "DOCTOR", "NURSE", "PATIENT");
-        if ("ADMIN".equalsIgnoreCase(account.getRole())) return repository.findAll();
+        Account account = currentAccount.requireRole("DOCTOR", "NURSE", "PATIENT");
         List<Long> patientIds = patientAccess.accessiblePatientIdList(account);
         return patientIds.isEmpty() ? List.of() : repository.findByPatient_IdInOrderByRecordedAtDesc(patientIds);
     }
 
     public Vital getById(Long id) {
         Vital vital = repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Vitals not found"));
-        patientAccess.requirePatientAccess(vital.getPatientId());
+        patientAccess.requireClinicalPatientAccess(vital.getPatientId());
         return vital;
     }
 
     public Vital create(Vital vital) {
-        Account account = currentAccount.requireRole("ADMIN", "DOCTOR", "NURSE");
+        Account account = currentAccount.requireRole("DOCTOR", "NURSE");
         if (vital.getPatient() == null || vital.getPatient().getId() == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "patient.id is required");
         }

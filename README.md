@@ -17,7 +17,7 @@ The role-aware dashboard already loads live records from the API. Patients see t
 - Login attempts are throttled to five attempts per 15 minutes per remote-address/account pair. Buckets are held in process memory; use a shared rate-limit store before running multiple backend instances.
 - Unsafe API requests require a CSRF token. After login or signup the backend sets the readable `XSRF-TOKEN` cookie; Angular's default XSRF interceptor sends it as `X-XSRF-TOKEN`. The token is stored in the server session and compared before processing writes.
 - API activity is written to the `audit_logs` table with account ID and role when available, action, resource type and ID, HTTP method, route, response status, correlation ID, and timestamp. Request bodies and clinical data are not copied into the audit table.
-- Existing per-role API checks and patient relationship checks remain in place.
+- Clinical record, diagnosis, prescription, lab report, vital, and consultation-note APIs require the patient or an authorized care role; administrator accounts cannot read or change those clinical resources. Doctors can manage records, diagnoses, prescriptions, and lab reports for patients in their care; doctors and nurses can manage vitals within their patient access. Patient relationships are checked by the backend.
 
 The application currently uses Hibernate `ddl-auto: update`; on startup it adds audit and consultation-note tables/columns to the existing schema. No Flyway migration framework is configured in this repository. Back up the database and review production schema changes through your normal change process before deploying.
 

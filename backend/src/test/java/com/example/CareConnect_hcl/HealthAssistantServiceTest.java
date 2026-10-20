@@ -26,12 +26,13 @@ class HealthAssistantServiceTest {
     }
     @Test void urgentSymptomsReturnImmediateGuidanceWithoutCallingProvider() {
         var response = service.chat(new AssistantChatRequest("I have chest pain", "en", List.of()));
-        assertTrue(response.urgent()); assertTrue(response.reply().contains("urgent medical attention")); assertEquals(0, provider.calls);
+        assertTrue(response.urgent()); assertTrue(response.reply().contains("urgent medical attention"));
+        assertTrue(response.safetyNotice().contains("does not diagnose")); assertEquals(0, provider.calls);
     }
     @Test void ordinaryQuestionUsesConfiguredProviderAndKeepsSafetyNotice() {
         provider.reply = "सामान्य जानकारी";
         var response = service.chat(new AssistantChatRequest("लैब रिपोर्ट क्या है?", "hi", List.of()));
-        assertEquals("सामान्य जानकारी", response.reply()); assertTrue(response.safetyNotice().contains("does not diagnose"));
+        assertEquals("सामान्य जानकारी", response.reply()); assertTrue(response.safetyNotice().contains("निदान"));
         assertTrue(!response.urgent()); assertEquals(1, provider.calls);
     }
     private static final class RecordingProvider implements AiProvider {

@@ -55,6 +55,11 @@ class AuthSessionInterceptorTest {
         assertForbidden("NURSE", "GET", "/api/prescriptions");
         assertAllowed("NURSE", "GET", "/api/lab-reports");
         assertAllowed("ADMIN", "GET", "/api/admins");
+        assertForbidden("ADMIN", "GET", "/api/medical-records");
+        assertForbidden("ADMIN", "GET", "/api/diagnoses");
+        assertForbidden("ADMIN", "GET", "/api/prescriptions");
+        assertForbidden("ADMIN", "GET", "/api/lab-reports");
+        assertForbidden("ADMIN", "GET", "/api/vitals");
     }
 
     @Test
@@ -64,6 +69,7 @@ class AuthSessionInterceptorTest {
 
         assertFalse(interceptor.preHandle(request, response, new Object()));
         assertEquals(401, response.getStatus());
+        org.junit.jupiter.api.Assertions.assertNotNull(response.getHeader("X-Correlation-ID"));
         assertEquals(1, recorded.size());
     }
 

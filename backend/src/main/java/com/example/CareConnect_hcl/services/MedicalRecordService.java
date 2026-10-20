@@ -31,9 +31,8 @@ public class MedicalRecordService {
         this.patientAccess = patientAccess;
     }
     public List<MedicalRecord> getAll() {
-        Account account = currentAccount.requireAccount();
+        Account account = currentAccount.requireRole("PATIENT", "DOCTOR", "NURSE");
         return switch (account.getRole().toUpperCase()) {
-            case "ADMIN" -> repository.findAll();
             case "PATIENT" -> repository.findByPatient_IdOrderByRecordedAtDesc(account.getProfileId());
             case "DOCTOR", "NURSE" -> {
                 var patientIds = patientAccess.accessiblePatientIdList(account);
@@ -44,30 +43,23 @@ public class MedicalRecordService {
     }
     public MedicalRecord getById(Long id) {
         MedicalRecord record = repository.findById(id).orElseThrow(() -> notFound());
-        patientAccess.requirePatientAccess(record.getPatientId());
+        patientAccess.requireClinicalPatientAccess(record.getPatientId());
         return record;
     }
     public MedicalRecord create(MedicalRecord record) {
-        Account account = currentAccount.requireRole("ADMIN", "DOCTOR");
+        Account account = currentAccount.requireRole("DOCTOR");
         record.setId(null);
-        if ("DOCTOR".equalsIgnoreCase(account.getRole())) {
-            record.setDoctor(doctorRepository.findById(account.getProfileId()).orElseThrow(() -> forbidden()));
-            if (record.getPatient() != null) patientAccess.requireDoctorOwnsPatient(record.getPatient().getId());
-        }
+        record.setDoctor(doctorRepository.findById(account.getProfileId()).orElseThrow(() -> forbidden()));
+        if (record.getPatient() != null) patientAccess.requireDoctorOwnsPatient(record.getPatient().getId());
         attachRelations(record);
         return repository.save(record);
     }
     public MedicalRecord update(Long id, MedicalRecord details) {
         MedicalRecord record = getById(id);
-        Account account = currentAccount.requireRole("ADMIN", "DOCTOR");
-        if ("ADMIN".equalsIgnoreCase(account.getRole())) {
-            record.setPatient(details.getPatient());
-            record.setDoctor(details.getDoctor());
-        } else {
-            if (details.getPatient() != null && details.getPatient().getId() != null
-                    && !details.getPatient().getId().equals(record.getPatientId())) throw forbidden();
-            record.setDoctor(doctorRepository.findById(account.getProfileId()).orElseThrow(() -> forbidden()));
-        }
+        Account account = currentAccount.requireRole("DOCTOR");
+        if (details.getPatient() != null && details.getPatient().getId() != null
+                && !details.getPatient().getId().equals(record.getPatientId())) throw forbidden();
+        record.setDoctor(doctorRepository.findById(account.getProfileId()).orElseThrow(() -> forbidden()));
         record.setDiagnosis(details.getDiagnosis());
         record.setTreatment(details.getTreatment());
         record.setNotes(details.getNotes());
@@ -75,7 +67,7 @@ public class MedicalRecordService {
         attachRelations(record);
         return repository.save(record);
     }
-    public void delete(Long id) { currentAccount.requireRole("ADMIN"); repository.delete(getById(id)); }
+    public void delete(Long id) { currentAccount.requireRole("DOCTOR"); repository.delete(getById(id)); }
 
     private void attachRelations(MedicalRecord record) {
         if (record.getPatient() == null || record.getPatient().getId() == null) {

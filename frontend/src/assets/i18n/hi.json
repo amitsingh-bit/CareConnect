@@ -27,7 +27,6 @@
   "dashboard.adminSummary": "आज की संचालन संबंधी जानकारी।",
   "dashboard.upcomingAppointments": "आगामी अपॉइंटमेंट",
   "dashboard.todayAppointments": "आज के अपॉइंटमेंट",
-  "dashboard.recentVitals": "हाल के स्वास्थ्य माप",
   "dashboard.healthTrends": "स्वास्थ्य माप के रुझान",
   "dashboard.notifications": "सूचनाएँ",
   "dashboard.records": "चिकित्सा रिकॉर्ड",
@@ -276,7 +275,6 @@
   "audit.resourceId": "संसाधन आईडी",
   "audit.correlationId": "अनुरोध आईडी",
   "audit.httpStatus": "स्थिति"
-  ,"dashboard.resourceDescription": "अपने खाते के लिए उपलब्ध जानकारी देखें और प्रबंधित करें।"
   ,"dashboard.bookVisitHint": "ज़रूरत पड़ने पर अपनी देखभाल टीम के साथ अपॉइंटमेंट लें।"
   ,"dashboard.currentPrescriptions": "वर्तमान नुस्खे"
   ,"dashboard.medicationInstructions": "आपकी देखभाल टीम के दवा संबंधी निर्देश"
@@ -470,7 +468,6 @@
   ,"video.titleAttribute": "वीडियो परामर्श"
   ,"note.close": "बंद करें"
   ,"common.saveNote": "नोट सहेजें"
-  ,"common.searchRecords": "रिकॉर्ड खोजें"
   ,"common.chooseGender": "लिंग चुनें"
   ,"common.openPatientProfile": "मरीज़ प्रोफ़ाइल खोलें"
   ,"common.manageNurseAssignments": "नर्स आवंटन प्रबंधित करें"

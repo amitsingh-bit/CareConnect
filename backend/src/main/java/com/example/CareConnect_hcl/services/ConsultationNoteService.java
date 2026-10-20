@@ -81,7 +81,7 @@ public class ConsultationNoteService {
     private void authorizeRead(Appointment appointment) {
         var account = currentAccount.requireAccount();
         switch (account.getRole().toUpperCase()) {
-            case "ADMIN" -> { }
+            case "ADMIN" -> notFound();
             case "PATIENT" -> { if (!appointment.getPatientId().equals(account.getProfileId())) notFound(); }
             case "DOCTOR" -> { if (!appointment.getDoctorId().equals(account.getProfileId())) notFound(); }
             case "NURSE" -> patientAccess.requirePatientAccess(appointment.getPatientId());

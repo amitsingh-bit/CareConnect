@@ -34,9 +34,8 @@ public class PrescriptionService {
         this.patientAccess = patientAccess;
     }
     public List<Prescription> getAll() {
-        Account account = currentAccount.requireRole("ADMIN", "DOCTOR", "PATIENT", "NURSE");
+        Account account = currentAccount.requireRole("DOCTOR", "PATIENT", "NURSE");
         return switch (account.getRole().toUpperCase()) {
-            case "ADMIN" -> repository.findAll();
             case "PATIENT" -> repository.findByPatient_IdOrderByPrescribedDateDesc(account.getProfileId());
             case "DOCTOR" -> {
                 List<Long> patientIds = patientAccess.accessiblePatientIdList(account);
@@ -51,11 +50,11 @@ public class PrescriptionService {
     }
     public Prescription getById(Long id) {
         Prescription prescription = repository.findById(id).orElseThrow(() -> notFound());
-        patientAccess.requirePatientAccess(prescription.getPatientId());
+        patientAccess.requireClinicalPatientAccess(prescription.getPatientId());
         return prescription;
     }
     public Prescription create(Prescription prescription) {
-        Account account = currentAccount.requireRole("ADMIN", "DOCTOR");
+        Account account = currentAccount.requireRole("DOCTOR");
         prescription.setId(null);
         attachRelations(prescription);
         if ("DOCTOR".equalsIgnoreCase(account.getRole())) {
@@ -66,7 +65,7 @@ public class PrescriptionService {
     }
     public Prescription update(Long id, Prescription details) {
         Prescription prescription = getById(id);
-        Account account = currentAccount.requireRole("ADMIN", "DOCTOR");
+        Account account = currentAccount.requireRole("DOCTOR");
         prescription.setMedicalRecord(details.getMedicalRecord());
         prescription.setDoctor(details.getDoctor());
         prescription.setMedication(details.getMedication());
@@ -83,7 +82,7 @@ public class PrescriptionService {
         }
         return repository.save(prescription);
     }
-    public void delete(Long id) { currentAccount.requireRole("ADMIN"); repository.delete(getById(id)); }
+    public void delete(Long id) { currentAccount.requireRole("DOCTOR"); repository.delete(getById(id)); }
 
     private void attachRelations(Prescription prescription) {
         if (prescription.getMedicalRecord() == null || prescription.getMedicalRecord().getId() == null) {

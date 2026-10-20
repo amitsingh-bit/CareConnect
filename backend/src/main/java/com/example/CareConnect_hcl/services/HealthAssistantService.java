@@ -19,7 +19,8 @@ import com.example.CareConnect_hcl.model.dto.AssistantChatResponse;
 public class HealthAssistantService {
     private static final int MAX_MESSAGE = 2000;
     private static final ConcurrentHashMap<Long, ArrayDeque<Instant>> REQUESTS = new ConcurrentHashMap<>();
-    private static final String NOTICE = "For personal medical decisions, contact your care team. This assistant does not diagnose or prescribe.";
+    private static final String ENGLISH_NOTICE = "For personal medical decisions, contact your care team. This assistant does not diagnose or prescribe.";
+    private static final String HINDI_NOTICE = "व्यक्तिगत चिकित्सा निर्णयों के लिए अपनी देखभाल टीम से संपर्क करें। यह सहायक निदान या दवा नहीं बताता।";
     private final CurrentAccountService currentAccount;
     private final AiProvider provider;
     public HealthAssistantService(CurrentAccountService currentAccount, AiProvider provider) {
@@ -31,9 +32,10 @@ public class HealthAssistantService {
         if (request == null || request.message() == null || request.message().isBlank() || request.message().length() > MAX_MESSAGE)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Enter a message up to 2,000 characters.");
         String language = "hi".equalsIgnoreCase(request.language()) ? "hi" : "en";
+        String notice = language.equals("hi") ? HINDI_NOTICE : ENGLISH_NOTICE;
         if (isUrgent(request.message())) return new AssistantChatResponse(language.equals("hi")
                 ? "आपके बताए लक्षणों में तुरंत चिकित्सा सहायता की आवश्यकता हो सकती है। अभी स्थानीय आपातकालीन सेवा से संपर्क करें या निकटतम आपातकालीन विभाग जाएँ।"
-                : "These symptoms may need urgent medical attention. Contact your local emergency service or go to the nearest emergency department now.", true, NOTICE);
+                : "These symptoms may need urgent medical attention. Contact your local emergency service or go to the nearest emergency department now.", true, notice);
         enforceRateLimit(account.getId());
         List<AiProvider.ChatMessage> history = new ArrayList<>();
         if (request.history() != null) {
@@ -46,7 +48,7 @@ public class HealthAssistantService {
             });
         }
         history.add(new AiProvider.ChatMessage("user", request.message().trim()));
-        return new AssistantChatResponse(provider.complete(language, history), false, NOTICE);
+        return new AssistantChatResponse(provider.complete(language, history), false, notice);
     }
 
     private void enforceRateLimit(Long accountId) {

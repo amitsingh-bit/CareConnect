@@ -27,7 +27,6 @@
   "dashboard.adminSummary": "Here is today’s operational summary.",
   "dashboard.upcomingAppointments": "Upcoming appointments",
   "dashboard.todayAppointments": "Today's appointments",
-  "dashboard.recentVitals": "Recent vitals",
   "dashboard.healthTrends": "Health measurement trends",
   "dashboard.notifications": "Notifications",
   "dashboard.records": "Medical records",
@@ -276,7 +275,6 @@
   "audit.resourceId": "Resource ID",
   "audit.correlationId": "Correlation ID",
   "audit.httpStatus": "Status"
-  ,"dashboard.resourceDescription": "Review and manage the information available to your account."
   ,"dashboard.bookVisitHint": "Book a visit with your care team when you need one."
   ,"dashboard.currentPrescriptions": "Current prescriptions"
   ,"dashboard.medicationInstructions": "Medication instructions from your care team"
@@ -470,7 +468,6 @@
   ,"video.titleAttribute": "Video consultation"
   ,"note.close": "Close"
   ,"common.saveNote": "Save note"
-  ,"common.searchRecords": "Search records"
   ,"common.chooseGender": "Select gender"
   ,"common.openPatientProfile": "Open patient profile"
   ,"common.manageNurseAssignments": "Manage nurse assignments"
