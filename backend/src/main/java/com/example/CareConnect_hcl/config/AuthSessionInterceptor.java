@@ -36,6 +36,7 @@ public class AuthSessionInterceptor implements HandlerInterceptor {
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
         if (!request.getRequestURI().contains("/api/")) return;
         Object accountId = request.getSession(false) == null ? null : request.getSession(false).getAttribute(ACCOUNT_ID_SESSION_KEY);
+        if (!(accountId instanceof Long)) accountId = request.getAttribute(ACCOUNT_ID_SESSION_KEY);
         Long id = accountId instanceof Long value ? value : null;
         String path = request.getRequestURI().substring(request.getContextPath().length());
         try {
@@ -57,6 +58,7 @@ public class AuthSessionInterceptor implements HandlerInterceptor {
             String supplied = request.getHeader("X-XSRF-TOKEN");
             if (!(expected instanceof String token) || supplied == null ||
                     !MessageDigest.isEqual(token.getBytes(StandardCharsets.UTF_8), supplied.getBytes(StandardCharsets.UTF_8))) {
+                recordDenied(request, path, HttpServletResponse.SC_FORBIDDEN);
                 response.setStatus(HttpServletResponse.SC_FORBIDDEN);
                 response.setContentType("application/json");
                 response.getWriter().write("{\"message\":\"CSRF token is missing or invalid\"}");
@@ -68,6 +70,8 @@ public class AuthSessionInterceptor implements HandlerInterceptor {
             Account account = accountRepository.findById(accountId).orElse(null);
             if (account != null) {
                 if (!isAllowed(account.getRole(), request.getMethod(), path)) {
+                    request.setAttribute(ACCOUNT_ID_SESSION_KEY, accountId);
+                    recordDenied(request, path, HttpServletResponse.SC_FORBIDDEN);
                     response.setStatus(HttpServletResponse.SC_FORBIDDEN);
                     response.setContentType("application/json");
                     response.getWriter().write("{\"message\":\"Your account does not have access to this resource\"}");
@@ -77,10 +81,21 @@ public class AuthSessionInterceptor implements HandlerInterceptor {
                 return true;
             }
         }
+        recordDenied(request, path, HttpServletResponse.SC_UNAUTHORIZED);
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.setContentType("application/json");
         response.getWriter().write("{\"message\":\"Please sign in\"}");
         return false;
+    }
+
+    private void recordDenied(HttpServletRequest request, String path, int status) {
+        Object accountId = request.getAttribute(ACCOUNT_ID_SESSION_KEY);
+        if (!(accountId instanceof Long)) {
+            var session = request.getSession(false);
+            accountId = session == null ? null : session.getAttribute(ACCOUNT_ID_SESSION_KEY);
+        }
+        try { auditLogService.record(accountId instanceof Long id ? id : null, request.getMethod(), path.substring(0, Math.min(path.length(), 255)), status); }
+        catch (RuntimeException auditFailure) { log.error("Could not persist denied API audit event for {} {}", request.getMethod(), path, auditFailure); }
     }
 
     private boolean isMutation(String method) {
@@ -96,6 +111,7 @@ public class AuthSessionInterceptor implements HandlerInterceptor {
         boolean admin = "ADMIN".equals(normalizedRole);
 
         if (path.startsWith("/api/auth/")) return true;
+        if (path.startsWith("/api/assistant")) return normalizedRole.equals("PATIENT") && write;
         if (path.startsWith("/api/appointments")) return read || (write && (admin || normalizedRole.equals("DOCTOR") || normalizedRole.equals("PATIENT"))) || (delete && admin);
         if (path.startsWith("/api/patients")) {
             if (path.contains("/nurses")) return admin;

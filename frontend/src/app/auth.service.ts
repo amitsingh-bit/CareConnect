@@ -75,6 +75,22 @@ export class AuthService {
   unassignNurse(patientId: number, nurseId: number): Observable<unknown> {
     return this.http.delete(`/api/patients/${patientId}/nurses/${nurseId}`, { withCredentials: true });
   }
+
+  assistantChat(payload: { message: string; language: string; history: { role: string; content: string }[] }): Observable<{ reply: string; urgent: boolean; safetyNotice: string }> {
+    return this.http.post<{ reply: string; urgent: boolean; safetyNotice: string }>('/api/assistant/chat', payload, { withCredentials: true });
+  }
+
+  consultationNote<T>(appointmentId: number): Observable<T> {
+    return this.http.get<T>(`/api/appointments/${appointmentId}/consultation-note`, { withCredentials: true });
+  }
+
+  saveConsultationNote<T>(appointmentId: number, payload: unknown): Observable<T> {
+    return this.http.put<T>(`/api/appointments/${appointmentId}/consultation-note`, payload, { withCredentials: true });
+  }
+
+  joinVideoConsultation(appointmentId: number): Observable<{ joinUrl: string; status: string; appointmentDateTime: string }> {
+    return this.http.post<{ joinUrl: string; status: string; appointmentDateTime: string }>(`/api/appointments/${appointmentId}/video/join`, {}, { withCredentials: true });
+  }
 }
 
 type Row = Record<string, any>;

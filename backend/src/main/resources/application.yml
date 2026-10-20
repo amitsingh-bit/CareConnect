@@ -23,3 +23,9 @@ careconnect:
   security:
     csrf:
       enabled: ${CARECONNECT_CSRF_ENABLED:true}
+  ai:
+    api-key: ${AI_API_KEY:}
+    model: ${AI_MODEL:}
+    base-url: ${AI_BASE_URL:https://api.openai.com/v1}
+  video:
+    daily-api-key: ${DAILY_API_KEY:}

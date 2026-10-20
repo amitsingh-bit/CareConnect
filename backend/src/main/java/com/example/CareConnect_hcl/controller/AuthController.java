@@ -64,7 +64,11 @@ public class AuthController {
     @PostMapping("/logout")
     public void logout(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
-        if (session != null) session.invalidate();
+        if (session != null) {
+            Object accountId = session.getAttribute(ACCOUNT_ID_SESSION_KEY);
+            if (accountId instanceof Long id) request.setAttribute(ACCOUNT_ID_SESSION_KEY, id);
+            session.invalidate();
+        }
     }
 
     private void startSession(HttpServletRequest request, AccountResponse account) {

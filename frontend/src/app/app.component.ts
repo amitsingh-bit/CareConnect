@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { forkJoin } from 'rxjs';
 import { AuthService, Account, SignupPayload } from './auth.service';
 
@@ -10,6 +11,7 @@ type Row = Record<string, any>;
 type Field = { key: string; label: string; type?: string; required?: boolean; options?: string; placeholder?: string };
 type Column = { label: string; path: string };
 type Resource = { key: string; endpoint: string; label: string; singular: string; icon: string; roles: string[]; columns: Column[]; fields: Field[]; canCreate?: boolean; canEdit?: boolean; canDelete?: boolean };
+type AssistantEntry = { role: 'user' | 'assistant'; content: string; urgent?: boolean };
 
 export interface PatientDashboardData { patient: Row; appointments: Row[]; records: Row[]; prescriptions: Row[]; labReports: Row[]; careTeam: Row[]; diagnoses: Row[]; vitals: Row[]; notifications: Row[]; }
 export interface DoctorDashboardData { todayAppointments: Row[]; upcomingAppointments: Row[]; patients: Row[]; records: Row[]; labReports: Row[]; prescriptions: Row[]; vitals: Row[]; notifications: Row[]; }
@@ -49,6 +51,7 @@ const resources: Resource[] = [
 @Component({ selector: 'app-root', imports: [FormsModule, DatePipe], templateUrl: './app.component.html', styleUrl: './app.component.css' })
 export class AppComponent implements OnInit {
   private readonly auth = inject(AuthService);
+  private readonly sanitizer = inject(DomSanitizer);
   readonly resources = resources;
   readonly statuses = ['Scheduled', 'Confirmed', 'Completed', 'Cancelled'];
   readonly prescriptionStatuses = ['ACTIVE', 'COMPLETED'];
@@ -83,6 +86,22 @@ export class AppComponent implements OnInit {
   patientProfileLoading = false;
   patientContextId: number | null = null;
   vitalRange: 'week' | 'month' = 'month';
+  vitalMetric: 'heartRate' | 'temperature' | 'oxygenSaturation' | 'weight' | 'height' = 'heartRate';
+  assistantLanguage: 'en' | 'hi' = typeof localStorage === 'undefined' ? 'en' : (localStorage.getItem('careconnect.language') === 'hi' ? 'hi' : 'en');
+  assistantMessages: AssistantEntry[] = [];
+  assistantText = '';
+  assistantSending = false;
+  assistantError = '';
+  private lastAssistantRequest: { message: string; language: string; history: { role: string; content: string }[] } | null = null;
+  noteAppointment: Row | null = null;
+  noteLoading = false;
+  noteSaving = false;
+  consultationNote: Row = { chiefComplaint: '', history: '', examination: '', assessment: '', diagnosis: '', plan: '', followUp: '', followUpDate: null };
+  noteNotice = '';
+  videoAppointment: Row | null = null;
+  videoJoinUrl: SafeResourceUrl | null = null;
+  videoError = '';
+  videoLoading = false;
 
   get initials(): string { return this.account?.name.trim().split(/\s+/).slice(0, 2).map((part) => part[0]).join('').toUpperCase() || 'CC'; }
   get firstName(): string { return this.account?.name.trim().split(/\s+/)[0] || 'there'; }
@@ -109,6 +128,38 @@ export class AppComponent implements OnInit {
     return (this.patientDashboard?.vitals || []).map((row) => ({ value: Number(row['heartRate']), date: new Date(String(row['recordedAt'])) }))
       .filter((item) => Number.isFinite(item.value) && !Number.isNaN(item.date.getTime()) && item.date >= cutoff)
       .sort((a, b) => a.date.getTime() - b.date.getTime()).slice(-14);
+  }
+  get vitalTrendLabel(): string {
+    return ({ heartRate: 'Heart rate · bpm', temperature: 'Temperature · °C', oxygenSaturation: 'Oxygen saturation · %', weight: 'Weight · kg', height: 'Height · cm' } as const)[this.vitalMetric];
+  }
+  get vitalTrend(): { value: number; date: Date }[] {
+    const now = new Date();
+    const days = this.vitalRange === 'week' ? 7 : 30;
+    const cutoff = new Date(now); cutoff.setDate(now.getDate() - days);
+    return (this.patientDashboard?.vitals || []).map((row) => ({ value: Number(row[this.vitalMetric]), date: new Date(String(row['recordedAt'])) }))
+      .filter((item) => Number.isFinite(item.value) && !Number.isNaN(item.date.getTime()) && item.date >= cutoff)
+      .sort((a, b) => a.date.getTime() - b.date.getTime()).slice(-30);
+  }
+  get previousVitalTrend(): { value: number; date: Date }[] {
+    const now = new Date(); const days = this.vitalRange === 'week' ? 7 : 30;
+    const currentStart = new Date(now); currentStart.setDate(now.getDate() - days);
+    const previousStart = new Date(currentStart); previousStart.setDate(currentStart.getDate() - days);
+    return (this.patientDashboard?.vitals || []).map((row) => ({ value: Number(row[this.vitalMetric]), date: new Date(String(row['recordedAt'])) }))
+      .filter((item) => Number.isFinite(item.value) && !Number.isNaN(item.date.getTime()) && item.date >= previousStart && item.date < currentStart);
+  }
+  get vitalTrendComparison(): string {
+    const current = this.vitalTrend; const previous = this.previousVitalTrend;
+    if (!current.length || !previous.length) return 'No prior-period measurements to compare';
+    const average = (values: { value: number }[]) => values.reduce((sum, item) => sum + item.value, 0) / values.length;
+    const delta = average(current) - average(previous);
+    return `${delta > 0 ? '+' : ''}${delta.toFixed(1)} vs previous ${this.vitalRange === 'week' ? 'week' : '30 days'}`;
+  }
+  get vitalTrendPoints(): string {
+    const values = this.vitalTrend;
+    if (!values.length) return '';
+    const min = Math.min(...values.map((item) => item.value)); const max = Math.max(...values.map((item) => item.value));
+    const spread = Math.max(1, max - min);
+    return values.map((item, index) => `${values.length === 1 ? 50 : 5 + index * 90 / (values.length - 1)},${90 - (item.value - min) * 75 / spread}`).join(' ');
   }
   get heartRateTrendPoints(): string {
     const values = this.heartRateTrend;
@@ -148,6 +199,72 @@ export class AppComponent implements OnInit {
   login(): void { this.submit(() => this.auth.login(this.loginData)); }
   signup(): void { const payload = { ...this.signupData }; if (payload.age == null) delete payload.age; if (payload.experience == null) delete payload.experience; this.submit(() => this.auth.signup(payload)); }
   logout(): void { this.loading = true; this.auth.logout().subscribe({ next: () => this.finishLogout(), error: () => this.finishLogout() }); }
+  setAssistantLanguage(language: 'en' | 'hi'): void {
+    this.assistantLanguage = language;
+    if (typeof localStorage !== 'undefined') localStorage.setItem('careconnect.language', language);
+  }
+  sendAssistant(suggested?: string): void {
+    const message = (suggested ?? this.assistantText).trim();
+    if (!message || this.assistantSending) return;
+    const history = this.assistantMessages.slice(-12).map(({ role, content }) => ({ role, content }));
+    this.assistantMessages = [...this.assistantMessages, { role: 'user', content: message }];
+    this.assistantText = '';
+    this.assistantError = '';
+    this.lastAssistantRequest = { message, language: this.assistantLanguage, history };
+    this.submitAssistant(this.lastAssistantRequest);
+  }
+  retryAssistant(): void {
+    if (this.lastAssistantRequest && !this.assistantSending) {
+      this.assistantError = '';
+      this.submitAssistant(this.lastAssistantRequest);
+    }
+  }
+  clearAssistant(): void { this.assistantMessages = []; this.assistantError = ''; this.lastAssistantRequest = null; }
+  openConsultationNote(appointment: Row): void {
+    const id = Number(appointment['id']);
+    if (!id) return;
+    this.noteAppointment = appointment; this.noteLoading = true; this.noteNotice = '';
+    this.consultationNote = { chiefComplaint: '', history: '', examination: '', assessment: '', diagnosis: '', plan: '', followUp: '', followUpDate: null };
+    this.auth.consultationNote<Row>(id).subscribe({
+      next: (note) => { this.consultationNote = { ...note }; this.noteLoading = false; },
+      error: (error: HttpErrorResponse) => {
+        this.noteLoading = false;
+        if (error.status === 404) return;
+        this.noteNotice = error.error?.message || 'Could not load this consultation note.';
+      }
+    });
+  }
+  saveConsultationNote(): void {
+    if (!this.noteAppointment || this.noteSaving) return;
+    this.noteSaving = true; this.noteNotice = '';
+    this.auth.saveConsultationNote<Row>(Number(this.noteAppointment['id']), this.consultationNote).subscribe({
+      next: (note) => { this.consultationNote = { ...note }; this.noteSaving = false; this.noteNotice = 'Consultation note saved.'; },
+      error: (error: HttpErrorResponse) => { this.noteSaving = false; this.noteNotice = error.error?.message || 'Could not save the consultation note.'; }
+    });
+  }
+  closeConsultationNote(): void { if (!this.noteSaving) this.noteAppointment = null; }
+  joinVideoConsultation(appointment: Row): void {
+    if (this.videoLoading) return;
+    this.videoAppointment = appointment; this.videoJoinUrl = null; this.videoError = ''; this.videoLoading = true;
+    this.auth.joinVideoConsultation(Number(appointment['id'])).subscribe({
+      next: (result) => { this.videoJoinUrl = this.sanitizer.bypassSecurityTrustResourceUrl(result.joinUrl); this.videoLoading = false; },
+      error: (error: HttpErrorResponse) => { this.videoError = error.error?.message || 'Could not join this video consultation.'; this.videoLoading = false; }
+    });
+  }
+  closeVideoConsultation(): void { this.videoAppointment = null; this.videoJoinUrl = null; this.videoError = ''; }
+  videoEligible(appointment: Row): boolean {
+    const time = new Date(String(appointment['appointmentDateTime'])).getTime();
+    const now = Date.now();
+    return !!appointment['id'] && String(appointment['status'] || '').toUpperCase() !== 'CANCELLED'
+      && Number.isFinite(time) && now >= time - 15 * 60_000 && now <= time + 120 * 60_000;
+  }
+  private submitAssistant(payload: { message: string; language: string; history: { role: string; content: string }[] }): void {
+    this.assistantSending = true;
+    this.auth.assistantChat(payload).subscribe({
+      next: (response) => { this.assistantMessages = [...this.assistantMessages, { role: 'assistant', content: `${response.reply}\n\n${response.safetyNotice}`, urgent: response.urgent }]; this.assistantSending = false; },
+      error: (error: HttpErrorResponse) => { this.assistantError = error.error?.message || 'The assistant is unavailable right now. Try again.'; this.assistantSending = false; }
+    });
+  }
 
   selectPage(key: string, patientId?: number): void {
     this.patientContextId = patientId ?? null;
