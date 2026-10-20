@@ -26,7 +26,7 @@ class AuthSessionInterceptorTest {
     @BeforeEach
     void setUp() {
         accounts = org.mockito.Mockito.mock(AccountRepository.class);
-        interceptor = new AuthSessionInterceptor(accounts);
+        interceptor = new AuthSessionInterceptor(accounts, org.mockito.Mockito.mock(com.example.CareConnect_hcl.services.AuditLogService.class));
     }
 
     @Test
@@ -46,6 +46,14 @@ class AuthSessionInterceptorTest {
 
         assertFalse(interceptor.preHandle(request, response, new Object()));
         assertEquals(401, response.getStatus());
+    }
+
+    @Test
+    void rejectsStateChangingRequestsWithoutCsrfToken() throws Exception {
+        MockHttpServletRequest request = request("ADMIN", "POST", "/api/vitals");
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        assertFalse(interceptor.preHandle(request, response, new Object()));
+        assertEquals(403, response.getStatus());
     }
 
     private void assertAllowed(String role, String method, String path) throws Exception {
@@ -70,7 +78,9 @@ class AuthSessionInterceptorTest {
         MockHttpServletRequest request = new MockHttpServletRequest(method, path);
         MockHttpSession session = new MockHttpSession();
         session.setAttribute(SESSION_KEY, 1L);
+        session.setAttribute("careconnect.csrf", "test-csrf");
         request.setSession(session);
+        if (!method.equals("GET")) request.addHeader("X-XSRF-TOKEN", "test-csrf");
         return request;
     }
 }

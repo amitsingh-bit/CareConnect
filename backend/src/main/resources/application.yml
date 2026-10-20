@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: ${DB_URL:jdbc:mysql://localhost:3306/CareConnect}
-    username: ${DB_USERNAME:root}
-    password: ${DB_PASSWORD:amit7280}
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3306/CareConnect}
+    username: ${SPRING_DATASOURCE_USERNAME:root}
+    password: ${SPRING_DATASOURCE_PASSWORD:}
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
@@ -10,3 +10,16 @@ spring:
 
 server:
   port: 8080
+  servlet:
+    session:
+      cookie:
+        http-only: true
+        secure: ${SESSION_COOKIE_SECURE:false}
+        same-site: lax
+
+careconnect:
+  auth:
+    admin-signup-code: ${CARECONNECT_ADMIN_SIGNUP_CODE:}
+  security:
+    csrf:
+      enabled: ${CARECONNECT_CSRF_ENABLED:true}
