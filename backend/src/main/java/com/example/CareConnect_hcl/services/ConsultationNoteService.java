@@ -8,6 +8,7 @@ import org.springframework.web.server.ResponseStatusException;
 import com.example.CareConnect_hcl.config.CurrentAccountService;
 import com.example.CareConnect_hcl.model.dto.ConsultationNoteRequest;
 import com.example.CareConnect_hcl.model.dto.ConsultationNoteResponse;
+import com.example.CareConnect_hcl.model.dto.ConsultationNoteVersionResponse;
 import com.example.CareConnect_hcl.model.entity.Appointment;
 import com.example.CareConnect_hcl.model.entity.ConsultationNote;
 import com.example.CareConnect_hcl.repository.AppointmentRepository;
@@ -34,6 +35,18 @@ public class ConsultationNoteService {
         ConsultationNote note = notes.findByAppointment_Id(appointmentId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Consultation note not found"));
         return response(note);
+    }
+
+    @Transactional(readOnly = true)
+    public java.util.List<ConsultationNoteVersionResponse> getVersions(Long appointmentId) {
+        Appointment appointment = appointment(appointmentId);
+        authorizeRead(appointment);
+        ConsultationNote note = notes.findByAppointment_Id(appointmentId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Consultation note not found"));
+        return versions.findAllByNote_IdOrderByAmendedAtDesc(note.getId()).stream().map(version ->
+                new ConsultationNoteVersionResponse(version.getId(), version.getAmendedByDoctorId(), version.getAmendedAt(),
+                        version.getChiefComplaint(), version.getHistory(), version.getExamination(), version.getAssessment(),
+                        version.getDiagnosis(), version.getPlan(), version.getFollowUp(), version.getFollowUpDate())).toList();
     }
 
     @Transactional

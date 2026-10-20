@@ -15,19 +15,19 @@ The role-aware dashboard already loads live records from the API. Patients see t
 
 - Session cookies are HTTP-only and use `SameSite=Lax`. Set `SESSION_COOKIE_SECURE=true` behind HTTPS in production.
 - Unsafe API requests require a CSRF token. After login or signup the backend sets the readable `XSRF-TOKEN` cookie; Angular's default XSRF interceptor sends it as `X-XSRF-TOKEN`. The token is stored in the server session and compared before processing writes.
-- API activity is written to the `audit_logs` table with account ID when available, HTTP method, route, response status, and timestamp. Request bodies and clinical data are not copied into the audit table.
+- API activity is written to the `audit_logs` table with account ID and role when available, action, resource type and ID, HTTP method, route, response status, correlation ID, and timestamp. Request bodies and clinical data are not copied into the audit table.
 - Existing per-role API checks and patient relationship checks remain in place.
 
 The application currently uses Hibernate `ddl-auto: update`; on startup it adds audit and consultation-note tables/columns to the existing schema. No Flyway migration framework is configured in this repository. Back up the database and review production schema changes through your normal change process before deploying.
 
 ## Patient and clinical workflows
 
-- The patient dashboard includes interactive 7-day and 30-day trend views for recorded heart rate, temperature, oxygen saturation, weight, and height, compared with the preceding period when earlier measurements exist. Blood pressure remains available in the latest-measurement card and record list; it is stored as text and is not charted. The dashboard still loads the existing role-scoped vital list and does not expose a paginated historical analytics API.
-- Doctors can create and update consultation notes from an appointment with chief complaint, history, examination, assessment, diagnosis, plan, follow-up instructions, and follow-up date. Before changed content is saved, the prior note is copied into `consultation_note_versions`. These snapshots preserve earlier text but are not yet exposed in a review UI or correction workflow.
+- The patient dashboard includes interactive 7-day and 30-day trend views for recorded systolic/diastolic blood pressure, heart rate, temperature, oxygen saturation, weight, and height, compared with the preceding period when earlier measurements exist. The dashboard still loads the existing role-scoped vital list and does not expose a paginated historical analytics API.
+- Doctors can create and update consultation notes from an appointment with chief complaint, history, examination, assessment, diagnosis, plan, follow-up instructions, and follow-up date. Before changed content is saved, the prior note is copied into `consultation_note_versions`; authorized users can review these snapshots in the note dialog.
 - The patient health assistant supports English and Hindi. Its interface language is saved in the browser. Assistant requests require an AI-compatible provider configured with `AI_API_KEY`, `AI_MODEL`, and optionally `AI_BASE_URL`. Without credentials the endpoint returns a service-unavailable error; it does not simulate answers. The assistant does not access patient records, diagnose, prescribe, or replace a clinician. Avoid entering sensitive information into assistant messages because messages are sent to the configured provider.
-- English/Hindi switching currently covers the health assistant interface; the rest of the application remains English-only.
+- English/Hindi preference and translation resources cover navigation, sign-in/sign-up, the patient overview, and the assistant. Several doctor, nurse, administrator, form, validation, and accessibility strings still need translation.
 - Video consultation now provisions an expiring private Daily room and scoped meeting tokens through a backend-only API key. Only the appointment's patient or assigned doctor can request a token, and access opens 15 minutes before start and closes 2 hours after the scheduled start. Configure `DAILY_API_KEY` to activate it. Provider activation and an end-to-end call still require a Daily account and have not been verified in this environment.
-- The audit table records API method, route, response status, account ID when available, and timestamp. It does not yet cover the full clinical event taxonomy or provide an audit review screen.
+- The administrator audit page lists the latest 200 audit events. Fine-grained clinical events, export, and retention controls remain future work.
 
 ## Requirements
 

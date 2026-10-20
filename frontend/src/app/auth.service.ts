@@ -84,6 +84,10 @@ export class AuthService {
     return this.http.get<T>(`/api/appointments/${appointmentId}/consultation-note`, { withCredentials: true });
   }
 
+  consultationNoteVersions<T>(appointmentId: number): Observable<T[]> {
+    return this.http.get<T[]>(`/api/appointments/${appointmentId}/consultation-note/versions`, { withCredentials: true });
+  }
+
   saveConsultationNote<T>(appointmentId: number, payload: unknown): Observable<T> {
     return this.http.put<T>(`/api/appointments/${appointmentId}/consultation-note`, payload, { withCredentials: true });
   }

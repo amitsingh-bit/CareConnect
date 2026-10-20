@@ -15,4 +15,10 @@ public class AuditLogService {
     public void record(Long accountId, String method, String path, int status) {
         repository.save(new AuditLog(accountId, method, path, status, Instant.now()));
     }
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void record(Long accountId, String actorRole, String method, String action, String resourceType,
+            String resourceId, String correlationId, String path, int status) {
+        repository.save(new AuditLog(accountId, actorRole, method, action, resourceType, resourceId,
+                correlationId, path, status, Instant.now()));
+    }
 }

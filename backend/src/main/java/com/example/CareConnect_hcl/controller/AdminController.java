@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.CareConnect_hcl.model.entity.Admin;
 import com.example.CareConnect_hcl.model.dto.AccountResponse;
+import com.example.CareConnect_hcl.model.dto.AuditLogResponse;
 import com.example.CareConnect_hcl.services.AdminService;
 
 @RestController
@@ -24,6 +25,7 @@ public class AdminController {
     public AdminController(AdminService service) { this.service = service; }
     @GetMapping public List<Admin> getAll() { return service.getAll(); }
     @GetMapping("/users") public List<AccountResponse> getUsers() { return service.getUsers(); }
+    @GetMapping("/audit-logs") public List<AuditLogResponse> getAuditLogs() { return service.getAuditLogs(); }
     @GetMapping("/{id}") public Admin getById(@PathVariable Long id) { return service.getById(id); }
     @PostMapping public Admin create(@RequestBody Admin admin) { return service.create(admin); }
     @PutMapping("/{id}") public Admin update(@PathVariable Long id, @RequestBody Admin admin) { return service.update(id, admin); }

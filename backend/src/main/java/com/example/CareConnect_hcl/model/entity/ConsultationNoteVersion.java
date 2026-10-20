@@ -27,4 +27,15 @@ public class ConsultationNoteVersion {
         this.assessment = note.getAssessment(); this.diagnosis = note.getDiagnosis(); this.plan = note.getPlan();
         this.followUp = note.getFollowUp(); this.followUpDate = note.getFollowUpDate();
     }
+    public Long getId() { return id; }
+    public Long getAmendedByDoctorId() { return amendedByDoctorId; }
+    public LocalDateTime getAmendedAt() { return amendedAt; }
+    public String getChiefComplaint() { return chiefComplaint; }
+    public String getHistory() { return history; }
+    public String getExamination() { return examination; }
+    public String getAssessment() { return assessment; }
+    public String getDiagnosis() { return diagnosis; }
+    public String getPlan() { return plan; }
+    public String getFollowUp() { return followUp; }
+    public LocalDate getFollowUpDate() { return followUpDate; }
 }

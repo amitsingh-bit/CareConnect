@@ -203,6 +203,7 @@ tbody tr:hover { background: #f5f9fb; }
 .language-toggle button.active { color: #fff; background: var(--cc-blue); }
 .app-language-toggle { padding: 2px; }
 .app-language-toggle button { min-height: 26px; padding-inline: 8px; }
+.auth-topline-actions { display: flex; align-items: center; gap: 12px; }
 .assistant-card { display: flex; min-height: 530px; flex-direction: column; overflow: hidden; border: 1px solid var(--cc-line); border-radius: 13px; background: #fff; box-shadow: 0 2px 9px rgba(22,50,79,.05); }
 .assistant-messages { display: flex; flex: 1; flex-direction: column; gap: 12px; overflow-y: auto; padding: 22px; }
 .assistant-welcome { display: grid; justify-items: center; gap: 9px; padding: 44px 14px 26px; text-align: center; }
@@ -230,6 +231,13 @@ tbody tr:hover { background: #f5f9fb; }
 .consultation-note-modal { width: min(680px, calc(100vw - 28px)); max-height: 90vh; overflow-y: auto; }
 .consultation-note-modal .record-form { padding-top: 16px; }
 .consultation-note-modal .form-field textarea { min-height: 74px; resize: vertical; }
+.note-history { margin: 0 18px 18px; padding: 14px; border: 1px solid var(--cc-line); border-radius: 9px; background: #fbfdfe; }
+.note-history h3 { margin: 0 0 10px; color: var(--cc-ink); font: 700 13px "Figtree", sans-serif; }
+.note-version { padding: 10px 0; border-top: 1px solid var(--cc-line); }
+.note-version summary { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px; cursor: pointer; color: var(--cc-ink); font-size: 11px; }
+.note-version summary span { color: var(--cc-muted); font-size: 10px; }
+.note-version p { margin: 8px 0; color: var(--cc-muted); font-size: 11px; line-height: 1.5; white-space: pre-line; }
+.note-version p b { color: var(--cc-ink); }
 .video-modal { width: min(1000px, calc(100vw - 28px)); max-height: 94vh; overflow-y: auto; }
 .video-frame { display: block; width: 100%; height: min(66vh, 650px); min-height: 360px; border: 0; background: #102a43; }
 .video-error { margin: 16px 18px; padding: 12px; border-radius: 8px; color: #873b38; background: #fff0ee; font-size: 12px; }

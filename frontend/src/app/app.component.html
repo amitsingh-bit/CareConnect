@@ -89,16 +89,16 @@
           <footer class="landing-footer"><a class="brand landing-brand" href="/" aria-label="CareConnect home"><span class="brand-mark" aria-hidden="true"><span></span><span></span></span><span>Care<span class="brand-light">Connect</span></span></a><span>Thoughtful care. Connected teams.</span><span>© 2026 CareConnect</span></footer>
         </div>
       } @else if (!account) {
-        <div class="auth-topline"><div class="mobile-brand brand"><span class="brand-mark" aria-hidden="true"><span></span><span></span></span><span>Care<span class="brand-light">Connect</span></span></div><button type="button" class="auth-back" (click)="closeAuth()">← Back to home</button></div>
+        <div class="auth-topline"><div class="mobile-brand brand"><span class="brand-mark" aria-hidden="true"><span></span><span></span></span><span>Care<span class="brand-light">Connect</span></span></div><div class="auth-topline-actions"><div class="language-toggle app-language-toggle" role="group" aria-label="Choose language"><button type="button" [class.active]="assistantLanguage === 'en'" (click)="setAssistantLanguage('en')">EN</button><button type="button" [class.active]="assistantLanguage === 'hi'" (click)="setAssistantLanguage('hi')">हि</button></div><button type="button" class="auth-back" (click)="closeAuth()">← {{ 'auth.back' | translate:assistantLanguage }}</button></div></div>
         <div class="form-heading">
-          <span class="eyebrow">{{ mode === 'signup' ? 'JOIN CARECONNECT' : 'WELCOME BACK' }}</span>
-          <h2>{{ mode === 'signup' ? 'Create your account' : 'Sign in to your account' }}</h2>
-          <p>{{ mode === 'signup' ? 'A few details will get you connected.' : 'Enter your details to continue to CareConnect.' }}</p>
+          <span class="eyebrow">{{ (mode === 'signup' ? 'auth.join' : 'auth.welcome') | translate:assistantLanguage }}</span>
+          <h2>{{ (mode === 'signup' ? 'auth.headingSignup' : 'auth.headingLogin') | translate:assistantLanguage }}</h2>
+          <p>{{ (mode === 'signup' ? 'auth.signupHint' : 'auth.loginHint') | translate:assistantLanguage }}</p>
         </div>
 
         <div class="mode-switch" role="tablist" aria-label="Account access mode">
-          <button class="mode-button" [class.active]="mode === 'login'" [attr.aria-selected]="mode === 'login'" role="tab" type="button" (click)="setMode('login')">Sign in</button>
-          <button class="mode-button" [class.active]="mode === 'signup'" [attr.aria-selected]="mode === 'signup'" role="tab" type="button" (click)="setMode('signup')">Create account</button>
+          <button class="mode-button" [class.active]="mode === 'login'" [attr.aria-selected]="mode === 'login'" role="tab" type="button" (click)="setMode('login')">{{ 'auth.login' | translate:assistantLanguage }}</button>
+          <button class="mode-button" [class.active]="mode === 'signup'" [attr.aria-selected]="mode === 'signup'" role="tab" type="button" (click)="setMode('signup')">{{ 'auth.signup' | translate:assistantLanguage }}</button>
         </div>
 
         @if (notice) {
@@ -107,56 +107,56 @@
 
         @if (mode === 'login') {
           <form class="auth-form" (ngSubmit)="login()" #loginForm="ngForm">
-            <label for="login-email">Email address</label>
+            <label for="login-email">{{ 'auth.email' | translate:assistantLanguage }}</label>
             <input id="login-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required [(ngModel)]="loginData.email">
-            <div class="label-row"><label for="login-password">Password</label></div>
+            <div class="label-row"><label for="login-password">{{ 'auth.password' | translate:assistantLanguage }}</label></div>
             <input id="login-password" name="password" type="password" autocomplete="current-password" placeholder="Enter your password" required [(ngModel)]="loginData.password">
-            <button class="submit-button" type="submit" [disabled]="loading || loginForm.invalid"><span>{{ loading ? 'Please wait…' : 'Sign in' }}</span><span aria-hidden="true">→</span></button>
+            <button class="submit-button" type="submit" [disabled]="loading || loginForm.invalid"><span>{{ (loading ? 'auth.pleaseWait' : 'auth.login') | translate:assistantLanguage }}</span><span aria-hidden="true">→</span></button>
           </form>
         } @else {
           <form class="auth-form" (ngSubmit)="signup()" #signupForm="ngForm">
-            <label for="signup-role">I am a</label>
+            <label for="signup-role">{{ 'auth.role' | translate:assistantLanguage }}</label>
             <div class="select-wrap"><select id="signup-role" name="role" required [(ngModel)]="signupData.role">
-              <option value="PATIENT">Patient</option><option value="DOCTOR">Doctor</option><option value="NURSE">Nurse</option><option value="ADMIN">Administrator</option>
+              <option value="PATIENT">{{ 'auth.patient' | translate:assistantLanguage }}</option><option value="DOCTOR">{{ 'auth.doctor' | translate:assistantLanguage }}</option><option value="NURSE">{{ 'auth.nurse' | translate:assistantLanguage }}</option><option value="ADMIN">{{ 'auth.admin' | translate:assistantLanguage }}</option>
             </select></div>
-            <label for="signup-name">Full name</label>
+            <label for="signup-name">{{ 'auth.name' | translate:assistantLanguage }}</label>
             <input id="signup-name" name="name" autocomplete="name" placeholder="Your full name" required [(ngModel)]="signupData.name">
-            <label for="signup-email">Email address</label>
+            <label for="signup-email">{{ 'auth.email' | translate:assistantLanguage }}</label>
             <input id="signup-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required [(ngModel)]="signupData.email">
 
             @switch (signupData.role) {
               @case ('PATIENT') {
-                <label for="signup-age">Age</label>
+                <label for="signup-age">{{ 'auth.age' | translate:assistantLanguage }}</label>
                 <input id="signup-age" name="age" type="number" min="0" max="130" required placeholder="Your age" [(ngModel)]="signupData.age">
-                <label for="signup-disease">Health concern <span class="optional">(optional)</span></label>
+                <label for="signup-disease">{{ 'auth.concern' | translate:assistantLanguage }} <span class="optional">(optional)</span></label>
                 <input id="signup-disease" name="disease" placeholder="What brings you here?" [(ngModel)]="signupData.disease">
               }
               @case ('DOCTOR') {
-                <label for="signup-experience">Years of experience</label>
+                <label for="signup-experience">{{ 'auth.experience' | translate:assistantLanguage }}</label>
                 <input id="signup-experience" name="experience" type="number" min="0" max="80" required placeholder="Years of practice" [(ngModel)]="signupData.experience">
-                <label for="signup-department">Department</label>
+                <label for="signup-department">{{ 'auth.department' | translate:assistantLanguage }}</label>
                 <input id="signup-department" name="department" required placeholder="e.g. Cardiology" [(ngModel)]="signupData.department">
               }
               @case ('NURSE') {
-                <label for="signup-department">Department</label>
+                <label for="signup-department">{{ 'auth.department' | translate:assistantLanguage }}</label>
                 <input id="signup-department" name="department" required placeholder="e.g. General Ward" [(ngModel)]="signupData.department">
-                <label for="signup-phone">Phone number <span class="optional">(optional)</span></label>
+                <label for="signup-phone">{{ 'auth.phone' | translate:assistantLanguage }} <span class="optional">(optional)</span></label>
                 <input id="signup-phone" name="phoneNumber" type="tel" autocomplete="tel" placeholder="Your phone number" [(ngModel)]="signupData.phoneNumber">
               }
               @case ('ADMIN') {
-                <label for="admin-code">Administrator invitation code</label>
+                <label for="admin-code">{{ 'auth.invitation' | translate:assistantLanguage }}</label>
                 <input id="admin-code" name="adminSignupCode" type="password" autocomplete="off" required placeholder="Enter your invitation code" [(ngModel)]="signupData.adminSignupCode">
                 <p class="role-description">Administrator accounts require an invitation code from your system owner.</p>
               }
             }
 
-            <label for="signup-password">Password</label>
+            <label for="signup-password">{{ 'auth.password' | translate:assistantLanguage }}</label>
             <input id="signup-password" name="password" type="password" autocomplete="new-password" minlength="8" placeholder="At least 8 characters" required [(ngModel)]="signupData.password">
             <p class="form-hint">Use at least 8 characters.</p>
-            <button class="submit-button" type="submit" [disabled]="loading || signupForm.invalid"><span>{{ loading ? 'Please wait…' : 'Create account' }}</span><span aria-hidden="true">→</span></button>
+            <button class="submit-button" type="submit" [disabled]="loading || signupForm.invalid"><span>{{ (loading ? 'auth.pleaseWait' : 'auth.signup') | translate:assistantLanguage }}</span><span aria-hidden="true">→</span></button>
           </form>
         }
-        <p class="privacy-note"><span aria-hidden="true">▣</span> Your account details are protected and never shown publicly.</p>
+        <p class="privacy-note"><span aria-hidden="true">▣</span> {{ 'auth.privacy' | translate:assistantLanguage }}</p>
       } @else {
         <div class="workspace">
           <aside class="sidebar">
@@ -166,21 +166,21 @@
             </a>
             <div class="workspace-label">WORKSPACE</div>
             <nav class="side-nav" aria-label="Main navigation">
-              <button class="nav-item" [class.selected]="activeKey === 'overview'" type="button" (click)="selectPage('overview')"><span class="nav-icon">⌂</span> Overview</button>
-              @if (account.role === 'PATIENT') { <button class="nav-item" [class.selected]="activeKey === 'assistant'" type="button" (click)="selectPage('assistant')"><span class="nav-icon">✳</span> {{ assistantLanguage === 'hi' ? 'स्वास्थ्य सहायक' : 'Health assistant' }}</button> }
+              <button class="nav-item" [class.selected]="activeKey === 'overview'" type="button" (click)="selectPage('overview')"><span class="nav-icon">⌂</span> {{ 'nav.overview' | translate:assistantLanguage }}</button>
+              @if (account.role === 'PATIENT') { <button class="nav-item" [class.selected]="activeKey === 'assistant'" type="button" (click)="selectPage('assistant')"><span class="nav-icon">✳</span> {{ 'nav.assistant' | translate:assistantLanguage }}</button> }
               @for (item of visibleResources; track trackResource($index, item)) {
-                <button class="nav-item" [class.selected]="activeKey === item.key" type="button" (click)="selectPage(item.key)"><span class="nav-icon">{{ item.icon }}</span> {{ item.label }}</button>
+                <button class="nav-item" [class.selected]="activeKey === item.key" type="button" (click)="selectPage(item.key)"><span class="nav-icon">{{ item.icon }}</span> {{ resourceTranslationKey(item.key) | translate:assistantLanguage }}</button>
               }
             </nav>
             <div class="sidebar-bottom">
-              <div class="profile-mini"><span class="mini-avatar">{{ initials }}</span><span class="mini-copy"><strong>{{ account.name }}</strong><small>{{ account.role.toLowerCase() }}</small></span><button class="logout-button" type="button" (click)="logout()">Sign out</button></div>
+              <div class="profile-mini"><span class="mini-avatar">{{ initials }}</span><span class="mini-copy"><strong>{{ account.name }}</strong><small>{{ account.role.toLowerCase() }}</small></span><button class="logout-button" type="button" (click)="logout()">{{ 'auth.logout' | translate:assistantLanguage }}</button></div>
             </div>
           </aside>
 
           <section class="workspace-main">
             <header class="topbar">
               <div class="mobile-brand brand"><span class="brand-mark" aria-hidden="true"><span></span><span></span></span><span>Care<span class="brand-light">Connect</span></span></div>
-              <div class="breadcrumb">CareConnect <span>/</span> {{ activeKey === 'assistant' ? (assistantLanguage === 'hi' ? 'स्वास्थ्य सहायक' : 'Health assistant') : activeResource?.label || 'Overview' }}</div>
+              <div class="breadcrumb">CareConnect <span>/</span> {{ activeKey === 'assistant' ? ('nav.assistant' | translate:assistantLanguage) : activeResource ? (resourceTranslationKey(activeResource.key) | translate:assistantLanguage) : ('nav.overview' | translate:assistantLanguage) }}</div>
               <div class="topbar-actions"><span class="today-label">{{ today | date:'EEE, MMM d' }}</span><div class="language-toggle app-language-toggle" role="group" aria-label="Choose language"><button type="button" [class.active]="assistantLanguage === 'en'" (click)="setAssistantLanguage('en')">EN</button><button type="button" [class.active]="assistantLanguage === 'hi'" (click)="setAssistantLanguage('hi')">हि</button></div><span class="top-avatar">{{ initials }}</span></div>
             </header>
 
@@ -205,7 +205,7 @@
 
               @if (activeKey === 'overview') {
                 <section class="page-heading overview-heading">
-                  <div><span class="eyebrow">{{ account.role === 'ADMIN' ? 'SYSTEM OVERVIEW' : account.role === 'DOCTOR' ? 'CLINICAL WORKSPACE' : account.role === 'NURSE' ? 'PATIENT COORDINATION' : 'YOUR CARE, IN ONE PLACE' }}</span><h1>Good {{ greeting }}, {{ greetingName }}.</h1><p>{{ account.role === 'PATIENT' ? 'Here’s your health overview for today.' : account.role === 'DOCTOR' ? 'Here is your clinical schedule and patient activity.' : account.role === 'NURSE' ? 'Here is your assigned patient schedule for today.' : 'Here is today’s operational summary.' }}</p></div>
+                  <div><span class="eyebrow">{{ (account.role === 'ADMIN' ? 'dashboard.adminEyebrow' : account.role === 'DOCTOR' ? 'dashboard.doctorEyebrow' : account.role === 'NURSE' ? 'dashboard.nurseEyebrow' : 'dashboard.patientEyebrow') | translate:assistantLanguage }}</span><h1>{{ greetingTranslationKey | translate:assistantLanguage }}, {{ greetingName }}.</h1><p>{{ (account.role === 'PATIENT' ? 'dashboard.patientSummary' : account.role === 'DOCTOR' ? 'dashboard.doctorSummary' : account.role === 'NURSE' ? 'dashboard.nurseSummary' : 'dashboard.adminSummary') | translate:assistantLanguage }}</p></div>
                   @if (account.role === 'ADMIN' || account.role === 'DOCTOR') { <button class="primary-button" type="button" (click)="createOn('appointments')">＋ New appointment</button> }
                 </section>
 
@@ -213,15 +213,15 @@
 
                 @if (account.role === 'PATIENT' && patientDashboard; as dashboard) {
                   <section class="stat-grid" aria-label="Your personal health statistics">
-                    <article class="stat-card"><span class="stat-icon teal">◷</span><span class="stat-label">Upcoming appointments</span><strong>{{ upcomingAppointments.length }}</strong><small>{{ upcomingAppointments[0] ? (upcomingAppointments[0]['appointmentDateTime'] | date:'MMM d, y') : 'No visits scheduled' }}</small></article>
-                    <article class="stat-card"><span class="stat-icon violet">▤</span><span class="stat-label">Medical records</span><strong>{{ dashboard.records.length }}</strong><small>Your care history</small></article>
-                    <article class="stat-card"><span class="stat-icon blue">✚</span><span class="stat-label">Active medications</span><strong>{{ activePrescriptions.length }}</strong><small>Active prescriptions</small></article>
-                    <article class="stat-card"><span class="stat-icon amber">⌁</span><span class="stat-label">Recent lab reports</span><strong>{{ dashboard.labReports.length }}</strong><small>{{ abnormalReports.length }} abnormal result{{ abnormalReports.length === 1 ? '' : 's' }}</small></article>
+                    <article class="stat-card"><span class="stat-icon teal">◷</span><span class="stat-label">{{ 'dashboard.upcomingStat' | translate:assistantLanguage }}</span><strong>{{ upcomingAppointments.length }}</strong><small>{{ upcomingAppointments[0] ? (upcomingAppointments[0]['appointmentDateTime'] | date:'MMM d, y') : 'No visits scheduled' }}</small></article>
+                    <article class="stat-card"><span class="stat-icon violet">▤</span><span class="stat-label">{{ 'dashboard.records' | translate:assistantLanguage }}</span><strong>{{ dashboard.records.length }}</strong><small>{{ 'dashboard.healthOverview' | translate:assistantLanguage }}</small></article>
+                    <article class="stat-card"><span class="stat-icon blue">✚</span><span class="stat-label">{{ 'dashboard.activeMedication' | translate:assistantLanguage }}</span><strong>{{ activePrescriptions.length }}</strong><small>{{ 'dashboard.activePrescriptions' | translate:assistantLanguage }}</small></article>
+                    <article class="stat-card"><span class="stat-icon amber">⌁</span><span class="stat-label">{{ 'dashboard.recentLabs' | translate:assistantLanguage }}</span><strong>{{ dashboard.labReports.length }}</strong><small>{{ abnormalReports.length }} abnormal result{{ abnormalReports.length === 1 ? '' : 's' }}</small></article>
                   </section>
                   <section class="patient-summary panel">
                     <div class="patient-summary-avatar">{{ dashboard.patient['name']?.slice(0, 1) || initials }}</div>
-                    <div class="patient-summary-main"><span class="eyebrow">PATIENT PROFILE</span><h2>{{ dashboard.patient['name'] }}</h2><p>{{ dashboard.patient['age'] }} years · {{ dashboard.patient['gender'] || 'Gender not recorded' }} · {{ dashboard.patient['bloodGroup'] || 'Blood group not recorded' }}</p></div>
-                    <div class="patient-summary-detail"><small>Primary condition</small><strong>{{ dashboard.patient['disease'] || 'No condition recorded' }}</strong></div>
+                    <div class="patient-summary-main"><span class="eyebrow">{{ 'dashboard.profile' | translate:assistantLanguage }}</span><h2>{{ dashboard.patient['name'] }}</h2><p>{{ dashboard.patient['age'] }} years · {{ dashboard.patient['gender'] || 'Gender not recorded' }} · {{ dashboard.patient['bloodGroup'] || 'Blood group not recorded' }}</p></div>
+                    <div class="patient-summary-detail"><small>{{ 'dashboard.primaryCondition' | translate:assistantLanguage }}</small><strong>{{ dashboard.patient['disease'] || 'No condition recorded' }}</strong></div>
                     <div class="patient-summary-detail"><small>Care team</small><strong>{{ dashboard.careTeam.length ? dashboard.careTeam[0]['name'] : 'No doctor assigned' }}</strong><span>{{ dashboard.careTeam.length ? dashboard.careTeam[0]['department'] : 'Care team' }}</span></div>
                     <div class="patient-summary-detail"><small>Contact</small><strong>{{ dashboard.patient['phone'] || dashboard.patient['email'] || 'No contact on file' }}</strong><span>{{ dashboard.patient['address'] || '' }}</span></div>
                   </section>
@@ -234,32 +234,32 @@
                       @for (prescription of activePrescriptions.slice(0, 4); track trackRow($index, prescription)) { <div class="clinical-row"><span class="quick-link-icon lavender">✚</span><span><strong>{{ prescription['medicationName'] || 'Medication' }}</strong><small>{{ prescription['dosage'] }} · {{ prescription['frequency'] }} · {{ prescription['duration'] }}</small></span><span class="record-badge normal">Active</span></div> }
                       @if (!activePrescriptions.length && !pageLoading) { <div class="empty-inline"><strong>No active prescriptions</strong><p>Your medication instructions will appear here.</p></div> }
                     </article>
-                    <article class="panel data-panel"><div class="panel-heading"><div><h2>Recent medical records</h2><p>Your latest care history</p></div><button class="text-button" type="button" (click)="selectPage('medical-records')">View records →</button></div>
+                    <article class="panel data-panel"><div class="panel-heading"><div><h2>{{ 'dashboard.recentRecords' | translate:assistantLanguage }}</h2><p>Your latest care history</p></div><button class="text-button" type="button" (click)="selectPage('medical-records')">{{ 'nav.records' | translate:assistantLanguage }} →</button></div>
                       @for (record of recentRecords; track trackRow($index, record)) { <div class="data-row"><span><strong>{{ record['diagnosis'] || 'Care record' }}</strong><small>{{ record['treatment'] || 'Treatment details' }} · {{ record['doctorName'] || 'Care team' }}</small></span><time>{{ record['recordedAt'] | date:'MMM d, y' }}</time></div> }
-                      @if (!dashboard.records.length && !pageLoading) { <div class="empty-inline"><strong>No medical records yet</strong></div> }
+                      @if (!dashboard.records.length && !pageLoading) { <div class="empty-inline"><strong>{{ 'dashboard.noRecords' | translate:assistantLanguage }}</strong></div> }
                     </article>
-                    <article class="panel data-panel"><div class="panel-heading"><div><h2>Recent lab reports</h2><p>Your available test results</p></div><button class="text-button" type="button" (click)="selectPage('lab-reports')">View reports →</button></div>
+                    <article class="panel data-panel"><div class="panel-heading"><div><h2>{{ 'dashboard.recentReports' | translate:assistantLanguage }}</h2><p>Your available test results</p></div><button class="text-button" type="button" (click)="selectPage('lab-reports')">{{ 'nav.labs' | translate:assistantLanguage }} →</button></div>
                       @for (report of recentReports; track trackRow($index, report)) { <div class="data-row"><span><strong>{{ report['testName'] || 'Lab test' }} · {{ report['result'] || 'Result pending' }}</strong><small>Reference range: {{ report['referenceRange'] || 'Not provided' }}</small></span><span class="record-badge" [class.normal]="report['status'] === 'NORMAL'" [class.abnormal]="report['status'] === 'ABNORMAL'" [class.pending]="report['status'] === 'PENDING'">{{ report['status'] || 'PENDING' }}</span><time>{{ report['reportDate'] | date:'MMM d, y' }}</time></div> }
-                      @if (!dashboard.labReports.length && !pageLoading) { <div class="empty-inline"><strong>No lab reports yet</strong></div> }
+                      @if (!dashboard.labReports.length && !pageLoading) { <div class="empty-inline"><strong>{{ 'dashboard.noReports' | translate:assistantLanguage }}</strong></div> }
                     </article>
-                    <article class="panel quick-panel"><div class="panel-heading"><div><h2>Your care team</h2><p>Doctors connected to your care</p></div><button class="text-button" type="button" (click)="selectPage('doctors')">View team →</button></div>
+                    <article class="panel quick-panel"><div class="panel-heading"><div><h2>{{ 'dashboard.careTeam' | translate:assistantLanguage }}</h2><p>Doctors connected to your care</p></div><button class="text-button" type="button" (click)="selectPage('doctors')">{{ 'nav.doctors' | translate:assistantLanguage }} →</button></div>
                       @for (doctor of dashboard.careTeam.slice(0, 5); track trackRow($index, doctor)) { <div class="clinical-row"><span class="mini-avatar">{{ doctor['name']?.slice(0, 1) || 'D' }}</span><span><strong>{{ doctor['name'] }}</strong><small>{{ doctor['department'] }} · {{ doctor['experience'] }} years</small></span></div> }
                       @if (!dashboard.careTeam.length && !pageLoading) { <div class="empty-inline"><strong>Your care team will appear here</strong><p>Doctors from your appointments and records are listed here.</p></div> }
                     </article>
-                    <article class="panel data-panel"><div class="panel-heading"><div><h2>Diagnoses</h2><p>Your documented health history</p></div><button class="text-button" type="button" (click)="selectPage('diagnoses')">View history →</button></div>
+                    <article class="panel data-panel"><div class="panel-heading"><div><h2>{{ 'dashboard.diagnoses' | translate:assistantLanguage }}</h2><p>Your documented health history</p></div><button class="text-button" type="button" (click)="selectPage('diagnoses')">{{ 'nav.diagnoses' | translate:assistantLanguage }} →</button></div>
                       @for (diagnosis of dashboard.diagnoses; track trackRow($index, diagnosis)) { <div class="data-row"><span><strong>{{ diagnosis['diagnosis'] }}</strong><small>{{ diagnosis['notes'] || 'No additional notes' }} · {{ diagnosis['doctorName'] || 'Care team' }}</small></span><time>{{ diagnosis['diagnosedAt'] | date:'MMM d, y' }}</time></div> }
-                      @if (!dashboard.diagnoses.length && !pageLoading) { <div class="empty-inline"><strong>No diagnoses recorded</strong></div> }
+                      @if (!dashboard.diagnoses.length && !pageLoading) { <div class="empty-inline"><strong>{{ 'dashboard.noDiagnoses' | translate:assistantLanguage }}</strong></div> }
                     </article>
-                    <article class="panel data-panel"><div class="panel-heading"><div><h2>Recent vitals</h2><p>Your latest recorded measurements</p></div><button class="text-button" type="button" (click)="selectPage('vitals')">View vitals →</button></div>
+                    <article class="panel data-panel"><div class="panel-heading"><div><h2>{{ 'dashboard.recentVitals' | translate:assistantLanguage }}</h2><p>Your latest recorded measurements</p></div><button class="text-button" type="button" (click)="selectPage('vitals')">{{ 'nav.vitals' | translate:assistantLanguage }} →</button></div>
                       @if (dashboard.vitals[0]; as vital) { <div class="vitals-grid"><div><small>Blood pressure</small><strong>{{ vital['bloodPressure'] || '—' }}</strong></div><div><small>Heart rate</small><strong>{{ vital['heartRate'] || '—' }} bpm</strong></div><div><small>Temperature</small><strong>{{ vital['temperature'] || '—' }} °C</strong></div><div><small>Oxygen</small><strong>{{ vital['oxygenSaturation'] || '—' }}%</strong></div><div><small>Weight</small><strong>{{ vital['weight'] || '—' }} kg</strong></div><div><small>Height</small><strong>{{ vital['height'] || '—' }} cm</strong></div></div><p class="vital-recorded">Recorded {{ vital['recordedAt'] | date:'MMM d, y · shortTime' }}</p> }
                       @else if (!pageLoading) { <div class="empty-inline"><strong>No vitals recorded</strong></div> }
                     </article>
-                    <article class="panel data-panel trend-panel"><div class="panel-heading"><div><h2>Health measurement trends</h2><p>{{ vitalTrendLabel }} · recorded values</p></div><div class="trend-controls"><label class="trend-range">Measurement<select aria-label="Choose a health measurement" [(ngModel)]="vitalMetric"><option value="heartRate">Heart rate · bpm</option><option value="temperature">Temperature · °C</option><option value="oxygenSaturation">Oxygen saturation · %</option><option value="weight">Weight · kg</option><option value="height">Height · cm</option></select></label><label class="trend-range">Range<select aria-label="Measurement date range" [(ngModel)]="vitalRange"><option value="week">7 days</option><option value="month">30 days</option></select></label></div></div>
+                    <article class="panel data-panel trend-panel"><div class="panel-heading"><div><h2>{{ 'dashboard.healthTrends' | translate:assistantLanguage }}</h2><p>{{ vitalTrendLabel }} · recorded values</p></div><div class="trend-controls"><label class="trend-range">Measurement<select aria-label="Choose a health measurement" [(ngModel)]="vitalMetric"><option value="bloodPressureSystolic">Blood pressure · systolic</option><option value="bloodPressureDiastolic">Blood pressure · diastolic</option><option value="heartRate">Heart rate · bpm</option><option value="temperature">Temperature · °C</option><option value="oxygenSaturation">Oxygen saturation · %</option><option value="weight">Weight · kg</option><option value="height">Height · cm</option></select></label><label class="trend-range">Range<select aria-label="Measurement date range" [(ngModel)]="vitalRange"><option value="week">7 days</option><option value="month">30 days</option></select></label></div></div>
                       @if (vitalTrend.length > 1) { <div class="trend-chart"><svg viewBox="0 0 100 100" preserveAspectRatio="none" role="img" [attr.aria-label]="'Line chart of recorded ' + vitalTrendLabel"><line x1="4" y1="90" x2="96" y2="90" class="trend-axis"/><polyline [attr.points]="vitalTrendPoints" class="trend-line"/></svg></div><div class="trend-summary"><span>{{ vitalTrend[0].date | date:'MMM d' }} · {{ vitalTrend[0].value }}</span><strong>{{ vitalTrend.length }} measurements · {{ vitalTrendComparison }}</strong><span>{{ vitalTrend[vitalTrend.length - 1].date | date:'MMM d' }} · {{ vitalTrend[vitalTrend.length - 1].value }}</span></div><p class="trend-note">This chart shows recorded values and period averages; it is not a diagnosis.</p> }
                       @else if (!pageLoading) { <div class="empty-inline"><strong>Not enough {{ vitalMetric === 'heartRate' ? 'heart rate' : vitalMetric === 'temperature' ? 'temperature' : vitalMetric === 'oxygenSaturation' ? 'oxygen saturation' : vitalMetric }} history</strong><p>At least two recorded measurements in this date range are needed to show a trend.</p></div> }
                       @else { <div class="empty-inline">Loading measurements…</div> }
                     </article>
-                    <article class="panel data-panel"><div class="panel-heading"><div><h2>Notifications</h2><p>Updates from your care team</p></div></div>
+                    <article class="panel data-panel"><div class="panel-heading"><div><h2>{{ 'dashboard.notifications' | translate:assistantLanguage }}</h2><p>Updates from your care team</p></div></div>
                       @for (notification of dashboard.notifications.slice(0, 4); track trackRow($index, notification)) { <div class="data-row"><span><strong>{{ notification['title'] }}</strong><small>{{ notification['message'] }}</small></span><time>{{ notification['createdAt'] | date:'MMM d' }}</time></div> }
                       @if (!dashboard.notifications.length && !pageLoading) { <div class="empty-inline"><strong>No new notifications</strong></div> }
                     </article>
@@ -348,7 +348,7 @@
                 }
               } @else {
                 @if (activeResource; as resource) {
-                <section class="page-heading resource-heading"><div><span class="eyebrow">{{ account.role === 'PATIENT' ? 'YOUR HEALTH' : account.role === 'DOCTOR' ? 'CLINICAL WORKSPACE' : account.role === 'NURSE' ? 'CARE COORDINATION' : 'SYSTEM MANAGEMENT' }}</span><h1>{{ resource.label }}</h1><p>{{ account.role === 'PATIENT' ? 'Your personal ' + resource.label.toLowerCase() + '.' : 'View the ' + resource.label.toLowerCase() + ' available to your role.' }}</p></div>@if (canCreate(resource)) { <button class="primary-button" type="button" (click)="createNew()">＋ Add {{ resource.singular }}</button> }</section>
+                <section class="page-heading resource-heading"><div><span class="eyebrow">{{ account.role === 'PATIENT' ? 'YOUR HEALTH' : account.role === 'DOCTOR' ? 'CLINICAL WORKSPACE' : account.role === 'NURSE' ? 'CARE COORDINATION' : 'SYSTEM MANAGEMENT' }}</span><h1>{{ resourceTranslationKey(resource.key) | translate:assistantLanguage }}</h1><p>{{ account.role === 'PATIENT' ? 'Your personal ' + resource.label.toLowerCase() + '.' : 'View the ' + resource.label.toLowerCase() + ' available to your role.' }}</p></div>@if (canCreate(resource)) { <button class="primary-button" type="button" (click)="createNew()">＋ Add {{ resource.singular }}</button> }</section>
                 <section class="panel table-panel">
                   <div class="table-toolbar"><div><h2>{{ resource.label }}</h2><span class="result-count">{{ visibleRows.length }} {{ visibleRows.length === 1 ? 'result' : 'results' }}</span></div><label class="search-box"><span>⌕</span><input type="search" [(ngModel)]="search" placeholder="Search {{ resource.label.toLowerCase() }}" aria-label="Search records"></label></div>
                   @if (pageLoading) { <div class="loading-state"><span class="spinner"></span> Loading {{ resource.label.toLowerCase() }}…</div> }
@@ -453,6 +453,24 @@
                   @if (noteNotice) { <div class="notice" [class.success]="noteNotice === 'Consultation note saved.'" role="status">{{ noteNotice }}</div> }
                   <footer class="modal-actions"><button class="secondary-action" type="button" (click)="closeConsultationNote()">Close</button><button class="primary-button" type="submit" [disabled]="noteSaving">{{ noteSaving ? 'Saving…' : 'Save note' }}</button></footer>
                 </form>
+                <section class="note-history" aria-label="Previous consultation note versions">
+                  <h3>Previous versions</h3>
+                  @if (noteVersionsLoading) { <p class="empty-inline">Loading note history…</p> }
+                  @else if (noteVersions.length) {
+                    @for (version of noteVersions; track version['id']) {
+                      <details class="note-version"><summary><strong>Saved {{ version['amendedAt'] | date:'MMM d, y · shortTime' }}</strong><span>Doctor profile {{ version['amendedByDoctorId'] }}</span></summary>
+                        @if (version['chiefComplaint']) { <p><b>Chief complaint:</b> {{ version['chiefComplaint'] }}</p> }
+                        @if (version['history']) { <p><b>History:</b> {{ version['history'] }}</p> }
+                        @if (version['examination']) { <p><b>Examination:</b> {{ version['examination'] }}</p> }
+                        @if (version['assessment']) { <p><b>Assessment:</b> {{ version['assessment'] }}</p> }
+                        @if (version['diagnosis']) { <p><b>Diagnosis:</b> {{ version['diagnosis'] }}</p> }
+                        @if (version['plan']) { <p><b>Plan:</b> {{ version['plan'] }}</p> }
+                        @if (version['followUp']) { <p><b>Follow-up:</b> {{ version['followUp'] }}</p> }
+                        @if (version['followUpDate']) { <p><b>Follow-up date:</b> {{ version['followUpDate'] | date:'MMM d, y' }}</p> }
+                      </details>
+                    }
+                  } @else { <p class="empty-inline">No earlier versions. A snapshot is created when a saved note is changed.</p> }
+                </section>
               }
             </section>
           </div>

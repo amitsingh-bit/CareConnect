@@ -18,7 +18,10 @@ class HealthAssistantServiceTest {
     @BeforeEach void setUp() {
         provider = new RecordingProvider();
         MockHttpServletRequest request = new MockHttpServletRequest();
-        request.setAttribute(CurrentAccountService.REQUEST_ATTRIBUTE, new Account("patient@example.invalid", "hash", "PATIENT", "Patient", 1L));
+        Account account = new Account("patient@example.invalid", "hash", "PATIENT", "Patient", 1L);
+        try { var id = Account.class.getDeclaredField("id"); id.setAccessible(true); id.set(account, 41L); }
+        catch (ReflectiveOperationException error) { throw new AssertionError(error); }
+        request.setAttribute(CurrentAccountService.REQUEST_ATTRIBUTE, account);
         service = new HealthAssistantService(new CurrentAccountService(request), provider);
     }
     @Test void urgentSymptomsReturnImmediateGuidanceWithoutCallingProvider() {

@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { forkJoin } from 'rxjs';
 import { AuthService, Account, SignupPayload } from './auth.service';
+import { TranslatePipe } from './i18n/translate.pipe';
 
 type AuthMode = 'login' | 'signup';
 type Row = Record<string, any>;
@@ -23,7 +24,7 @@ const navigationByRole: Record<string, string[]> = {
   PATIENT: ['appointments', 'medical-records', 'diagnoses', 'prescriptions', 'lab-reports', 'vitals', 'doctors'],
   DOCTOR: ['appointments', 'patients', 'medical-records', 'prescriptions', 'lab-reports', 'diagnoses', 'vitals', 'doctors', 'medications'],
   NURSE: ['appointments', 'patients', 'medical-records', 'lab-reports', 'vitals', 'doctors'],
-  ADMIN: ['appointments', 'patients', 'doctors', 'nurses', 'medical-records', 'lab-reports', 'diagnoses', 'prescriptions', 'medications', 'vitals', 'users', 'admins']
+  ADMIN: ['appointments', 'patients', 'doctors', 'nurses', 'medical-records', 'lab-reports', 'diagnoses', 'prescriptions', 'medications', 'vitals', 'users', 'admins', 'audit-logs']
 };
 
 const roles = {
@@ -45,10 +46,11 @@ const resources: Resource[] = [
   { key: 'medications', endpoint: 'medications', label: 'Medication catalog', singular: 'medication', icon: '✣', roles: ['DOCTOR', 'ADMIN'], columns: [{ label: 'Name', path: 'name' }, { label: 'Strength', path: 'strength' }, { label: 'Form', path: 'form' }], fields: [{ key: 'name', label: 'Medication name', required: true }, { key: 'strength', label: 'Strength', required: true, placeholder: 'e.g. 250 mg' }, { key: 'form', label: 'Form', required: true, placeholder: 'e.g. Tablet' }] },
   { key: 'vitals', endpoint: 'vitals', label: 'Vitals', singular: 'vital record', icon: '♥', roles: roles.all, columns: [{ label: 'Patient', path: 'patientName' }, { label: 'Blood pressure', path: 'bloodPressure' }, { label: 'Heart rate', path: 'heartRate' }, { label: 'Temperature °C', path: 'temperature' }, { label: 'Oxygen %', path: 'oxygenSaturation' }, { label: 'Weight kg', path: 'weight' }, { label: 'Recorded', path: 'recordedAt' }], fields: [{ key: 'patientId', label: 'Patient', type: 'select', options: 'patients', required: true }, { key: 'bloodPressure', label: 'Blood pressure', placeholder: 'e.g. 120/80' }, { key: 'heartRate', label: 'Heart rate (bpm)', type: 'number' }, { key: 'temperature', label: 'Temperature (°C)', type: 'number' }, { key: 'oxygenSaturation', label: 'Oxygen saturation (%)', type: 'number' }, { key: 'weight', label: 'Weight (kg)', type: 'number' }, { key: 'height', label: 'Height (cm)', type: 'number' }, { key: 'recordedAt', label: 'Recorded date & time', type: 'datetime-local', required: true }] },
   { key: 'users', endpoint: 'admins/users', label: 'User accounts', singular: 'user', icon: '♙', roles: roles.admin, columns: [{ label: 'Name', path: 'name' }, { label: 'Email', path: 'email' }, { label: 'Role', path: 'role' }, { label: 'Profile ID', path: 'profileId' }], fields: [], canCreate: false, canEdit: false, canDelete: false },
-  { key: 'admins', endpoint: 'admins', label: 'Administrators', singular: 'administrator', icon: '⚙', roles: roles.admin, columns: [{ label: 'Name', path: 'name' }, { label: 'Email', path: 'email' }], fields: [{ key: 'name', label: 'Full name', required: true }, { key: 'email', label: 'Email address', type: 'email', required: true }] }
+  { key: 'admins', endpoint: 'admins', label: 'Administrators', singular: 'administrator', icon: '⚙', roles: roles.admin, columns: [{ label: 'Name', path: 'name' }, { label: 'Email', path: 'email' }], fields: [{ key: 'name', label: 'Full name', required: true }, { key: 'email', label: 'Email address', type: 'email', required: true }] },
+  { key: 'audit-logs', endpoint: 'admins/audit-logs', label: 'Audit log', singular: 'audit event', icon: '▤', roles: roles.admin, columns: [{ label: 'Time', path: 'occurredAt' }, { label: 'Actor ID', path: 'accountId' }, { label: 'Role', path: 'actorRole' }, { label: 'Action', path: 'action' }, { label: 'Resource', path: 'resourceType' }, { label: 'Resource ID', path: 'resourceId' }, { label: 'Status', path: 'status' }, { label: 'Correlation ID', path: 'correlationId' }], fields: [], canCreate: false, canEdit: false, canDelete: false }
 ];
 
-@Component({ selector: 'app-root', imports: [FormsModule, DatePipe], templateUrl: './app.component.html', styleUrl: './app.component.css' })
+@Component({ selector: 'app-root', imports: [FormsModule, DatePipe, TranslatePipe], templateUrl: './app.component.html', styleUrl: './app.component.css' })
 export class AppComponent implements OnInit {
   private readonly auth = inject(AuthService);
   private readonly sanitizer = inject(DomSanitizer);
@@ -86,7 +88,7 @@ export class AppComponent implements OnInit {
   patientProfileLoading = false;
   patientContextId: number | null = null;
   vitalRange: 'week' | 'month' = 'month';
-  vitalMetric: 'heartRate' | 'temperature' | 'oxygenSaturation' | 'weight' | 'height' = 'heartRate';
+  vitalMetric: 'bloodPressureSystolic' | 'bloodPressureDiastolic' | 'heartRate' | 'temperature' | 'oxygenSaturation' | 'weight' | 'height' = 'heartRate';
   assistantLanguage: 'en' | 'hi' = typeof localStorage === 'undefined' ? 'en' : (localStorage.getItem('careconnect.language') === 'hi' ? 'hi' : 'en');
   assistantMessages: AssistantEntry[] = [];
   assistantText = '';
@@ -98,6 +100,8 @@ export class AppComponent implements OnInit {
   noteSaving = false;
   consultationNote: Row = { chiefComplaint: '', history: '', examination: '', assessment: '', diagnosis: '', plan: '', followUp: '', followUpDate: null };
   noteNotice = '';
+  noteVersions: Row[] = [];
+  noteVersionsLoading = false;
   videoAppointment: Row | null = null;
   videoJoinUrl: SafeResourceUrl | null = null;
   videoError = '';
@@ -107,6 +111,11 @@ export class AppComponent implements OnInit {
   get firstName(): string { return this.account?.name.trim().split(/\s+/)[0] || 'there'; }
   get today(): Date { return new Date(); }
   get greeting(): string { const hour = new Date().getHours(); return hour < 12 ? 'morning' : hour < 18 ? 'afternoon' : 'evening'; }
+  get greetingTranslationKey(): string { return `dashboard.hello${this.greeting[0].toUpperCase()}${this.greeting.slice(1)}`; }
+  resourceTranslationKey(key: string): string {
+    const translationKeys: Record<string, string> = { appointments: 'nav.appointments', patients: 'nav.patients', doctors: 'nav.doctors', nurses: 'nav.nurses', 'medical-records': 'nav.records', diagnoses: 'nav.diagnoses', prescriptions: 'nav.prescriptions', 'lab-reports': 'nav.labs', vitals: 'nav.vitals', medications: 'nav.medications', users: 'nav.users', admins: 'nav.admins', 'audit-logs': 'nav.audit' };
+    return translationKeys[key] || key;
+  }
   get visibleResources(): Resource[] {
     const keys = navigationByRole[this.account?.role.toUpperCase() || ''] || [];
     return keys.map((key) => resources.find((item) => item.key === key)).filter((item): item is Resource => !!item);
@@ -130,13 +139,20 @@ export class AppComponent implements OnInit {
       .sort((a, b) => a.date.getTime() - b.date.getTime()).slice(-14);
   }
   get vitalTrendLabel(): string {
-    return ({ heartRate: 'Heart rate · bpm', temperature: 'Temperature · °C', oxygenSaturation: 'Oxygen saturation · %', weight: 'Weight · kg', height: 'Height · cm' } as const)[this.vitalMetric];
+    return ({ bloodPressureSystolic: 'Blood pressure · systolic mmHg', bloodPressureDiastolic: 'Blood pressure · diastolic mmHg', heartRate: 'Heart rate · bpm', temperature: 'Temperature · °C', oxygenSaturation: 'Oxygen saturation · %', weight: 'Weight · kg', height: 'Height · cm' } as const)[this.vitalMetric];
+  }
+  private vitalValue(row: Row): number {
+    if (this.vitalMetric === 'bloodPressureSystolic' || this.vitalMetric === 'bloodPressureDiastolic') {
+      const values = String(row['bloodPressure'] || '').match(/^\s*(\d+(?:\.\d+)?)\s*\/\s*(\d+(?:\.\d+)?)\s*$/);
+      return values ? Number(values[this.vitalMetric === 'bloodPressureSystolic' ? 1 : 2]) : Number.NaN;
+    }
+    return Number(row[this.vitalMetric]);
   }
   get vitalTrend(): { value: number; date: Date }[] {
     const now = new Date();
     const days = this.vitalRange === 'week' ? 7 : 30;
     const cutoff = new Date(now); cutoff.setDate(now.getDate() - days);
-    return (this.patientDashboard?.vitals || []).map((row) => ({ value: Number(row[this.vitalMetric]), date: new Date(String(row['recordedAt'])) }))
+    return (this.patientDashboard?.vitals || []).map((row) => ({ value: this.vitalValue(row), date: new Date(String(row['recordedAt'])) }))
       .filter((item) => Number.isFinite(item.value) && !Number.isNaN(item.date.getTime()) && item.date >= cutoff)
       .sort((a, b) => a.date.getTime() - b.date.getTime()).slice(-30);
   }
@@ -144,7 +160,7 @@ export class AppComponent implements OnInit {
     const now = new Date(); const days = this.vitalRange === 'week' ? 7 : 30;
     const currentStart = new Date(now); currentStart.setDate(now.getDate() - days);
     const previousStart = new Date(currentStart); previousStart.setDate(currentStart.getDate() - days);
-    return (this.patientDashboard?.vitals || []).map((row) => ({ value: Number(row[this.vitalMetric]), date: new Date(String(row['recordedAt'])) }))
+    return (this.patientDashboard?.vitals || []).map((row) => ({ value: this.vitalValue(row), date: new Date(String(row['recordedAt'])) }))
       .filter((item) => Number.isFinite(item.value) && !Number.isNaN(item.date.getTime()) && item.date >= previousStart && item.date < currentStart);
   }
   get vitalTrendComparison(): string {
@@ -224,11 +240,13 @@ export class AppComponent implements OnInit {
     const id = Number(appointment['id']);
     if (!id) return;
     this.noteAppointment = appointment; this.noteLoading = true; this.noteNotice = '';
+    this.noteVersions = []; this.noteVersionsLoading = true;
     this.consultationNote = { chiefComplaint: '', history: '', examination: '', assessment: '', diagnosis: '', plan: '', followUp: '', followUpDate: null };
     this.auth.consultationNote<Row>(id).subscribe({
-      next: (note) => { this.consultationNote = { ...note }; this.noteLoading = false; },
+      next: (note) => { this.consultationNote = { ...note }; this.noteLoading = false; this.loadConsultationNoteVersions(id); },
       error: (error: HttpErrorResponse) => {
         this.noteLoading = false;
+        this.noteVersionsLoading = false;
         if (error.status === 404) return;
         this.noteNotice = error.error?.message || 'Could not load this consultation note.';
       }
@@ -238,8 +256,16 @@ export class AppComponent implements OnInit {
     if (!this.noteAppointment || this.noteSaving) return;
     this.noteSaving = true; this.noteNotice = '';
     this.auth.saveConsultationNote<Row>(Number(this.noteAppointment['id']), this.consultationNote).subscribe({
-      next: (note) => { this.consultationNote = { ...note }; this.noteSaving = false; this.noteNotice = 'Consultation note saved.'; },
+      next: (note) => { this.consultationNote = { ...note }; this.noteSaving = false; this.noteNotice = 'Consultation note saved.'; this.loadConsultationNoteVersions(Number(this.noteAppointment?.['id'])); },
       error: (error: HttpErrorResponse) => { this.noteSaving = false; this.noteNotice = error.error?.message || 'Could not save the consultation note.'; }
+    });
+  }
+  private loadConsultationNoteVersions(appointmentId: number): void {
+    if (!appointmentId) { this.noteVersionsLoading = false; return; }
+    this.noteVersionsLoading = true;
+    this.auth.consultationNoteVersions<Row>(appointmentId).subscribe({
+      next: (versions) => { this.noteVersions = versions; this.noteVersionsLoading = false; },
+      error: () => { this.noteVersions = []; this.noteVersionsLoading = false; }
     });
   }
   closeConsultationNote(): void { if (!this.noteSaving) this.noteAppointment = null; }
