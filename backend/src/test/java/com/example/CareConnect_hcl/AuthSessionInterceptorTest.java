@@ -3,6 +3,8 @@ package com.example.CareConnect_hcl;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import java.util.Optional;
 import java.lang.reflect.Proxy;
 
@@ -16,12 +18,14 @@ import com.example.CareConnect_hcl.config.AuthSessionInterceptor;
 import com.example.CareConnect_hcl.config.CurrentAccountService;
 import com.example.CareConnect_hcl.model.entity.Account;
 import com.example.CareConnect_hcl.repository.AccountRepository;
+import com.example.CareConnect_hcl.services.AuditLogService;
 
 class AuthSessionInterceptorTest {
     private static final String SESSION_KEY = "careconnect.accountId";
     private AccountRepository accounts;
     private AuthSessionInterceptor interceptor;
     private Account currentAccount;
+    private AuditLogService auditLogs;
 
     @BeforeEach
     void setUp() {
@@ -31,7 +35,8 @@ class AuthSessionInterceptorTest {
                     if (method.getName().equals("toString")) return "TestAccountRepository";
                     return null;
                 });
-        interceptor = new AuthSessionInterceptor(accounts, null, true);
+        auditLogs = mock(AuditLogService.class);
+        interceptor = new AuthSessionInterceptor(accounts, auditLogs, true);
     }
 
     @Test
@@ -51,6 +56,7 @@ class AuthSessionInterceptorTest {
 
         assertFalse(interceptor.preHandle(request, response, new Object()));
         assertEquals(401, response.getStatus());
+        verify(auditLogs).record(null, "GET", "/api/patients", 401);
     }
 
     @Test
@@ -60,6 +66,7 @@ class AuthSessionInterceptorTest {
         MockHttpServletResponse response = new MockHttpServletResponse();
         assertFalse(interceptor.preHandle(request, response, new Object()));
         assertEquals(403, response.getStatus());
+        verify(auditLogs).record(1L, "POST", "/api/vitals", 403);
     }
 
     private void assertAllowed(String role, String method, String path) throws Exception {

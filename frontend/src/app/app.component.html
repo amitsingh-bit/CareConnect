@@ -181,7 +181,7 @@
             <header class="topbar">
               <div class="mobile-brand brand"><span class="brand-mark" aria-hidden="true"><span></span><span></span></span><span>Care<span class="brand-light">Connect</span></span></div>
               <div class="breadcrumb">CareConnect <span>/</span> {{ activeKey === 'assistant' ? (assistantLanguage === 'hi' ? 'स्वास्थ्य सहायक' : 'Health assistant') : activeResource?.label || 'Overview' }}</div>
-              <div class="topbar-actions"><span class="today-label">{{ today | date:'EEE, MMM d' }}</span><span class="top-avatar">{{ initials }}</span></div>
+              <div class="topbar-actions"><span class="today-label">{{ today | date:'EEE, MMM d' }}</span><div class="language-toggle app-language-toggle" role="group" aria-label="Choose language"><button type="button" [class.active]="assistantLanguage === 'en'" (click)="setAssistantLanguage('en')">EN</button><button type="button" [class.active]="assistantLanguage === 'hi'" (click)="setAssistantLanguage('hi')">हि</button></div><span class="top-avatar">{{ initials }}</span></div>
             </header>
 
             <main class="content-area">
@@ -460,7 +460,7 @@
         @if (videoAppointment; as appointment) {
           <div class="modal-backdrop video-backdrop" (click)="closeVideoConsultation()" (keydown.escape)="closeVideoConsultation()">
             <section class="record-modal video-modal" role="dialog" aria-modal="true" aria-label="Video consultation" (click)="$event.stopPropagation()">
-              <header class="modal-header"><div><span class="eyebrow">SECURE VIDEO VISIT</span><h2>Video consultation</h2><p>{{ appointment['appointmentDateTime'] | date:'MMM d, y · shortTime' }} · {{ account?.role === 'DOCTOR' ? appointment['patientName'] : appointment['doctorName'] }}</p></div><button class="close-button" type="button" aria-label="Leave video consultation" (click)="closeVideoConsultation()">×</button></header>
+              <header class="modal-header"><div><span class="eyebrow">SECURE VIDEO VISIT</span><h2>Video consultation</h2><p>{{ appointment['appointmentDateTime'] | date:'MMM d, y · shortTime' }} · {{ account.role === 'DOCTOR' ? appointment['patientName'] : appointment['doctorName'] }}</p></div><button class="close-button" type="button" aria-label="Leave video consultation" (click)="closeVideoConsultation()">×</button></header>
               @if (videoLoading) { <div class="loading-state"><span class="spinner"></span> Requesting authorized room access…</div> }
               @if (videoError) { <div class="video-error" role="alert">{{ videoError }}</div> }
               @if (videoJoinUrl) { <iframe class="video-frame" [src]="videoJoinUrl" title="Daily video consultation" allow="camera; microphone; fullscreen; speaker; display-capture" referrerpolicy="no-referrer"></iframe> }
