@@ -21,14 +21,14 @@ public class AuthSessionInterceptor implements HandlerInterceptor {
     private static final Logger log = LoggerFactory.getLogger(AuthSessionInterceptor.class);
     private static final String ACCOUNT_ID_SESSION_KEY = "careconnect.accountId";
     private static final String CSRF_SESSION_KEY = "careconnect.csrf";
-    @Value("${careconnect.security.csrf.enabled:true}")
-    private boolean csrfEnabled;
     private final AccountRepository accountRepository;
     private final AuditLogService auditLogService;
 
-    public AuthSessionInterceptor(AccountRepository accountRepository, AuditLogService auditLogService) {
+    public AuthSessionInterceptor(AccountRepository accountRepository, AuditLogService auditLogService,
+            @Value("${careconnect.security.csrf.enabled:true}") boolean csrfEnabled) {
         this.accountRepository = accountRepository;
         this.auditLogService = auditLogService;
+        this.csrfEnabled = csrfEnabled;
     }
 
     @Override
