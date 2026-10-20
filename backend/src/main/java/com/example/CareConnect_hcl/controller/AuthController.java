@@ -12,6 +12,7 @@ import com.example.CareConnect_hcl.model.dto.AccountResponse;
 import com.example.CareConnect_hcl.model.dto.LoginRequest;
 import com.example.CareConnect_hcl.model.dto.SignupRequest;
 import com.example.CareConnect_hcl.services.AuthService;
+import com.example.CareConnect_hcl.services.LoginRateLimiter;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -24,11 +25,13 @@ import org.springframework.beans.factory.annotation.Value;
 public class AuthController {
     private static final String ACCOUNT_ID_SESSION_KEY = "careconnect.accountId";
     private final AuthService authService;
+    private final LoginRateLimiter loginRateLimiter;
     @Value("${server.servlet.session.cookie.secure:false}")
     private boolean secureCookie;
 
-    public AuthController(AuthService authService) {
+    public AuthController(AuthService authService, LoginRateLimiter loginRateLimiter) {
         this.authService = authService;
+        this.loginRateLimiter = loginRateLimiter;
     }
 
     @PostMapping("/signup")
@@ -41,7 +44,12 @@ public class AuthController {
 
     @PostMapping("/login")
     public AccountResponse login(@RequestBody LoginRequest request, HttpServletRequest httpRequest, HttpServletResponse response) {
+        if (request == null) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email and password are required");
+        String email = request.email();
+        String remoteAddress = httpRequest.getRemoteAddr();
+        loginRateLimiter.check(remoteAddress, email);
         AccountResponse account = authService.login(request.email(), request.password());
+        loginRateLimiter.succeeded(remoteAddress, email);
         startSession(httpRequest, account);
         issueCsrf(httpRequest, response);
         return account;

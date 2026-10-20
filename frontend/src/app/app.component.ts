@@ -6,6 +6,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { forkJoin } from 'rxjs';
 import { AuthService, Account, SignupPayload } from './auth.service';
 import { TranslatePipe } from './i18n/translate.pipe';
+import hi from '../assets/i18n/hi.json';
 
 type AuthMode = 'login' | 'signup';
 type Row = Record<string, any>;
@@ -248,7 +249,7 @@ export class AppComponent implements OnInit {
         this.noteLoading = false;
         this.noteVersionsLoading = false;
         if (error.status === 404) return;
-        this.noteNotice = error.error?.message || 'Could not load this consultation note.';
+        this.noteNotice = this.localizedError(error, 'Could not load this consultation note.');
       }
     });
   }
@@ -257,7 +258,7 @@ export class AppComponent implements OnInit {
     this.noteSaving = true; this.noteNotice = '';
     this.auth.saveConsultationNote<Row>(Number(this.noteAppointment['id']), this.consultationNote).subscribe({
       next: (note) => { this.consultationNote = { ...note }; this.noteSaving = false; this.noteNotice = 'Consultation note saved.'; this.loadConsultationNoteVersions(Number(this.noteAppointment?.['id'])); },
-      error: (error: HttpErrorResponse) => { this.noteSaving = false; this.noteNotice = error.error?.message || 'Could not save the consultation note.'; }
+      error: (error: HttpErrorResponse) => { this.noteSaving = false; this.noteNotice = this.localizedError(error, 'Could not save the consultation note.'); }
     });
   }
   private loadConsultationNoteVersions(appointmentId: number): void {
@@ -274,7 +275,7 @@ export class AppComponent implements OnInit {
     this.videoAppointment = appointment; this.videoJoinUrl = null; this.videoError = ''; this.videoLoading = true;
     this.auth.joinVideoConsultation(Number(appointment['id'])).subscribe({
       next: (result) => { this.videoJoinUrl = this.sanitizer.bypassSecurityTrustResourceUrl(result.joinUrl); this.videoLoading = false; },
-      error: (error: HttpErrorResponse) => { this.videoError = error.error?.message || 'Could not join this video consultation.'; this.videoLoading = false; }
+      error: (error: HttpErrorResponse) => { this.videoError = this.localizedError(error, 'Could not join this video consultation.'); this.videoLoading = false; }
     });
   }
   closeVideoConsultation(): void { this.videoAppointment = null; this.videoJoinUrl = null; this.videoError = ''; }
@@ -288,7 +289,7 @@ export class AppComponent implements OnInit {
     this.assistantSending = true;
     this.auth.assistantChat(payload).subscribe({
       next: (response) => { this.assistantMessages = [...this.assistantMessages, { role: 'assistant', content: `${response.reply}\n\n${response.safetyNotice}`, urgent: response.urgent }]; this.assistantSending = false; },
-      error: (error: HttpErrorResponse) => { this.assistantError = error.error?.message || 'The assistant is unavailable right now. Try again.'; this.assistantSending = false; }
+      error: (error: HttpErrorResponse) => { this.assistantError = this.localizedError(error, 'The assistant is unavailable right now. Try again.'); this.assistantSending = false; }
     });
   }
 
@@ -515,8 +516,16 @@ export class AppComponent implements OnInit {
 
   private submit(request: () => ReturnType<AuthService['login']>): void {
     this.notice = ''; this.loading = true;
-    request().subscribe({ next: (account) => { this.account = account; this.authOpen = false; this.loading = false; this.loadDashboard(); }, error: (error: HttpErrorResponse) => { this.notice = error.error?.message || error.error?.error || 'Something went wrong. Please try again.'; this.noticeKind = 'error'; this.loading = false; } });
+    request().subscribe({ next: (account) => { this.account = account; this.authOpen = false; this.loading = false; this.loadDashboard(); }, error: (error: HttpErrorResponse) => { this.notice = this.localizedError(error, 'Something went wrong. Please try again.'); this.noticeKind = 'error'; this.loading = false; } });
   }
-  private setError(error: HttpErrorResponse, fallback: string): void { this.noticeKind = 'error'; this.notice = error.error?.message || error.error?.error || fallback; }
+  private setError(error: HttpErrorResponse, fallback: string): void { this.noticeKind = 'error'; this.notice = this.localizedError(error, fallback); }
+  private localizedError(error: HttpErrorResponse, fallback: string): string {
+    const message = error.error?.message || error.error?.error || fallback;
+    if (this.assistantLanguage !== 'hi') return message;
+    const keys: Record<number, string> = { 400: 'errors.invalidInput', 401: 'errors.unauthorized', 403: 'errors.forbidden', 404: 'errors.notFound', 409: 'errors.conflict', 429: 'errors.rateLimited', 503: 'errors.notConfigured' };
+    const key = keys[error.status] || (error.status >= 500 ? 'errors.serverUnavailable' : '');
+    if (key) return (hi as Record<string, string>)[key] || message;
+    return message;
+  }
   private finishLogout(): void { this.account = null; this.authOpen = false; this.loginData = { email: '', password: '' }; this.signupData = { role: 'PATIENT', name: '', email: '', password: '' }; this.mode = 'login'; this.loading = false; this.notice = ''; this.activeKey = 'overview'; }
 }

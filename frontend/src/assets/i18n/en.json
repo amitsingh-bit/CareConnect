@@ -85,5 +85,397 @@
   "assistant.welcome": "How can I help?",
   "assistant.send": "Send",
   "assistant.clear": "Clear chat",
-  "assistant.ask": "Ask a question…"
+  "assistant.ask": "Ask a question…",
+  "common.add": "Add",
+  "common.edit": "Edit",
+  "common.delete": "Delete",
+  "common.actions": "Actions",
+  "common.loading": "Loading…",
+  "common.results": "results",
+  "common.result": "result",
+  "common.noResults": "No matching records",
+  "common.emptySearch": "Try another search term.",
+  "common.saveRecord": "Save record",
+  "common.required": "Required",
+  "common.optional": "optional",
+  "common.patientDetails": "Patient details",
+  "common.patientName": "Patient name",
+  "common.gender": "Gender",
+  "common.selectGender": "Select gender",
+  "common.address": "Address",
+  "common.contact": "Contact",
+  "common.email": "Email",
+  "common.phone": "Phone",
+  "common.bloodGroup": "Blood group",
+  "common.emergencyContact": "Emergency contact",
+  "common.age": "Age",
+  "common.name": "Name",
+  "common.doctor": "Doctor",
+  "common.patient": "Patient",
+  "common.status": "Status",
+  "common.dateTime": "Date & time",
+  "common.department": "Department",
+  "common.experience": "Experience",
+  "common.diagnosis": "Diagnosis",
+  "common.treatment": "Treatment",
+  "common.recorded": "Recorded",
+  "common.medication": "Medication",
+  "common.dosage": "Dosage",
+  "common.frequency": "Frequency",
+  "common.duration": "Duration",
+  "common.prescribed": "Prescribed",
+  "common.test": "Test",
+  "common.resultLabel": "Result",
+  "common.referenceRange": "Reference range",
+  "common.reportDate": "Report date",
+  "common.notes": "Notes",
+  "common.instructions": "Instructions",
+  "common.strength": "Strength",
+  "common.form": "Form",
+  "common.bloodPressure": "Blood pressure",
+  "common.heartRate": "Heart rate",
+  "common.temperature": "Temperature °C",
+  "common.oxygen": "Oxygen %",
+  "common.weight": "Weight kg",
+  "common.height": "Height cm",
+  "common.patientProfile": "Patient profile",
+  "common.emptyPatient": "No concern recorded",
+  "common.viewProfile": "View profile",
+  "common.openProfile": "Open profile",
+  "common.consultationNote": "Consultation note",
+  "common.joinVideo": "Join video",
+  "common.newAppointment": "New appointment",
+  "common.searchRecords": "Search records",
+  "common.searchResource": "Search",
+  "common.loadError": "Could not load this information.",
+  "common.saveError": "Could not save this information.",
+  "dashboard.newAppointment": "New appointment",
+  "dashboard.resourceDescription": "Review and manage the information available to your account.",
+  "dashboard.workspace": "WORKSPACE",
+  "dashboard.patientSchedule": "Patient schedule and visit status",
+  "dashboard.viewSchedule": "View schedule",
+  "dashboard.createPrescription": "Create prescription",
+  "dashboard.viewPatients": "View patients",
+  "dashboard.reviewReports": "Review reports",
+  "dashboard.reviewVitals": "Review vitals",
+  "dashboard.patientStats": "Your personal health statistics",
+  "dashboard.doctorStats": "Clinical workload statistics",
+  "dashboard.nurseStats": "Nursing coordination statistics",
+  "dashboard.adminStats": "System statistics",
+  "dashboard.doctorToday": "Today's appointments",
+  "dashboard.scheduledToday": "Scheduled for today",
+  "dashboard.assignedToYou": "Assigned to you",
+  "dashboard.assignedPatients": "Assigned patients",
+  "dashboard.connectedCare": "Connected through care records",
+  "dashboard.pendingLabs": "Pending lab reports",
+  "dashboard.awaitingReview": "Awaiting review",
+  "dashboard.noTodayAppointments": "No appointments scheduled today",
+  "dashboard.assignedAppointmentsAppear": "Your assigned appointments will appear here.",
+  "dashboard.clinicalActions": "Clinical actions",
+  "dashboard.startTask": "Start a care task",
+  "dashboard.myPatients": "My patients",
+  "dashboard.linkedPatients": "Patients linked to your appointments and clinical records",
+  "dashboard.noPatients": "No assigned patients yet",
+  "dashboard.recentMedicalRecords": "Recent medical records",
+  "dashboard.forPatientsInCare": "For patients in your care",
+  "dashboard.recentLabReports": "Recent lab reports",
+  "dashboard.resultsAssigned": "Results for your assigned patients",
+  "dashboard.recentVitals": "Recent vitals",
+  "dashboard.panelMeasurements": "Measurements from your patient panel",
+  "dashboard.noVitalsPanel": "No vitals on your panel",
+  "dashboard.prescriptionActivity": "Prescription activity",
+  "dashboard.recentTreatmentPlans": "Recent treatment plans for your patients",
+  "dashboard.noPrescriptionActivity": "No prescription activity",
+  "dashboard.checkIns": "Today's patient check-ins",
+  "dashboard.assignedToNurse": "Appointments for patients assigned to you",
+  "dashboard.noAssignedToday": "No assigned appointments today",
+  "dashboard.coordination": "Patient coordination",
+  "dashboard.quickCareAccess": "Quick access to your care work",
+  "dashboard.patientsUnderCare": "Patients under care",
+  "dashboard.nursingWorkflow": "Assigned to your nursing workflow",
+  "dashboard.noPatientsAssigned": "No patients assigned yet",
+  "dashboard.askAdmin": "Ask an administrator to assign patients to your account.",
+  "dashboard.latestPatientVitals": "Latest patient vitals",
+  "dashboard.assignedMeasurements": "Measurements for assigned patients",
+  "dashboard.noAssignedVitals": "No vitals recorded for assigned patients",
+  "dashboard.totalPatients": "Total patients",
+  "dashboard.totalDoctors": "Total doctors",
+  "dashboard.totalNurses": "Total nurses",
+  "dashboard.patientProfiles": "Patient profiles",
+  "dashboard.careTeamMembers": "Care team members",
+  "dashboard.nursingTeamMembers": "Nursing team members",
+  "dashboard.scheduledHistorical": "Scheduled and historical",
+  "dashboard.acrossSystem": "Across the system",
+  "dashboard.availableResults": "Available results",
+  "dashboard.appointmentsToday": "Appointments today",
+  "dashboard.onSchedule": "On today's schedule",
+  "dashboard.userAccounts": "User accounts",
+  "dashboard.acrossRoles": "Across all roles",
+  "dashboard.recentAppointments": "Recent appointments",
+  "dashboard.latestScheduling": "Latest scheduling activity",
+  "dashboard.administration": "Administration",
+  "dashboard.manageResources": "Manage core CareConnect resources",
+  "dashboard.operationalActivity": "Operational activity",
+  "dashboard.currentRecords": "Current system records",
+  "dashboard.departmentDistribution": "Department distribution",
+  "dashboard.doctorsByDepartment": "Doctors by department",
+  "dashboard.noDepartmentData": "No department data",
+  "dashboard.appointmentActivity": "Appointment activity",
+  "dashboard.statusBreakdown": "Current appointment status breakdown",
+  "dashboard.noAppointmentData": "No appointment data",
+  "assistant.videoSecurity": "This visit is not recorded by CareConnect. Check your camera and microphone permissions before joining.",
+  "assistant.secureVideo": "SECURE VIDEO VISIT",
+  "assistant.videoConsultation": "Video consultation",
+  "assistant.requestingRoom": "Requesting authorized room access…",
+  "assistant.notRecorded": "This visit is not recorded by CareConnect.",
+  "note.clinicalWorkspace": "CLINICAL WORKSPACE",
+  "note.title": "Consultation note",
+  "note.loading": "Loading consultation note…",
+  "note.chiefComplaint": "Chief complaint",
+  "note.history": "History of present illness",
+  "note.examination": "Examination",
+  "note.assessment": "Assessment",
+  "note.diagnosis": "Diagnosis",
+  "note.plan": "Plan",
+  "note.followUp": "Follow-up",
+  "note.followUpDate": "Follow-up date",
+  "note.save": "Save note",
+  "note.saving": "Saving…",
+  "note.previousVersions": "Previous versions",
+  "note.loadingHistory": "Loading note history…",
+  "note.noVersions": "No earlier versions. A snapshot is created when a saved note is changed.",
+  "video.title": "Video consultation",
+  "video.secureVisit": "SECURE VIDEO VISIT",
+  "video.joining": "Requesting authorized room access…",
+  "video.permissionHint": "This visit is not recorded by CareConnect. Check your camera and microphone permissions before joining.",
+  "form.saveRecord": "Save record",
+  "form.required": "Required",
+  "form.patientName": "Patient name",
+  "form.patientDetails": "Patient details",
+  "form.completeDetails": "Complete the details below to save this record.",
+  "form.selectGender": "Select gender",
+  "auth.optional": "optional",
+  "auth.invitationHint": "Administrator accounts require an invitation code from your system owner.",
+  "auth.passwordHint": "Use at least 8 characters.",
+  "auth.enterPassword": "Enter your password",
+  "auth.fullNamePlaceholder": "Your full name",
+  "auth.agePlaceholder": "Your age",
+  "auth.concernPlaceholder": "What brings you here?",
+  "auth.practicePlaceholder": "Years of practice",
+  "auth.invitationPlaceholder": "Enter your invitation code",
+  "auth.passwordLength": "At least 8 characters",
+  "audit.title": "Audit log",
+  "audit.actor": "Actor",
+  "audit.role": "Role",
+  "audit.action": "Action",
+  "audit.resource": "Resource",
+  "audit.status": "HTTP status",
+  "audit.correlation": "Request ID",
+  "audit.timestamp": "Time",
+  "audit.actorId": "Actor ID",
+  "audit.resourceId": "Resource ID",
+  "audit.correlationId": "Correlation ID",
+  "audit.httpStatus": "Status"
+  ,"dashboard.resourceDescription": "Review and manage the information available to your account."
+  ,"dashboard.bookVisitHint": "Book a visit with your care team when you need one."
+  ,"dashboard.currentPrescriptions": "Current prescriptions"
+  ,"dashboard.medicationInstructions": "Medication instructions from your care team"
+  ,"dashboard.active": "Active"
+  ,"dashboard.medicationHint": "Your medication instructions will appear here."
+  ,"dashboard.latestCareHistory": "Your latest care history"
+  ,"dashboard.availableTestResults": "Your available test results"
+  ,"dashboard.doctorsConnected": "Doctors connected to your care"
+  ,"dashboard.noCareTeam": "Your care team will appear here"
+  ,"dashboard.doctorsFromRecords": "Doctors from your appointments and records are listed here."
+  ,"dashboard.documentedHistory": "Your documented health history"
+  ,"dashboard.latestMeasurements": "Your latest recorded measurements"
+  ,"dashboard.chooseMeasurement": "Choose a health measurement"
+  ,"dashboard.chooseRange": "Measurement date range"
+  ,"dashboard.measurement": "Measurement"
+  ,"dashboard.range": "Range"
+  ,"dashboard.week": "7 days"
+  ,"dashboard.month": "30 days"
+  ,"dashboard.chartDisclaimer": "This chart shows recorded values and period averages; it is not a diagnosis."
+  ,"dashboard.chartNeedsData": "At least two recorded measurements in this date range are needed to show a trend."
+  ,"dashboard.loadingMeasurements": "Loading measurements…"
+  ,"dashboard.accountUpdates": "Updates for your account"
+  ,"dashboard.viewScheduleArrow": "View schedule →"
+  ,"dashboard.addRecord": "＋ Add medical record"
+  ,"dashboard.addDiagnosis": "＋ Add diagnosis"
+  ,"dashboard.createPrescriptionAction": "＋ Create prescription"
+  ,"dashboard.viewMyPatients": "View my patients →"
+  ,"dashboard.openProfileArrow": "Open profile →"
+  ,"dashboard.reviewReportsArrow": "Review reports →"
+  ,"dashboard.reviewVitalsArrow": "Review vitals →"
+  ,"dashboard.viewPrescriptionsArrow": "View prescriptions →"
+  ,"dashboard.todayCheckins": "Today's check-ins"
+  ,"dashboard.scheduledVisits": "Scheduled patient visits"
+  ,"dashboard.underCare": "Patients under care"
+  ,"dashboard.assignedCare": "Assigned to your care"
+  ,"dashboard.pendingTasks": "Pending tasks"
+  ,"dashboard.upcomingAssignedVisits": "Upcoming assigned visits"
+  ,"dashboard.vitalsRecorded": "Vitals recorded"
+  ,"dashboard.assignedPatientsToday": "Appointments for patients assigned to you"
+  ,"dashboard.viewAppointmentsArrow": "View appointments →"
+  ,"dashboard.quickCoordination": "Quick access to your care work"
+  ,"dashboard.viewAssignedPatients": "View assigned patients →"
+  ,"dashboard.reviewAppointments": "Review appointments →"
+  ,"dashboard.reviewLabReports": "Review lab reports →"
+  ,"dashboard.assignedNursingWorkflow": "Assigned to your nursing workflow"
+  ,"dashboard.viewReports": "View reports →"
+  ,"dashboard.assignedPatientHistory": "History for patients assigned to you"
+  ,"dashboard.viewRecords": "View records →"
+  ,"dashboard.viewVitals": "View vitals →"
+  ,"dashboard.coordinationUpdates": "Care coordination updates"
+  ,"dashboard.manageAppointments": "Manage appointments →"
+  ,"dashboard.managePatients": "Manage patients →"
+  ,"dashboard.manageDoctors": "Manage doctors →"
+  ,"dashboard.manageNurses": "Manage nurses →"
+  ,"dashboard.manageMedications": "Manage medications →"
+  ,"dashboard.recordedSystem": "Recorded in the system"
+  ,"dashboard.manage": "Manage →"
+  ,"dashboard.availableReview": "Available for review"
+  ,"dashboard.acrossProfiles": "Across patient profiles"
+  ,"dashboard.acrossSignedInUsers": "Across signed-in users"
+  ,"auth.signupOptional": "(optional)"
+  ,"auth.getStarted": "Get started"
+  ,"auth.signIn": "Sign in"
+  ,"auth.backHome": "Back to home"
+  ,"auth.enterEmailExample": "you@example.com"
+  ,"auth.departmentExample": "e.g. Cardiology"
+  ,"auth.wardExample": "e.g. General Ward"
+  ,"form.selectOption": "Select"
+  ,"form.searchEmpty": "No matching records"
+  ,"form.tryAnotherSearch": "Try another search term."
+  ,"form.createRecordHint": "Create a record to get started. Your changes will be saved to CareConnect."
+  ,"form.completeBelow": "Complete the details below to save this record."
+  ,"form.updateDetails": "UPDATE CARE DETAILS"
+  ,"form.addToCareConnect": "ADD TO CARECONNECT"
+  ,"form.saveChanges": "Save changes"
+  ,"form.patientCoordination": "PATIENT COORDINATION"
+  ,"form.nurseAssignments": "Nurse assignments"
+  ,"form.selectAssignedNurses": "Select the nurses assigned to this patient."
+  ,"form.loadNurseTeam": "Loading nurse team…"
+  ,"form.unassign": "Unassign"
+  ,"form.assign": "Assign"
+  ,"form.noNurses": "No nurses are available."
+  ,"profile.patientRecord": "CARECONNECT PATIENT RECORD"
+  ,"profile.heading": "Medical history and current clinical information."
+  ,"profile.loading": "Loading patient record…"
+  ,"profile.noHistory": "No medical history recorded."
+  ,"profile.noDiagnoses": "No diagnoses recorded."
+  ,"profile.noPrescriptions": "No prescriptions recorded."
+  ,"profile.noLabs": "No lab reports recorded."
+  ,"profile.noVitals": "No vitals recorded."
+  ,"profile.noAppointments": "No appointments recorded."
+  ,"profile.clinicalNote": "＋ Clinical note"
+  ,"profile.addDiagnosis": "＋ Diagnosis"
+  ,"profile.addPrescription": "＋ Prescription"
+  ,"profile.addLabReport": "＋ Lab report"
+  ,"profile.medicalHistory": "Medical history"
+  ,"profile.noNotes": "No additional clinical notes."
+  ,"profile.referenceRange": "Reference range:"
+  ,"profile.notProvided": "Not provided"
+  ,"profile.careVisit": "Care visit"
+  ,"profile.noCondition": "No primary condition recorded"
+  ,"profile.bloodGroupMissing": "Blood group not recorded"
+  ,"note.saved": "Saved"
+  ,"note.doctorProfile": "Doctor profile"
+  ,"note.chiefComplaintColon": "Chief complaint:"
+  ,"note.historyColon": "History:"
+  ,"note.examinationColon": "Examination:"
+  ,"note.assessmentColon": "Assessment:"
+  ,"note.diagnosisColon": "Diagnosis:"
+  ,"note.planColon": "Plan:"
+  ,"note.followUpColon": "Follow-up:"
+  ,"note.followUpDateColon": "Follow-up date:"
+  ,"video.leave": "Leave video consultation"
+  ,"landing.kicker": "HEALTHCARE, CONNECTED"
+  ,"landing.headline": "Better care starts with a clearer connection."
+  ,"landing.intro": "One secure place for patients and care teams to stay connected throughout every step of care."
+  ,"landing.careMoves": "Care that moves with you"
+  ,"landing.teamTogether": "Your care team and health information, together."
+  ,"landing.tagline": "Thoughtful care. Connected teams."
+  ,"landing.careServices": "Care services"
+  ,"landing.about": "About us"
+  ,"landing.getStarted": "Get started"
+  ,"landing.clearerCare": "A clearer way to care"
+  ,"landing.betterHealth": "Better health starts with"
+  ,"landing.betterConnection": "better connection."
+  ,"landing.heroDescription": "Bring your appointments, health records, prescriptions, and care team together in one calm, secure place."
+  ,"landing.startJourney": "Start your care journey"
+  ,"landing.explore": "Explore CareConnect"
+  ,"landing.connectedCare": "Care that stays connected"
+  ,"landing.forPatientsTeams": "For patients and care teams"
+  ,"landing.yourCareConnected": "Your care, connected"
+  ,"landing.everyStep": "Every step, all in one place"
+  ,"landing.nextStep": "YOUR NEXT STEP"
+  ,"landing.bookAppointment": "Book an appointment"
+  ,"landing.connectedSpace": "One connected space for"
+  ,"landing.healthRecords": "Health records"
+  ,"landing.simplerCare": "Care, made simpler"
+  ,"landing.healthEverything": "Everything you need to stay"
+  ,"landing.healthTop": "on top of your health."
+  ,"landing.detailsTogether": "Your health details are easier to manage when they’re all in one place."
+  ,"landing.appointmentDescription": "Keep track of upcoming visits and stay in touch with your care team."
+  ,"landing.exploreAppointments": "Explore appointments"
+  ,"landing.recordsDescription": "See your medical history and treatment information together."
+  ,"landing.exploreRecords": "Explore records"
+  ,"landing.teamDescription": "Connect with doctors and nurses who are part of your care journey."
+  ,"landing.meetTeam": "Meet your team"
+  ,"landing.thoughtfullyConnected": "Your health, thoughtfully connected"
+  ,"landing.nextStepEasy": "Let’s make your next step"
+  ,"landing.littleEasier": "a little easier."
+  ,"landing.createAccount": "Create your account"
+  ,"landing.onePlace": "One secure place to manage your care."
+  ,"errors.unauthorized": "Email or password is incorrect."
+  ,"errors.forbidden": "You are not allowed to perform this action."
+  ,"errors.notFound": "The requested information could not be found."
+  ,"errors.conflict": "This change cannot be made right now."
+  ,"errors.rateLimited": "Too many attempts. Please try again later."
+  ,"errors.invalidInput": "Check the information and try again."
+  ,"errors.notConfigured": "This service is not configured or is temporarily unavailable. Contact the administrator."
+  ,"errors.serverUnavailable": "The service is unavailable right now. Please try again later."
+  ,"dashboard.visitsPlan": "Your visits and care plan"
+  ,"dashboard.bookAppointmentArrow": "Book an appointment →"
+  ,"dashboard.bloodPressureSystolic": "Blood pressure · systolic"
+  ,"dashboard.bloodPressureDiastolic": "Blood pressure · diastolic"
+  ,"dashboard.heartRateBpm": "Heart rate · bpm"
+  ,"dashboard.temperatureC": "Temperature · °C"
+  ,"dashboard.oxygenSaturation": "Oxygen saturation · %"
+  ,"dashboard.weightKg": "Weight · kg"
+  ,"dashboard.heightCm": "Height · cm"
+  ,"dashboard.temperatureLabel": "Temperature"
+  ,"dashboard.oxygenLabel": "Oxygen"
+  ,"dashboard.weightLabel": "Weight"
+  ,"dashboard.heightLabel": "Height"
+  ,"dashboard.assignedPatientMeasurements": "For assigned patients"
+  ,"dashboard.assignedPatientsResults": "Results for assigned patients"
+  ,"dashboard.updatesCareTeam": "Updates from your care team"
+  ,"dashboard.newNotifications": "No new notifications"
+  ,"dashboard.viewPatientsArrow": "View patients →"
+  ,"landing.english": "English"
+  ,"landing.hindi": "Hindi"
+  ,"form.emailPlaceholder": "Email address"
+  ,"form.phonePlaceholder": "Phone number"
+  ,"form.addressPlaceholder": "Address"
+  ,"profile.patient": "Patient profile"
+  ,"profile.noContact": "No contact on file"
+  ,"profile.noConcern": "No concern recorded"
+  ,"profile.noDoctor": "No doctor assigned"
+  ,"profile.careTeam": "Care team"
+  ,"profile.noRecords": "No medical history recorded."
+  ,"profile.noPrescription": "No prescriptions recorded."
+  ,"profile.noAppointmentsRecorded": "No appointments recorded."
+  ,"video.titleAttribute": "Video consultation"
+  ,"note.close": "Close"
+  ,"common.saveNote": "Save note"
+  ,"common.searchRecords": "Search records"
+  ,"common.chooseGender": "Select gender"
+  ,"common.openPatientProfile": "Open patient profile"
+  ,"common.manageNurseAssignments": "Manage nurse assignments"
+  ,"common.assignNurses": "Assign nurses"
+  ,"common.editRecord": "Edit record"
+  ,"common.deleteRecord": "Delete record"
+  ,"common.closeDialog": "Close"
 }

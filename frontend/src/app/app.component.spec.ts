@@ -25,4 +25,14 @@ describe('AppComponent', () => {
     expect((fixture.nativeElement as HTMLElement).textContent).toContain('YOUR CARE, IN ONE PLACE');
     expect((fixture.nativeElement as HTMLElement).textContent).toContain('No upcoming appointments');
   });
+
+  it('switches app navigation to Hindi and keeps the selected language', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    fixture.componentInstance.setAssistantLanguage('hi');
+    fixture.detectChanges();
+    expect((fixture.nativeElement as HTMLElement).textContent).toContain('अवलोकन');
+    expect((fixture.nativeElement as HTMLElement).querySelector('main')?.getAttribute('lang')).toBe('hi');
+    expect(localStorage.getItem('careconnect.language')).toBe('hi');
+  });
 });

@@ -85,5 +85,397 @@
   "assistant.welcome": "मैं आपकी कैसे मदद कर सकता हूँ?",
   "assistant.send": "भेजें",
   "assistant.clear": "बातचीत साफ़ करें",
-  "assistant.ask": "अपना प्रश्न लिखें…"
+  "assistant.ask": "अपना प्रश्न लिखें…",
+  "common.add": "जोड़ें",
+  "common.edit": "बदलें",
+  "common.delete": "हटाएँ",
+  "common.actions": "कार्रवाइयाँ",
+  "common.loading": "लोड हो रहा है…",
+  "common.results": "परिणाम",
+  "common.result": "परिणाम",
+  "common.noResults": "कोई मेल खाता रिकॉर्ड नहीं मिला",
+  "common.emptySearch": "दूसरा खोज शब्द आज़माएँ।",
+  "common.saveRecord": "रिकॉर्ड सहेजें",
+  "common.required": "ज़रूरी",
+  "common.optional": "वैकल्पिक",
+  "common.patientDetails": "मरीज़ का विवरण",
+  "common.patientName": "मरीज़ का नाम",
+  "common.gender": "लिंग",
+  "common.selectGender": "लिंग चुनें",
+  "common.address": "पता",
+  "common.contact": "संपर्क",
+  "common.email": "ईमेल",
+  "common.phone": "फ़ोन",
+  "common.bloodGroup": "रक्त समूह",
+  "common.emergencyContact": "आपातकालीन संपर्क",
+  "common.age": "आयु",
+  "common.name": "नाम",
+  "common.doctor": "डॉक्टर",
+  "common.patient": "मरीज़",
+  "common.status": "स्थिति",
+  "common.dateTime": "तारीख़ और समय",
+  "common.department": "विभाग",
+  "common.experience": "अनुभव",
+  "common.diagnosis": "निदान",
+  "common.treatment": "उपचार",
+  "common.recorded": "दर्ज किया गया",
+  "common.medication": "दवा",
+  "common.dosage": "खुराक",
+  "common.frequency": "आवृत्ति",
+  "common.duration": "अवधि",
+  "common.prescribed": "लिखी गई",
+  "common.test": "जाँच",
+  "common.resultLabel": "नतीजा",
+  "common.referenceRange": "संदर्भ सीमा",
+  "common.reportDate": "रिपोर्ट की तारीख़",
+  "common.notes": "टिप्पणियाँ",
+  "common.instructions": "निर्देश",
+  "common.strength": "ताकत",
+  "common.form": "रूप",
+  "common.bloodPressure": "रक्तचाप",
+  "common.heartRate": "हृदय गति",
+  "common.temperature": "तापमान °C",
+  "common.oxygen": "ऑक्सीजन %",
+  "common.weight": "वज़न किग्रा",
+  "common.height": "ऊँचाई सेमी",
+  "common.patientProfile": "मरीज़ प्रोफ़ाइल",
+  "common.emptyPatient": "कोई समस्या दर्ज नहीं है",
+  "common.viewProfile": "प्रोफ़ाइल देखें",
+  "common.openProfile": "प्रोफ़ाइल खोलें",
+  "common.consultationNote": "परामर्श नोट",
+  "common.joinVideo": "वीडियो कॉल में जुड़ें",
+  "common.newAppointment": "नया अपॉइंटमेंट",
+  "common.searchRecords": "रिकॉर्ड खोजें",
+  "common.searchResource": "खोजें",
+  "common.loadError": "जानकारी लोड नहीं हो सकी।",
+  "common.saveError": "जानकारी सहेजी नहीं जा सकी।",
+  "dashboard.newAppointment": "नया अपॉइंटमेंट",
+  "dashboard.resourceDescription": "अपने खाते के लिए उपलब्ध जानकारी देखें और प्रबंधित करें।",
+  "dashboard.workspace": "कार्यक्षेत्र",
+  "dashboard.patientSchedule": "मरीज़ का कार्यक्रम और विज़िट स्थिति",
+  "dashboard.viewSchedule": "कार्यक्रम देखें",
+  "dashboard.createPrescription": "नुस्खा बनाएँ",
+  "dashboard.viewPatients": "मरीज़ देखें",
+  "dashboard.reviewReports": "रिपोर्ट देखें",
+  "dashboard.reviewVitals": "स्वास्थ्य माप देखें",
+  "dashboard.patientStats": "आपके स्वास्थ्य के आँकड़े",
+  "dashboard.doctorStats": "चिकित्सकीय कार्यभार के आँकड़े",
+  "dashboard.nurseStats": "नर्सिंग समन्वय के आँकड़े",
+  "dashboard.adminStats": "सिस्टम के आँकड़े",
+  "dashboard.doctorToday": "आज के अपॉइंटमेंट",
+  "dashboard.scheduledToday": "आज के लिए निर्धारित",
+  "dashboard.assignedToYou": "आपको सौंपे गए",
+  "dashboard.assignedPatients": "सौंपे गए मरीज़",
+  "dashboard.connectedCare": "देखभाल रिकॉर्ड से जुड़े",
+  "dashboard.pendingLabs": "लंबित लैब रिपोर्ट",
+  "dashboard.awaitingReview": "समीक्षा की प्रतीक्षा में",
+  "dashboard.noTodayAppointments": "आज कोई अपॉइंटमेंट निर्धारित नहीं है",
+  "dashboard.assignedAppointmentsAppear": "आपके सौंपे गए अपॉइंटमेंट यहाँ दिखेंगे।",
+  "dashboard.clinicalActions": "चिकित्सकीय कार्रवाइयाँ",
+  "dashboard.startTask": "देखभाल का काम शुरू करें",
+  "dashboard.myPatients": "मेरे मरीज़",
+  "dashboard.linkedPatients": "आपके अपॉइंटमेंट और चिकित्सकीय रिकॉर्ड से जुड़े मरीज़",
+  "dashboard.noPatients": "अभी कोई मरीज़ नहीं सौंपा गया",
+  "dashboard.recentMedicalRecords": "हाल के चिकित्सा रिकॉर्ड",
+  "dashboard.forPatientsInCare": "आपकी देखभाल के मरीज़ों के लिए",
+  "dashboard.recentLabReports": "हाल की लैब रिपोर्ट",
+  "dashboard.resultsAssigned": "आपके सौंपे गए मरीज़ों के नतीजे",
+  "dashboard.recentVitals": "हाल के स्वास्थ्य माप",
+  "dashboard.panelMeasurements": "आपके मरीज़ पैनल के माप",
+  "dashboard.noVitalsPanel": "आपके पैनल में कोई स्वास्थ्य माप नहीं है",
+  "dashboard.prescriptionActivity": "नुस्खों की गतिविधि",
+  "dashboard.recentTreatmentPlans": "आपके मरीज़ों की हाल की उपचार योजनाएँ",
+  "dashboard.noPrescriptionActivity": "नुस्खे की कोई गतिविधि नहीं",
+  "dashboard.checkIns": "आज के मरीज़ चेक-इन",
+  "dashboard.assignedToNurse": "आपको सौंपे गए मरीज़ों के अपॉइंटमेंट",
+  "dashboard.noAssignedToday": "आज कोई सौंपा गया अपॉइंटमेंट नहीं है",
+  "dashboard.coordination": "मरीज़ समन्वय",
+  "dashboard.quickCareAccess": "देखभाल के काम तक तुरंत पहुँच",
+  "dashboard.patientsUnderCare": "देखभाल में शामिल मरीज़",
+  "dashboard.nursingWorkflow": "आपके नर्सिंग कार्य में सौंपे गए",
+  "dashboard.noPatientsAssigned": "अभी कोई मरीज़ नहीं सौंपा गया",
+  "dashboard.askAdmin": "अपने खाते में मरीज़ सौंपने के लिए प्रशासक से कहें।",
+  "dashboard.latestPatientVitals": "मरीज़ों के नवीनतम स्वास्थ्य माप",
+  "dashboard.assignedMeasurements": "सौंपे गए मरीज़ों के माप",
+  "dashboard.noAssignedVitals": "सौंपे गए मरीज़ों के स्वास्थ्य माप दर्ज नहीं हैं",
+  "dashboard.totalPatients": "कुल मरीज़",
+  "dashboard.totalDoctors": "कुल डॉक्टर",
+  "dashboard.totalNurses": "कुल नर्स",
+  "dashboard.patientProfiles": "मरीज़ प्रोफ़ाइल",
+  "dashboard.careTeamMembers": "देखभाल टीम के सदस्य",
+  "dashboard.nursingTeamMembers": "नर्सिंग टीम के सदस्य",
+  "dashboard.scheduledHistorical": "निर्धारित और पुराने",
+  "dashboard.acrossSystem": "पूरे सिस्टम में",
+  "dashboard.availableResults": "उपलब्ध नतीजे",
+  "dashboard.appointmentsToday": "आज के अपॉइंटमेंट",
+  "dashboard.onSchedule": "आज के कार्यक्रम में",
+  "dashboard.userAccounts": "उपयोगकर्ता खाते",
+  "dashboard.acrossRoles": "सभी भूमिकाओं में",
+  "dashboard.recentAppointments": "हाल के अपॉइंटमेंट",
+  "dashboard.latestScheduling": "हाल की समय-सारणी गतिविधि",
+  "dashboard.administration": "प्रशासन",
+  "dashboard.manageResources": "CareConnect के मुख्य संसाधन प्रबंधित करें",
+  "dashboard.operationalActivity": "संचालन गतिविधि",
+  "dashboard.currentRecords": "वर्तमान सिस्टम रिकॉर्ड",
+  "dashboard.departmentDistribution": "विभाग के अनुसार वितरण",
+  "dashboard.doctorsByDepartment": "विभाग के अनुसार डॉक्टर",
+  "dashboard.noDepartmentData": "विभाग का डेटा उपलब्ध नहीं है",
+  "dashboard.appointmentActivity": "अपॉइंटमेंट गतिविधि",
+  "dashboard.statusBreakdown": "अपॉइंटमेंट स्थिति का विवरण",
+  "dashboard.noAppointmentData": "अपॉइंटमेंट डेटा उपलब्ध नहीं है",
+  "assistant.videoSecurity": "यह विज़िट CareConnect द्वारा रिकॉर्ड नहीं की जाती। जुड़ने से पहले कैमरा और माइक्रोफ़ोन की अनुमति जाँचें।",
+  "assistant.secureVideo": "सुरक्षित वीडियो विज़िट",
+  "assistant.videoConsultation": "वीडियो परामर्श",
+  "assistant.requestingRoom": "अनुमत कमरे तक पहुँच माँगी जा रही है…",
+  "assistant.notRecorded": "यह विज़िट CareConnect द्वारा रिकॉर्ड नहीं की जाती।",
+  "note.clinicalWorkspace": "चिकित्सकीय कार्यक्षेत्र",
+  "note.title": "परामर्श नोट",
+  "note.loading": "परामर्श नोट लोड हो रहा है…",
+  "note.chiefComplaint": "मुख्य शिकायत",
+  "note.history": "वर्तमान बीमारी का इतिहास",
+  "note.examination": "जाँच",
+  "note.assessment": "आकलन",
+  "note.diagnosis": "निदान",
+  "note.plan": "योजना",
+  "note.followUp": "फ़ॉलो-अप",
+  "note.followUpDate": "फ़ॉलो-अप की तारीख़",
+  "note.save": "नोट सहेजें",
+  "note.saving": "सहेजा जा रहा है…",
+  "note.previousVersions": "पिछले संस्करण",
+  "note.loadingHistory": "नोट का इतिहास लोड हो रहा है…",
+  "note.noVersions": "पहले का कोई संस्करण नहीं है। सहेजे गए नोट में बदलाव होने पर पुरानी प्रति बनेगी।",
+  "video.title": "वीडियो परामर्श",
+  "video.secureVisit": "सुरक्षित वीडियो विज़िट",
+  "video.joining": "अनुमत कमरे तक पहुँच माँगी जा रही है…",
+  "video.permissionHint": "यह विज़िट CareConnect द्वारा रिकॉर्ड नहीं की जाती। जुड़ने से पहले कैमरा और माइक्रोफ़ोन की अनुमति जाँचें।",
+  "form.saveRecord": "रिकॉर्ड सहेजें",
+  "form.required": "ज़रूरी",
+  "form.patientName": "मरीज़ का नाम",
+  "form.patientDetails": "मरीज़ का विवरण",
+  "form.completeDetails": "रिकॉर्ड सहेजने के लिए नीचे का विवरण भरें।",
+  "form.selectGender": "लिंग चुनें",
+  "auth.optional": "वैकल्पिक",
+  "auth.invitationHint": "प्रशासक खाते के लिए सिस्टम स्वामी का आमंत्रण कोड आवश्यक है।",
+  "auth.passwordHint": "कम से कम 8 अक्षर इस्तेमाल करें।",
+  "auth.enterPassword": "अपना पासवर्ड दर्ज करें",
+  "auth.fullNamePlaceholder": "आपका पूरा नाम",
+  "auth.agePlaceholder": "आपकी आयु",
+  "auth.concernPlaceholder": "आप यहाँ किस कारण आए हैं?",
+  "auth.practicePlaceholder": "अभ्यास के वर्ष",
+  "auth.invitationPlaceholder": "आमंत्रण कोड दर्ज करें",
+  "auth.passwordLength": "कम से कम 8 अक्षर",
+  "audit.title": "ऑडिट लॉग",
+  "audit.actor": "उपयोगकर्ता",
+  "audit.role": "भूमिका",
+  "audit.action": "कार्रवाई",
+  "audit.resource": "संसाधन",
+  "audit.status": "HTTP स्थिति",
+  "audit.correlation": "अनुरोध आईडी",
+  "audit.timestamp": "समय",
+  "audit.actorId": "उपयोगकर्ता आईडी",
+  "audit.resourceId": "संसाधन आईडी",
+  "audit.correlationId": "अनुरोध आईडी",
+  "audit.httpStatus": "स्थिति"
+  ,"dashboard.resourceDescription": "अपने खाते के लिए उपलब्ध जानकारी देखें और प्रबंधित करें।"
+  ,"dashboard.bookVisitHint": "ज़रूरत पड़ने पर अपनी देखभाल टीम के साथ अपॉइंटमेंट लें।"
+  ,"dashboard.currentPrescriptions": "वर्तमान नुस्खे"
+  ,"dashboard.medicationInstructions": "आपकी देखभाल टीम के दवा संबंधी निर्देश"
+  ,"dashboard.active": "सक्रिय"
+  ,"dashboard.medicationHint": "दवा संबंधी निर्देश यहाँ दिखाई देंगे।"
+  ,"dashboard.latestCareHistory": "आपका हाल का देखभाल इतिहास"
+  ,"dashboard.availableTestResults": "आपके उपलब्ध जाँच नतीजे"
+  ,"dashboard.doctorsConnected": "आपकी देखभाल से जुड़े डॉक्टर"
+  ,"dashboard.noCareTeam": "आपकी देखभाल टीम यहाँ दिखाई देगी"
+  ,"dashboard.doctorsFromRecords": "आपके अपॉइंटमेंट और रिकॉर्ड के डॉक्टर यहाँ सूचीबद्ध हैं।"
+  ,"dashboard.documentedHistory": "दर्ज किया गया स्वास्थ्य इतिहास"
+  ,"dashboard.latestMeasurements": "आपके नवीनतम दर्ज माप"
+  ,"dashboard.chooseMeasurement": "स्वास्थ्य माप चुनें"
+  ,"dashboard.chooseRange": "माप की तारीख़ सीमा"
+  ,"dashboard.measurement": "माप"
+  ,"dashboard.range": "अवधि"
+  ,"dashboard.week": "7 दिन"
+  ,"dashboard.month": "30 दिन"
+  ,"dashboard.chartDisclaimer": "यह चार्ट दर्ज माप और अवधि के औसत दिखाता है; यह निदान नहीं है।"
+  ,"dashboard.chartNeedsData": "रुझान दिखाने के लिए इस अवधि में कम से कम दो माप आवश्यक हैं।"
+  ,"dashboard.loadingMeasurements": "माप लोड हो रहे हैं…"
+  ,"dashboard.accountUpdates": "आपके खाते के अपडेट"
+  ,"dashboard.viewScheduleArrow": "कार्यक्रम देखें →"
+  ,"dashboard.addRecord": "＋ चिकित्सा रिकॉर्ड जोड़ें"
+  ,"dashboard.addDiagnosis": "＋ निदान जोड़ें"
+  ,"dashboard.createPrescriptionAction": "＋ नुस्खा बनाएँ"
+  ,"dashboard.viewMyPatients": "मेरे मरीज़ देखें →"
+  ,"dashboard.openProfileArrow": "प्रोफ़ाइल खोलें →"
+  ,"dashboard.reviewReportsArrow": "रिपोर्ट देखें →"
+  ,"dashboard.reviewVitalsArrow": "स्वास्थ्य माप देखें →"
+  ,"dashboard.viewPrescriptionsArrow": "नुस्खे देखें →"
+  ,"dashboard.todayCheckins": "आज के चेक-इन"
+  ,"dashboard.scheduledVisits": "निर्धारित मरीज़ विज़िट"
+  ,"dashboard.underCare": "देखभाल में शामिल मरीज़"
+  ,"dashboard.assignedCare": "आपकी देखभाल के लिए सौंपे गए"
+  ,"dashboard.pendingTasks": "लंबित कार्य"
+  ,"dashboard.upcomingAssignedVisits": "आगामी सौंपे गए अपॉइंटमेंट"
+  ,"dashboard.vitalsRecorded": "दर्ज स्वास्थ्य माप"
+  ,"dashboard.assignedPatientsToday": "आपको सौंपे गए मरीज़ों के अपॉइंटमेंट"
+  ,"dashboard.viewAppointmentsArrow": "अपॉइंटमेंट देखें →"
+  ,"dashboard.quickCoordination": "देखभाल कार्य तक तुरंत पहुँच"
+  ,"dashboard.viewAssignedPatients": "सौंपे गए मरीज़ देखें →"
+  ,"dashboard.reviewAppointments": "अपॉइंटमेंट की समीक्षा करें →"
+  ,"dashboard.reviewLabReports": "लैब रिपोर्ट की समीक्षा करें →"
+  ,"dashboard.assignedNursingWorkflow": "आपके नर्सिंग कार्य में सौंपे गए"
+  ,"dashboard.viewReports": "रिपोर्ट देखें →"
+  ,"dashboard.assignedPatientHistory": "सौंपे गए मरीज़ों का इतिहास"
+  ,"dashboard.viewRecords": "रिकॉर्ड देखें →"
+  ,"dashboard.viewVitals": "स्वास्थ्य माप देखें →"
+  ,"dashboard.coordinationUpdates": "देखभाल समन्वय अपडेट"
+  ,"dashboard.manageAppointments": "अपॉइंटमेंट प्रबंधित करें →"
+  ,"dashboard.managePatients": "मरीज़ प्रबंधित करें →"
+  ,"dashboard.manageDoctors": "डॉक्टर प्रबंधित करें →"
+  ,"dashboard.manageNurses": "नर्स प्रबंधित करें →"
+  ,"dashboard.manageMedications": "दवाएँ प्रबंधित करें →"
+  ,"dashboard.recordedSystem": "सिस्टम में दर्ज"
+  ,"dashboard.manage": "प्रबंधित करें →"
+  ,"dashboard.availableReview": "समीक्षा के लिए उपलब्ध"
+  ,"dashboard.acrossProfiles": "मरीज़ प्रोफ़ाइल में"
+  ,"dashboard.acrossSignedInUsers": "सभी लॉग-इन उपयोगकर्ताओं में"
+  ,"auth.signupOptional": "(वैकल्पिक)"
+  ,"auth.getStarted": "शुरू करें"
+  ,"auth.signIn": "साइन इन करें"
+  ,"auth.backHome": "मुखपृष्ठ पर लौटें"
+  ,"auth.enterEmailExample": "you@example.com"
+  ,"auth.departmentExample": "उदाहरण: हृदय रोग विभाग"
+  ,"auth.wardExample": "उदाहरण: सामान्य वार्ड"
+  ,"form.selectOption": "चुनें"
+  ,"form.searchEmpty": "कोई मेल खाता रिकॉर्ड नहीं मिला"
+  ,"form.tryAnotherSearch": "दूसरा खोज शब्द आज़माएँ।"
+  ,"form.createRecordHint": "शुरू करने के लिए रिकॉर्ड बनाएँ। बदलाव CareConnect में सहेजे जाएँगे।"
+  ,"form.completeBelow": "रिकॉर्ड सहेजने के लिए नीचे का विवरण भरें।"
+  ,"form.updateDetails": "देखभाल विवरण बदलें"
+  ,"form.addToCareConnect": "CareConnect में जोड़ें"
+  ,"form.saveChanges": "बदलाव सहेजें"
+  ,"form.patientCoordination": "मरीज़ समन्वय"
+  ,"form.nurseAssignments": "नर्स का आवंटन"
+  ,"form.selectAssignedNurses": "इस मरीज़ को दी गई नर्स चुनें।"
+  ,"form.loadNurseTeam": "नर्सिंग टीम लोड हो रही है…"
+  ,"form.unassign": "हटाएँ"
+  ,"form.assign": "सौंपें"
+  ,"form.noNurses": "कोई नर्स उपलब्ध नहीं है।"
+  ,"profile.patientRecord": "CARECONNECT मरीज़ रिकॉर्ड"
+  ,"profile.heading": "चिकित्सा इतिहास और वर्तमान चिकित्सकीय जानकारी।"
+  ,"profile.loading": "मरीज़ रिकॉर्ड लोड हो रहा है…"
+  ,"profile.noHistory": "कोई चिकित्सा इतिहास दर्ज नहीं है।"
+  ,"profile.noDiagnoses": "कोई निदान दर्ज नहीं है।"
+  ,"profile.noPrescriptions": "कोई नुस्खा दर्ज नहीं है।"
+  ,"profile.noLabs": "कोई लैब रिपोर्ट दर्ज नहीं है।"
+  ,"profile.noVitals": "कोई स्वास्थ्य माप दर्ज नहीं है।"
+  ,"profile.noAppointments": "कोई अपॉइंटमेंट दर्ज नहीं है।"
+  ,"profile.clinicalNote": "＋ चिकित्सकीय नोट"
+  ,"profile.addDiagnosis": "＋ निदान"
+  ,"profile.addPrescription": "＋ नुस्खा"
+  ,"profile.addLabReport": "＋ लैब रिपोर्ट"
+  ,"profile.medicalHistory": "चिकित्सा इतिहास"
+  ,"profile.noNotes": "कोई अतिरिक्त चिकित्सकीय नोट नहीं है।"
+  ,"profile.referenceRange": "संदर्भ सीमा:"
+  ,"profile.notProvided": "उपलब्ध नहीं"
+  ,"profile.careVisit": "देखभाल विज़िट"
+  ,"profile.noCondition": "कोई मुख्य स्वास्थ्य स्थिति दर्ज नहीं है"
+  ,"profile.bloodGroupMissing": "रक्त समूह दर्ज नहीं है"
+  ,"note.saved": "सहेजा गया"
+  ,"note.doctorProfile": "डॉक्टर प्रोफ़ाइल"
+  ,"note.chiefComplaintColon": "मुख्य शिकायत:"
+  ,"note.historyColon": "इतिहास:"
+  ,"note.examinationColon": "जाँच:"
+  ,"note.assessmentColon": "आकलन:"
+  ,"note.diagnosisColon": "निदान:"
+  ,"note.planColon": "योजना:"
+  ,"note.followUpColon": "फ़ॉलो-अप:"
+  ,"note.followUpDateColon": "फ़ॉलो-अप की तारीख़:"
+  ,"video.leave": "वीडियो परामर्श छोड़ें"
+  ,"landing.kicker": "जुड़ी हुई स्वास्थ्य सेवा"
+  ,"landing.headline": "बेहतर देखभाल की शुरुआत बेहतर जुड़ाव से होती है।"
+  ,"landing.intro": "मरीज़ों और देखभाल टीम के लिए हर चरण में जुड़े रहने की एक सुरक्षित जगह।"
+  ,"landing.careMoves": "आपके साथ चलने वाली देखभाल"
+  ,"landing.teamTogether": "आपकी देखभाल टीम और स्वास्थ्य जानकारी, एक साथ।"
+  ,"landing.tagline": "सोच-समझकर देखभाल। जुड़ी हुई टीमें।"
+  ,"landing.careServices": "देखभाल सेवाएँ"
+  ,"landing.about": "हमारे बारे में"
+  ,"landing.getStarted": "शुरू करें"
+  ,"landing.clearerCare": "देखभाल का सरल तरीका"
+  ,"landing.betterHealth": "बेहतर स्वास्थ्य की शुरुआत"
+  ,"landing.betterConnection": "बेहतर जुड़ाव से।"
+  ,"landing.heroDescription": "अपॉइंटमेंट, स्वास्थ्य रिकॉर्ड, नुस्खे और देखभाल टीम को एक सुरक्षित जगह पर साथ रखें।"
+  ,"landing.startJourney": "देखभाल यात्रा शुरू करें"
+  ,"landing.explore": "CareConnect देखें"
+  ,"landing.connectedCare": "लगातार जुड़ी देखभाल"
+  ,"landing.forPatientsTeams": "मरीज़ों और देखभाल टीम के लिए"
+  ,"landing.yourCareConnected": "आपकी देखभाल, जुड़ी हुई"
+  ,"landing.everyStep": "हर चरण, एक ही जगह"
+  ,"landing.nextStep": "आपका अगला कदम"
+  ,"landing.bookAppointment": "अपॉइंटमेंट बुक करें"
+  ,"landing.connectedSpace": "एक जुड़ी हुई जगह पर"
+  ,"landing.healthRecords": "स्वास्थ्य रिकॉर्ड"
+  ,"landing.simplerCare": "सरल देखभाल"
+  ,"landing.healthEverything": "स्वास्थ्य संभालने के लिए"
+  ,"landing.healthTop": "ज़रूरी सब कुछ।"
+  ,"landing.detailsTogether": "स्वास्थ्य की जानकारी एक ही जगह होने से उसे संभालना आसान होता है।"
+  ,"landing.appointmentDescription": "आगामी विज़िट देखें और अपनी देखभाल टीम के संपर्क में रहें।"
+  ,"landing.exploreAppointments": "अपॉइंटमेंट देखें"
+  ,"landing.recordsDescription": "अपना चिकित्सा इतिहास और उपचार की जानकारी साथ देखें।"
+  ,"landing.exploreRecords": "रिकॉर्ड देखें"
+  ,"landing.teamDescription": "अपनी देखभाल यात्रा से जुड़े डॉक्टरों और नर्सों से संपर्क करें।"
+  ,"landing.meetTeam": "अपनी टीम से मिलें"
+  ,"landing.thoughtfullyConnected": "आपका स्वास्थ्य, सोच-समझकर जुड़ा हुआ"
+  ,"landing.nextStepEasy": "आपका अगला कदम बनाएँ"
+  ,"landing.littleEasier": "थोड़ा और आसान।"
+  ,"landing.createAccount": "अपना खाता बनाएँ"
+  ,"landing.onePlace": "अपनी देखभाल संभालने की सुरक्षित जगह।"
+  ,"errors.unauthorized": "ईमेल या पासवर्ड सही नहीं है।"
+  ,"errors.forbidden": "आपको यह कार्रवाई करने की अनुमति नहीं है।"
+  ,"errors.notFound": "मांगी गई जानकारी नहीं मिली।"
+  ,"errors.conflict": "यह बदलाव इस समय संभव नहीं है।"
+  ,"errors.rateLimited": "बहुत अधिक प्रयास हुए। कृपया बाद में कोशिश करें।"
+  ,"errors.invalidInput": "दर्ज जानकारी जाँचें और फिर प्रयास करें।"
+  ,"errors.notConfigured": "यह सेवा कॉन्फ़िगर नहीं है या अभी उपलब्ध नहीं है। प्रशासक से संपर्क करें।"
+  ,"errors.serverUnavailable": "सेवा अभी उपलब्ध नहीं है। कृपया बाद में कोशिश करें।"
+  ,"dashboard.visitsPlan": "आपकी विज़िट और देखभाल योजना"
+  ,"dashboard.bookAppointmentArrow": "अपॉइंटमेंट बुक करें →"
+  ,"dashboard.bloodPressureSystolic": "रक्तचाप · सिस्टोलिक"
+  ,"dashboard.bloodPressureDiastolic": "रक्तचाप · डायस्टोलिक"
+  ,"dashboard.heartRateBpm": "हृदय गति · प्रति मिनट"
+  ,"dashboard.temperatureC": "तापमान · °C"
+  ,"dashboard.oxygenSaturation": "ऑक्सीजन संतृप्ति · %"
+  ,"dashboard.weightKg": "वज़न · किग्रा"
+  ,"dashboard.heightCm": "ऊँचाई · सेमी"
+  ,"dashboard.temperatureLabel": "तापमान"
+  ,"dashboard.oxygenLabel": "ऑक्सीजन"
+  ,"dashboard.weightLabel": "वज़न"
+  ,"dashboard.heightLabel": "ऊँचाई"
+  ,"dashboard.assignedPatientMeasurements": "सौंपे गए मरीज़ों के लिए"
+  ,"dashboard.assignedPatientsResults": "सौंपे गए मरीज़ों के नतीजे"
+  ,"dashboard.updatesCareTeam": "आपकी देखभाल टीम के अपडेट"
+  ,"dashboard.newNotifications": "कोई नई सूचना नहीं"
+  ,"dashboard.viewPatientsArrow": "मरीज़ देखें →"
+  ,"landing.english": "अंग्रेज़ी"
+  ,"landing.hindi": "हिंदी"
+  ,"form.emailPlaceholder": "ईमेल पता"
+  ,"form.phonePlaceholder": "फ़ोन नंबर"
+  ,"form.addressPlaceholder": "पता"
+  ,"profile.patient": "मरीज़ प्रोफ़ाइल"
+  ,"profile.noContact": "संपर्क जानकारी दर्ज नहीं है"
+  ,"profile.noConcern": "कोई समस्या दर्ज नहीं है"
+  ,"profile.noDoctor": "कोई डॉक्टर नियुक्त नहीं है"
+  ,"profile.careTeam": "देखभाल टीम"
+  ,"profile.noRecords": "कोई चिकित्सा इतिहास दर्ज नहीं है।"
+  ,"profile.noPrescription": "कोई नुस्खा दर्ज नहीं है।"
+  ,"profile.noAppointmentsRecorded": "कोई अपॉइंटमेंट दर्ज नहीं है।"
+  ,"video.titleAttribute": "वीडियो परामर्श"
+  ,"note.close": "बंद करें"
+  ,"common.saveNote": "नोट सहेजें"
+  ,"common.searchRecords": "रिकॉर्ड खोजें"
+  ,"common.chooseGender": "लिंग चुनें"
+  ,"common.openPatientProfile": "मरीज़ प्रोफ़ाइल खोलें"
+  ,"common.manageNurseAssignments": "नर्स आवंटन प्रबंधित करें"
+  ,"common.assignNurses": "नर्स आवंटित करें"
+  ,"common.editRecord": "रिकॉर्ड बदलें"
+  ,"common.deleteRecord": "रिकॉर्ड हटाएँ"
+  ,"common.closeDialog": "बंद करें"
 }

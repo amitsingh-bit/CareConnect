@@ -8,6 +8,9 @@ type TranslationMap = Record<string, string>;
 export class TranslatePipe implements PipeTransform {
   transform(key: string, language: 'en' | 'hi' = 'en'): string {
     const dictionary = (language === 'hi' ? hi : en) as TranslationMap;
-    return dictionary[key] ?? key;
+    if (dictionary[key]) return dictionary[key];
+    // Dynamic resource labels are authored in English in the existing resource catalog.
+    const entry = Object.entries(en as TranslationMap).find(([, english]) => english === key);
+    return entry ? dictionary[entry[0]] ?? key : key;
   }
 }
