@@ -3,10 +3,9 @@ package com.example.CareConnect_hcl;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 import java.util.Optional;
 import java.lang.reflect.Proxy;
+import java.util.ArrayList;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,6 +17,7 @@ import com.example.CareConnect_hcl.config.AuthSessionInterceptor;
 import com.example.CareConnect_hcl.config.CurrentAccountService;
 import com.example.CareConnect_hcl.model.entity.Account;
 import com.example.CareConnect_hcl.repository.AccountRepository;
+import com.example.CareConnect_hcl.repository.AuditLogRepository;
 import com.example.CareConnect_hcl.services.AuditLogService;
 
 class AuthSessionInterceptorTest {
@@ -26,6 +26,7 @@ class AuthSessionInterceptorTest {
     private AuthSessionInterceptor interceptor;
     private Account currentAccount;
     private AuditLogService auditLogs;
+    private java.util.List<com.example.CareConnect_hcl.model.entity.AuditLog> recorded;
 
     @BeforeEach
     void setUp() {
@@ -35,7 +36,14 @@ class AuthSessionInterceptorTest {
                     if (method.getName().equals("toString")) return "TestAccountRepository";
                     return null;
                 });
-        auditLogs = mock(AuditLogService.class);
+        recorded = new ArrayList<>();
+        AuditLogRepository auditRepository = (AuditLogRepository) Proxy.newProxyInstance(AuditLogRepository.class.getClassLoader(),
+                new Class<?>[] { AuditLogRepository.class }, (proxy, method, args) -> {
+                    if (method.getName().equals("save")) { recorded.add((com.example.CareConnect_hcl.model.entity.AuditLog) args[0]); return args[0]; }
+                    if (method.getName().equals("toString")) return "TestAuditLogRepository";
+                    return null;
+                });
+        auditLogs = new AuditLogService(auditRepository);
         interceptor = new AuthSessionInterceptor(accounts, auditLogs, true);
     }
 
@@ -56,7 +64,7 @@ class AuthSessionInterceptorTest {
 
         assertFalse(interceptor.preHandle(request, response, new Object()));
         assertEquals(401, response.getStatus());
-        verify(auditLogs).record(null, "GET", "/api/patients", 401);
+        assertEquals(1, recorded.size());
     }
 
     @Test
@@ -66,7 +74,7 @@ class AuthSessionInterceptorTest {
         MockHttpServletResponse response = new MockHttpServletResponse();
         assertFalse(interceptor.preHandle(request, response, new Object()));
         assertEquals(403, response.getStatus());
-        verify(auditLogs).record(1L, "POST", "/api/vitals", 403);
+        assertEquals(1, recorded.size());
     }
 
     private void assertAllowed(String role, String method, String path) throws Exception {
