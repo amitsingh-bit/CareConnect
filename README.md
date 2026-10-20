@@ -1,71 +1,80 @@
 # CareConnect
 
-CareConnect is a healthcare coordination application for patients and care teams. The repository contains a Spring Boot REST API and an Angular 19 frontend.
+CareConnect is an existing healthcare coordination application built with a Spring Boot REST API, MySQL, and an Angular 19 frontend. This repository extends the existing application; it is not a replacement project.
 
-## Features
+## Existing architecture
 
-- Session based sign in and role specific registration for patients, doctors, nurses, and administrators.
-- A role aware workspace for appointments, patient profiles, medical records, diagnoses, prescriptions, lab reports, doctors, nurses, and the medication catalog.
-- Create, update, search, and delete actions for resources supported by the API.
-- Overview cards for care activity, with shortcuts to appointments and health records.
+- **Frontend:** Angular 19, TypeScript, Angular Router, HttpClient, one role-aware workspace component, and session-based API requests.
+- **Backend:** Java 17, Spring Boot 4.1.1, Spring Web, Spring Data JPA, Hibernate, and Maven. Sources are under `backend/src`; the root `pom.xml` configures those source directories.
+- **Database:** MySQL with the existing patient, doctor, nurse, administrator, appointment, medical record, diagnosis, prescription, medication, lab report, vital, notification, and account entities.
+- **Authentication:** Server-side HTTP session. Passwords are hashed by the existing `PasswordHasher`; account roles are `PATIENT`, `DOCTOR`, `NURSE`, and `ADMIN`.
 
-## Interface direction
+The role-aware dashboard already loads live records from the API. Patients see their profile, appointments, care team, records, diagnoses, prescriptions, lab reports, vitals, and notifications. Doctor and nurse dashboards show their existing scoped work queues. Empty lists are presented without inventing clinical data.
 
-The Angular workspace follows the UI/UX Pro Max healthcare guidance: a light, data-dense dashboard with calm teal and green accents, clear surfaces, and Atkinson Hyperlegible typography. Tables and forms use readable text sizing, visible keyboard focus, responsive layouts, and reduced-motion support. The source design guidance is in `ui-ux-pro-max-skill/`.
+## Security changes
+
+- Session cookies are HTTP-only and use `SameSite=Lax`. Set `SESSION_COOKIE_SECURE=true` behind HTTPS in production.
+- Unsafe API requests require a CSRF token. After login or signup the backend sets the readable `XSRF-TOKEN` cookie; Angular's default XSRF interceptor sends it as `X-XSRF-TOKEN`. The token is stored in the server session and compared before processing writes.
+- API activity is written to the `audit_logs` table with account ID when available, HTTP method, route, response status, and timestamp. Request bodies and clinical data are not copied into the audit table.
+- Existing per-role API checks and patient relationship checks remain in place.
+
+The application currently uses Hibernate `ddl-auto: update`; on startup it adds the audit table to the existing schema. No Flyway migration framework is configured in this repository. Back up the database and review production schema changes through your normal change process before deploying.
+
+## Features not yet implemented
+
+The patient dashboard now includes a heart rate line chart from actual vital records with 7-day and 30-day filters. Other vital types do not yet have charts, and the dashboard does not compare periods or provide a full historical analytics API. A consultation-note workflow, English/Hindi localization, an AI assistant/provider integration, and a video consultation provider/room workflow are also not implemented. No simulated AI or video behavior is included. External AI/video activation will require further implementation and provider credentials.
 
 ## Requirements
 
 - Java 17 or later
 - Maven 3.9 or the included Maven wrapper
 - Node.js 20 or later and npm
-- MySQL running locally with a database named `CareConnect`
+- MySQL with a database named `CareConnect`
 
-The backend database connection is configured in `backend/src/main/resources/application.yml`. It defaults to `jdbc:mysql://localhost:3306/CareConnect` with username `root` and password `amit7280`; override these with `DB_URL`, `DB_USERNAME`, and `DB_PASSWORD` for your local MySQL installation. The application uses the existing session cookie authentication. For administrator signup, set `CARECONNECT_ADMIN_SIGNUP_CODE` to the invitation code that new administrators must provide.
+## Configuration
 
-## Demo database
+The backend reads these environment variables (placeholders only; do not commit real credentials):
 
-Create the database if needed:
+| Variable | Default | Purpose |
+| --- | --- | --- |
+| `SPRING_DATASOURCE_URL` | `jdbc:mysql://localhost:3306/CareConnect` | MySQL JDBC URL |
+| `SPRING_DATASOURCE_USERNAME` | `root` | MySQL username |
+| `SPRING_DATASOURCE_PASSWORD` | empty | MySQL password |
+| `SESSION_COOKIE_SECURE` | `false` | Set `true` when served over HTTPS |
+| `CARECONNECT_ADMIN_SIGNUP_CODE` | empty | Invitation code required for admin signup |
+| `CARECONNECT_CSRF_ENABLED` | `true` | CSRF protection toggle; keep enabled outside isolated tests |
+
+Create the database before starting the backend:
 
 ```sql
 CREATE DATABASE CareConnect;
 ```
 
-Start Spring Boot once so Hibernate can create or update the tables from the existing JPA entities. Then, from the repository root, load the linked demo records:
+For example, configure a local environment before starting (replace the sample values locally):
 
 ```bash
-mysql -u root -p CareConnect < database/careconnect_demo_data.sql
+export SPRING_DATASOURCE_URL='jdbc:mysql://localhost:3306/CareConnect'
+export SPRING_DATASOURCE_USERNAME='root'
+export SPRING_DATASOURCE_PASSWORD='your-local-password'
 ```
 
-Restart Spring Boot and sign in with any of these demo accounts:
-
-| Role | Email | Password |
-| --- | --- | --- |
-| Patient | `patient@careconnect.com` | `Patient@123` |
-| Doctor | `doctor@careconnect.com` | `Doctor@123` |
-| Nurse | `nurse@careconnect.com` | `Nurse@123` |
-| Admin | `admin@careconnect.com` | `Admin@123` |
-
-The seed uses the existing `doctor`, `patients`, `appointments`, `medical_records`, `diagnoses`, `prescriptions`, `lab_reports`, and related table mappings. Vitals and notifications use the added `vitals` and `notifications` entities. The SQL uses explicit stable IDs and can be run again to refresh the demo rows. It is intended for local development and demos; do not use the listed credentials outside that environment.
+There is no `.env` loader in the current backend; export variables in the shell or your deployment platform. Do not use demo credentials or data in a production environment. `database/careconnect_demo_data.sql` is for local development only.
 
 ## Run locally
 
-Open two terminals from the repository root.
-
-Start the backend:
-
-```bash
-mvn spring-boot:run
-```
-
-Or use the wrapper:
+From the repository root, start Spring Boot:
 
 ```bash
 ./mvnw spring-boot:run
 ```
 
-The backend listens on [http://localhost:8080](http://localhost:8080). The root Maven configuration points to the backend source and resource folders under `backend/src`.
+Or use installed Maven:
 
-Start the Angular frontend:
+```bash
+mvn spring-boot:run
+```
+
+In another terminal, start Angular:
 
 ```bash
 cd frontend
@@ -73,32 +82,19 @@ npm install
 npm start
 ```
 
-Open [http://localhost:4200](http://localhost:4200). The Angular development server forwards `/api` requests to the backend through `frontend/proxy.conf.json`; requests use the backend session cookie.
+Open `http://localhost:4200`. The Angular development proxy forwards `/api` to `http://localhost:8080`, so browser requests and the session cookie use the same origin. The backend listens on port 8080.
 
-To deploy Angular inside Spring Boot, build it from `frontend`:
+Build Angular for static serving by running `npm run build` from `frontend`; the configured output directory is `backend/src/main/resources/static`. Build the backend with `./mvnw package`.
 
-```bash
-npm run build
-```
-
-The production build is written to `backend/src/main/resources/static`. Run or restart Spring Boot and open [http://localhost:8080](http://localhost:8080) to use the combined app.
-
-## Build
-
-Build the frontend:
+## Tests
 
 ```bash
-cd frontend
-npm run build
+./mvnw test
+cd frontend && npm test -- --watch=false
 ```
 
-Build the Spring Boot application:
-
-```bash
-mvn package
-```
+The CSRF and role-access interceptor tests are under `backend/src/test`. Run builds and tests against a configured database where application integration tests require it.
 
 ## API areas
 
-The backend provides `/api/auth` for session access and REST resources under `/api/appointments`, `/api/patients`, `/api/doctors`, `/api/nurses`, `/api/medical-records`, `/api/diagnoses`, `/api/prescriptions`, `/api/lab-reports`, `/api/medications`, and `/api/admins`.
-# CareConnect
+The existing API includes `/api/auth`, `/api/appointments`, `/api/patients`, `/api/doctors`, `/api/nurses`, `/api/medical-records`, `/api/diagnoses`, `/api/prescriptions`, `/api/lab-reports`, `/api/medications`, `/api/vitals`, and `/api/notifications`. Authentication uses `/api/auth/login`, `/api/auth/signup`, `/api/auth/me`, and `/api/auth/logout`.

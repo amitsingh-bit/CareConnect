@@ -3,9 +3,8 @@ package com.example.CareConnect_hcl;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.when;
-
 import java.util.Optional;
+import java.lang.reflect.Proxy;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,11 +21,17 @@ class AuthSessionInterceptorTest {
     private static final String SESSION_KEY = "careconnect.accountId";
     private AccountRepository accounts;
     private AuthSessionInterceptor interceptor;
+    private Account currentAccount;
 
     @BeforeEach
     void setUp() {
-        accounts = org.mockito.Mockito.mock(AccountRepository.class);
-        interceptor = new AuthSessionInterceptor(accounts, org.mockito.Mockito.mock(com.example.CareConnect_hcl.services.AuditLogService.class));
+        accounts = (AccountRepository) Proxy.newProxyInstance(AccountRepository.class.getClassLoader(),
+                new Class<?>[] { AccountRepository.class }, (proxy, method, args) -> {
+                    if (method.getName().equals("findById")) return Optional.ofNullable(currentAccount);
+                    if (method.getName().equals("toString")) return "TestAccountRepository";
+                    return null;
+                });
+        interceptor = new AuthSessionInterceptor(accounts, null, true);
     }
 
     @Test
@@ -51,6 +56,7 @@ class AuthSessionInterceptorTest {
     @Test
     void rejectsStateChangingRequestsWithoutCsrfToken() throws Exception {
         MockHttpServletRequest request = request("ADMIN", "POST", "/api/vitals");
+        request.removeHeader("X-XSRF-TOKEN");
         MockHttpServletResponse response = new MockHttpServletResponse();
         assertFalse(interceptor.preHandle(request, response, new Object()));
         assertEquals(403, response.getStatus());
@@ -74,7 +80,7 @@ class AuthSessionInterceptorTest {
 
     private MockHttpServletRequest request(String role, String method, String path) {
         Account account = new Account("test@example.invalid", "hash", role, "Test", 1L);
-        when(accounts.findById(1L)).thenReturn(Optional.of(account));
+        currentAccount = account;
         MockHttpServletRequest request = new MockHttpServletRequest(method, path);
         MockHttpSession session = new MockHttpSession();
         session.setAttribute(SESSION_KEY, 1L);

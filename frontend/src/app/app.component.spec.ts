@@ -11,16 +11,18 @@ describe('AppComponent', () => {
         provide: AuthService,
         useValue: {
           me: () => of({ id: 1, profileId: 1, name: 'Care User', email: 'care@example.com', role: 'PATIENT' }),
-          list: () => of([])
+          list: () => of([]),
+          get: () => of({ id: 1, name: 'Care User', age: 42, gender: 'Not recorded' })
         }
       }]
     }).compileComponents();
   });
 
-  it('should create the app and render the signed-in account', () => {
+  it('should create the app and render the patient overview', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     expect(fixture.componentInstance).toBeTruthy();
-    expect((fixture.nativeElement as HTMLElement).textContent).toContain('Welcome, Care User.');
+    expect((fixture.nativeElement as HTMLElement).textContent).toContain('YOUR CARE, IN ONE PLACE');
+    expect((fixture.nativeElement as HTMLElement).textContent).toContain('No upcoming appointments');
   });
 });

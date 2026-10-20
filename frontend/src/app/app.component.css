@@ -182,6 +182,15 @@ tbody tr:hover { background: #f5f9fb; }
 .chart-label strong { color: var(--cc-ink); }
 .chart-track { height: 7px; overflow: hidden; border-radius: 99px; background: #eaf1f4; }
 .chart-track i { display: block; height: 100%; min-width: 4px; border-radius: inherit; background: linear-gradient(90deg,#0077b6,#36a58f); }
+.trend-range { display: flex; align-items: center; gap: 7px; color: var(--cc-muted); font-size: 10px; }
+.trend-range select { min-height: 30px; border: 1px solid var(--cc-line); border-radius: 6px; padding: 3px 7px; color: var(--cc-ink); background: #fff; font: inherit; }
+.trend-chart { height: 130px; margin: 10px 0 4px; padding: 8px 2px 0; }
+.trend-chart svg { width: 100%; height: 100%; overflow: visible; }
+.trend-axis { stroke: #dce7ee; stroke-width: 1; vector-effect: non-scaling-stroke; }
+.trend-line { fill: none; stroke: #087e76; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+.trend-summary { display: flex; justify-content: space-between; gap: 8px; color: var(--cc-muted); font-size: 9px; }
+.trend-summary strong { color: var(--cc-ink); font-weight: 600; }
+.trend-note { margin: 9px 0 0; color: var(--cc-muted); font-size: 9px; }
 @media(max-width:900px) { .patient-summary { flex-wrap: wrap; }.patient-summary-main { flex: 1; }.patient-summary-detail { flex: 1 1 27%; min-height: 42px; } }
 @media(max-width:640px) { .patient-summary { gap: 12px; padding: 13px; }.patient-summary-main { min-width: calc(100% - 65px); }.patient-summary-detail { flex-basis: calc(50% - 10px); padding-left: 10px; }.patient-summary-detail:nth-of-type(3) { border-left: 0; padding-left: 0; }.vitals-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } }
 @media(max-width:640px) { .patient-profile-modal { width: calc(100vw - 18px); max-height: 93vh; }.patient-profile-content { grid-template-columns: 1fr; gap: 9px; padding: 12px; }.patient-detail-summary { padding: 12px; }.patient-profile-actions { padding: 10px 12px; } }

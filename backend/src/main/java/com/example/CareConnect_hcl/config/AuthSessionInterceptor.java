@@ -21,6 +21,7 @@ public class AuthSessionInterceptor implements HandlerInterceptor {
     private static final Logger log = LoggerFactory.getLogger(AuthSessionInterceptor.class);
     private static final String ACCOUNT_ID_SESSION_KEY = "careconnect.accountId";
     private static final String CSRF_SESSION_KEY = "careconnect.csrf";
+    private final boolean csrfEnabled;
     private final AccountRepository accountRepository;
     private final AuditLogService auditLogService;
 
@@ -102,7 +103,7 @@ public class AuthSessionInterceptor implements HandlerInterceptor {
         }
         if (path.startsWith("/api/doctors")) return read || admin;
         if (path.startsWith("/api/medical-records")) return read || ((write || delete) && (admin || normalizedRole.equals("DOCTOR")));
-        if (path.startsWith("/api/prescriptions")) return read || (write && (admin || normalizedRole.equals("DOCTOR"))) || (delete && admin);
+        if (path.startsWith("/api/prescriptions")) return (read && !normalizedRole.equals("NURSE")) || (write && (admin || normalizedRole.equals("DOCTOR"))) || (delete && admin);
         if (path.startsWith("/api/lab-reports")) return read || ((write || delete) && (admin || normalizedRole.equals("DOCTOR")));
         if (path.startsWith("/api/diagnoses")) return admin || normalizedRole.equals("DOCTOR") || (read && (normalizedRole.equals("PATIENT") || normalizedRole.equals("NURSE")));
         if (path.startsWith("/api/medications")) return read && (admin || normalizedRole.equals("DOCTOR")) || ((write || delete) && admin);

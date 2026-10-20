@@ -82,6 +82,7 @@ export class AppComponent implements OnInit {
   patientProfile: PatientProfileData | null = null;
   patientProfileLoading = false;
   patientContextId: number | null = null;
+  vitalRange: 'week' | 'month' = 'month';
 
   get initials(): string { return this.account?.name.trim().split(/\s+/).slice(0, 2).map((part) => part[0]).join('').toUpperCase() || 'CC'; }
   get firstName(): string { return this.account?.name.trim().split(/\s+/)[0] || 'there'; }
@@ -101,6 +102,22 @@ export class AppComponent implements OnInit {
   get activePrescriptions(): Row[] { return (this.patientDashboard?.prescriptions || []).filter((row) => String(row['status'] || '').toUpperCase() === 'ACTIVE'); }
   get abnormalReports(): Row[] { return (this.patientDashboard?.labReports || []).filter((row) => String(row['status'] || '').toUpperCase() === 'ABNORMAL'); }
   get doctorPendingLabs(): Row[] { return (this.doctorDashboard?.labReports || []).filter((row) => String(row['status'] || '').toUpperCase() === 'PENDING'); }
+  get heartRateTrend(): { value: number; date: Date }[] {
+    const now = new Date();
+    const cutoff = new Date(now);
+    cutoff.setDate(now.getDate() - (this.vitalRange === 'week' ? 7 : 30));
+    return (this.patientDashboard?.vitals || []).map((row) => ({ value: Number(row['heartRate']), date: new Date(String(row['recordedAt'])) }))
+      .filter((item) => Number.isFinite(item.value) && !Number.isNaN(item.date.getTime()) && item.date >= cutoff)
+      .sort((a, b) => a.date.getTime() - b.date.getTime()).slice(-14);
+  }
+  get heartRateTrendPoints(): string {
+    const values = this.heartRateTrend;
+    if (!values.length) return '';
+    const min = Math.min(...values.map((item) => item.value));
+    const max = Math.max(...values.map((item) => item.value));
+    const spread = Math.max(1, max - min);
+    return values.map((item, index) => `${values.length === 1 ? 50 : 5 + index * 90 / (values.length - 1)},${90 - (item.value - min) * 75 / spread}`).join(' ');
+  }
   get adminAppointmentsToday(): Row[] { return (this.adminDashboard?.appointments || []).filter((row) => this.isToday(row['appointmentDateTime'])); }
   get adminDepartmentStats(): { label: string; value: number }[] {
     const counts = new Map<string, number>();
