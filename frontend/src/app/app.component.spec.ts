@@ -5,6 +5,7 @@ import { AuthService } from './auth.service';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
+    localStorage.setItem('careconnect.language', 'en');
     await TestBed.configureTestingModule({
       imports: [AppComponent],
       providers: [{
@@ -29,7 +30,7 @@ describe('AppComponent', () => {
   it('switches app navigation to Hindi and keeps the selected language', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
-    fixture.componentInstance.setAssistantLanguage('hi');
+    fixture.componentInstance.setLanguage('hi');
     fixture.detectChanges();
     expect((fixture.nativeElement as HTMLElement).textContent).toContain('अवलोकन');
     expect((fixture.nativeElement as HTMLElement).querySelector('main')?.getAttribute('lang')).toBe('hi');

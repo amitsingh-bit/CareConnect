@@ -4,12 +4,13 @@
 USE CareConnect;
 START TRANSACTION;
 
--- Demo accounts (PasswordHasher: PBKDF2-HMAC-SHA256, 310000 iterations).
+-- Demo accounts (all use the local-only password CareConnect123!).
+-- Password hashes use PasswordHasher: PBKDF2-HMAC-SHA256, 310000 iterations.
 INSERT INTO accounts (id, email, password_hash, role, display_name, profile_id) VALUES
-(1, 'patient@careconnect.com', 'pbkdf2-sha256$310000$AQIDBAUGBwgJCgsMDQ4PEA==$Sy0DLPNvW/cFv+8+YwIdLvRsJcvdGyxXfI3vyN3nyzE=', 'PATIENT', 'Rahul Sharma', 1),
-(2, 'doctor@careconnect.com', 'pbkdf2-sha256$310000$ERITFBUWFxgZGhscHR4fIA==$zyhxXxXN4AEOPX5tYo1TikjnAg1Oi5qHWxxVc2Cu/sM=', 'DOCTOR', 'Dr. Ankit Verma', 1),
-(3, 'nurse@careconnect.com', 'pbkdf2-sha256$310000$ISIjJCUmJygpKissLS4vMA==$CTq47iu/psPnnjkpqtQlcUK5b3nHrXzgAePHHcER4bw=', 'NURSE', 'Nurse Kavita', 1),
-(4, 'admin@careconnect.com', 'pbkdf2-sha256$310000$MTIzNDU2Nzg5Ojs8PT4/QA==$kDFXCZ+4oCh0csUs305+xeeMDGwuoY0EarZbO2frjGs=', 'ADMIN', 'CareConnect Admin', 1)
+(1, 'patient@careconnect.com', 'pbkdf2-sha256$310000$UVJTVFVWV1hZWltcXV5fYA==$lP7kCNVGW6LDa+AKAAXF5ftfI7hbPOVGEXibXGHpPS4=', 'PATIENT', 'Rahul Sharma', 1),
+(2, 'doctor@careconnect.com', 'pbkdf2-sha256$310000$YWJjZGVmZ2hpamtsbW5vcA==$liqCGkVMeVWWmeBT3SSWLw7N7K1WGgmqJtolSUdqFSA=', 'DOCTOR', 'Dr. Ankit Verma', 1),
+(3, 'nurse@careconnect.com', 'pbkdf2-sha256$310000$cXJzdHV2d3h5ent8fX5/gA==$PUBOuqZ1jlJalJNbzp35KRCPv5YUYyfG4EuG53G4OX0=', 'NURSE', 'Nurse Kavita', 1),
+(4, 'admin@careconnect.com', 'pbkdf2-sha256$310000$gYKDhIWGh4iJiouMjY6PkA==$9ArOCZdeLzgUUsez5wT5B6bSvde7TcwpmZ5sBSrc3pU=', 'ADMIN', 'CareConnect Admin', 1)
 ON DUPLICATE KEY UPDATE email=VALUES(email), password_hash=VALUES(password_hash), role=VALUES(role), display_name=VALUES(display_name), profile_id=VALUES(profile_id);
 
 INSERT INTO doctor (docid, name, experience, department) VALUES

@@ -120,8 +120,6 @@ public class AuthSessionInterceptor implements HandlerInterceptor {
         if (lower.equals("/api/auth/login")) return status >= 400 ? "LOGIN_FAILED" : "LOGIN";
         if (lower.equals("/api/auth/logout")) return "LOGOUT";
         if (status >= 400) return "DENIED";
-        if (lower.contains("/assistant/")) return "AI_CHAT";
-        if (lower.contains("/video/")) return "VIDEO_JOIN";
         return switch (method.toUpperCase()) { case "GET", "HEAD" -> "READ"; case "POST" -> "CREATE"; case "PUT", "PATCH" -> "UPDATE"; case "DELETE" -> "DELETE"; default -> "REQUEST"; };
     }
     private static String resourceType(String path) {
@@ -148,7 +146,6 @@ public class AuthSessionInterceptor implements HandlerInterceptor {
         boolean admin = "ADMIN".equals(normalizedRole);
 
         if (path.startsWith("/api/auth/")) return true;
-        if (path.startsWith("/api/assistant")) return normalizedRole.equals("PATIENT") && write;
         if (path.startsWith("/api/appointments")) return read || (write && (admin || normalizedRole.equals("DOCTOR") || normalizedRole.equals("PATIENT"))) || (delete && admin);
         if (path.startsWith("/api/patients")) {
             if (path.contains("/nurses")) return admin;

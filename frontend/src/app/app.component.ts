@@ -2,7 +2,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { forkJoin } from 'rxjs';
 import { AuthService, Account, SignupPayload } from './auth.service';
 import { TranslatePipe } from './i18n/translate.pipe';
@@ -13,7 +12,6 @@ type Row = Record<string, any>;
 type Field = { key: string; label: string; type?: string; required?: boolean; options?: string; placeholder?: string };
 type Column = { label: string; path: string };
 type Resource = { key: string; endpoint: string; label: string; singular: string; icon: string; roles: string[]; columns: Column[]; fields: Field[]; canCreate?: boolean; canEdit?: boolean; canDelete?: boolean };
-type AssistantEntry = { role: 'user' | 'assistant'; content: string; urgent?: boolean };
 
 export interface PatientDashboardData { patient: Row; appointments: Row[]; records: Row[]; prescriptions: Row[]; labReports: Row[]; careTeam: Row[]; diagnoses: Row[]; vitals: Row[]; notifications: Row[]; }
 export interface DoctorDashboardData { todayAppointments: Row[]; upcomingAppointments: Row[]; patients: Row[]; records: Row[]; labReports: Row[]; prescriptions: Row[]; vitals: Row[]; notifications: Row[]; }
@@ -54,7 +52,6 @@ const resources: Resource[] = [
 @Component({ selector: 'app-root', imports: [FormsModule, DatePipe, TranslatePipe], templateUrl: './app.component.html', styleUrl: './app.component.css' })
 export class AppComponent implements OnInit {
   private readonly auth = inject(AuthService);
-  private readonly sanitizer = inject(DomSanitizer);
   readonly resources = resources;
   readonly statuses = ['Scheduled', 'Confirmed', 'Completed', 'Cancelled'];
   readonly prescriptionStatuses = ['ACTIVE', 'COMPLETED'];
@@ -90,12 +87,7 @@ export class AppComponent implements OnInit {
   patientContextId: number | null = null;
   vitalRange: 'week' | 'month' = 'month';
   vitalMetric: 'bloodPressureSystolic' | 'bloodPressureDiastolic' | 'heartRate' | 'temperature' | 'oxygenSaturation' | 'weight' | 'height' = 'heartRate';
-  assistantLanguage: 'en' | 'hi' = typeof localStorage === 'undefined' ? 'en' : (localStorage.getItem('careconnect.language') === 'hi' ? 'hi' : 'en');
-  assistantMessages: AssistantEntry[] = [];
-  assistantText = '';
-  assistantSending = false;
-  assistantError = '';
-  private lastAssistantRequest: { message: string; language: string; history: { role: string; content: string }[] } | null = null;
+  language: 'en' | 'hi' = typeof localStorage === 'undefined' ? 'en' : (localStorage.getItem('careconnect.language') === 'hi' ? 'hi' : 'en');
   noteAppointment: Row | null = null;
   noteLoading = false;
   noteSaving = false;
@@ -103,10 +95,6 @@ export class AppComponent implements OnInit {
   noteNotice = '';
   noteVersions: Row[] = [];
   noteVersionsLoading = false;
-  videoAppointment: Row | null = null;
-  videoJoinUrl: SafeResourceUrl | null = null;
-  videoError = '';
-  videoLoading = false;
 
   get initials(): string { return this.account?.name.trim().split(/\s+/).slice(0, 2).map((part) => part[0]).join('').toUpperCase() || 'CC'; }
   get firstName(): string { return this.account?.name.trim().split(/\s+/)[0] || 'there'; }
@@ -216,27 +204,10 @@ export class AppComponent implements OnInit {
   login(): void { this.submit(() => this.auth.login(this.loginData)); }
   signup(): void { const payload = { ...this.signupData }; if (payload.age == null) delete payload.age; if (payload.experience == null) delete payload.experience; this.submit(() => this.auth.signup(payload)); }
   logout(): void { this.loading = true; this.auth.logout().subscribe({ next: () => this.finishLogout(), error: () => this.finishLogout() }); }
-  setAssistantLanguage(language: 'en' | 'hi'): void {
-    this.assistantLanguage = language;
+  setLanguage(language: 'en' | 'hi'): void {
+    this.language = language;
     if (typeof localStorage !== 'undefined') localStorage.setItem('careconnect.language', language);
   }
-  sendAssistant(suggested?: string): void {
-    const message = (suggested ?? this.assistantText).trim();
-    if (!message || this.assistantSending) return;
-    const history = this.assistantMessages.slice(-12).map(({ role, content }) => ({ role, content }));
-    this.assistantMessages = [...this.assistantMessages, { role: 'user', content: message }];
-    this.assistantText = '';
-    this.assistantError = '';
-    this.lastAssistantRequest = { message, language: this.assistantLanguage, history };
-    this.submitAssistant(this.lastAssistantRequest);
-  }
-  retryAssistant(): void {
-    if (this.lastAssistantRequest && !this.assistantSending) {
-      this.assistantError = '';
-      this.submitAssistant(this.lastAssistantRequest);
-    }
-  }
-  clearAssistant(): void { this.assistantMessages = []; this.assistantError = ''; this.lastAssistantRequest = null; }
   openConsultationNote(appointment: Row): void {
     const id = Number(appointment['id']);
     if (!id) return;
@@ -270,29 +241,6 @@ export class AppComponent implements OnInit {
     });
   }
   closeConsultationNote(): void { if (!this.noteSaving) this.noteAppointment = null; }
-  joinVideoConsultation(appointment: Row): void {
-    if (this.videoLoading) return;
-    this.videoAppointment = appointment; this.videoJoinUrl = null; this.videoError = ''; this.videoLoading = true;
-    this.auth.joinVideoConsultation(Number(appointment['id'])).subscribe({
-      next: (result) => { this.videoJoinUrl = this.sanitizer.bypassSecurityTrustResourceUrl(result.joinUrl); this.videoLoading = false; },
-      error: (error: HttpErrorResponse) => { this.videoError = this.localizedError(error, 'Could not join this video consultation.'); this.videoLoading = false; }
-    });
-  }
-  closeVideoConsultation(): void { this.videoAppointment = null; this.videoJoinUrl = null; this.videoError = ''; }
-  videoEligible(appointment: Row): boolean {
-    const time = new Date(String(appointment['appointmentDateTime'])).getTime();
-    const now = Date.now();
-    return !!appointment['id'] && String(appointment['status'] || '').toUpperCase() !== 'CANCELLED'
-      && Number.isFinite(time) && now >= time - 15 * 60_000 && now <= time + 120 * 60_000;
-  }
-  private submitAssistant(payload: { message: string; language: string; history: { role: string; content: string }[] }): void {
-    this.assistantSending = true;
-    this.auth.assistantChat(payload).subscribe({
-      next: (response) => { this.assistantMessages = [...this.assistantMessages, { role: 'assistant', content: `${response.reply}\n\n${response.safetyNotice}`, urgent: response.urgent }]; this.assistantSending = false; },
-      error: (error: HttpErrorResponse) => { this.assistantError = this.localizedError(error, 'The assistant is unavailable right now. Try again.'); this.assistantSending = false; }
-    });
-  }
-
   selectPage(key: string, patientId?: number): void {
     this.patientContextId = patientId ?? null;
     this.activeKey = key; this.search = ''; this.notice = ''; this.showForm = false;
@@ -521,7 +469,7 @@ export class AppComponent implements OnInit {
   private setError(error: HttpErrorResponse, fallback: string): void { this.noticeKind = 'error'; this.notice = this.localizedError(error, fallback); }
   private localizedError(error: HttpErrorResponse, fallback: string): string {
     const message = error.error?.message || error.error?.error || fallback;
-    if (this.assistantLanguage !== 'hi') return message;
+    if (this.language !== 'hi') return message;
     const keys: Record<number, string> = { 400: 'errors.invalidInput', 401: 'errors.unauthorized', 403: 'errors.forbidden', 404: 'errors.notFound', 409: 'errors.conflict', 429: 'errors.rateLimited', 503: 'errors.notConfigured' };
     const key = keys[error.status] || (error.status >= 500 ? 'errors.serverUnavailable' : '');
     if (key) return (hi as Record<string, string>)[key] || message;

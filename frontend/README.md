@@ -1,6 +1,6 @@
 # CareConnect Angular frontend
 
-This Angular 19 application provides the CareConnect account access screen, including patient, doctor, nurse, and administrator registration, session restore, and sign out.
+This Angular 19 application provides account access and role-aware workspaces for patients, doctors, nurses, and administrators. It connects to the Spring Boot API for session authentication and healthcare coordination workflows.
 
 ## Run locally
 
