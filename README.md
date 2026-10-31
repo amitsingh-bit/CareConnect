@@ -4,7 +4,7 @@ CareConnect is an existing healthcare coordination application built with a Spri
 
 ## Existing architecture
 
-- **Frontend:** Angular 19, TypeScript, Angular Router, HttpClient, one role-aware workspace component, and session-based API requests.
+- **Frontend:** Angular 19, TypeScript, Angular Router, HttpClient, role-based workspace views, a resource catalog for navigation and forms, and session-based API requests.
 - **Backend:** Java 17, Spring Boot 4.1.1, Spring Web, Spring Data JPA, Hibernate, and Maven. Sources are under `backend/src`; the root `pom.xml` configures those source directories.
 - **Database:** MySQL with the existing patient, doctor, nurse, administrator, appointment, medical record, diagnosis, prescription, medication, lab report, vital, notification, and account entities.
 - **Authentication:** Server-side HTTP session. Passwords are hashed by the existing `PasswordHasher`; account roles are `PATIENT`, `DOCTOR`, `NURSE`, and `ADMIN`.
@@ -110,6 +110,6 @@ The existing API includes `/api/auth`, `/api/appointments`, `/api/patients`, `/a
 - The repository still uses Hibernate `ddl-auto: update` rather than versioned Flyway migrations. Review a production database backup and schema plan before deploying new entities or columns.
 - The dashboards use existing list APIs and client-side chart calculations; a paginated analytics API and database-level time-range queries have not been added.
 - Login throttling is process-local, so horizontally scaled deployments need a shared store or gateway limit.
-- Localization covers application-owned UI text and common API errors. User-entered medical content, provider responses, and detailed server validation messages are shown as received to avoid altering clinical meaning.
+- Localization covers application-owned UI text and common API errors. User-entered medical content and detailed server validation messages are shown as received to avoid altering clinical meaning.
 - Consultation notes are versioned when changed, but the existing schema does not have a separate signed/finalized state or a formal amendment reason field.
 - Audit events capture API request metadata, but fine-grained access events, tamper-evident archival, retention controls, and export remain future work.
